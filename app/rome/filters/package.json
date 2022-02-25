@@ -1,0 +1,24 @@
+{
+  "name": "library-filters",
+  "devDependencies": {
+    "angular": "1.2.27",
+    "angular-route": "1.2.27",
+    "angular-mocks": "1.2.27",
+    "angular-bootstrap": "latest",
+    "angular-ui-sortable": "0.12.5",
+    "grunt": "~0.4.4",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-conventional-changelog": "~1.0.0",
+    "grunt-karma": "~0.8.3",
+    "karma-chrome-launcher": "~0.1.3",
+    "karma-firefox-launcher": "~0.1.3",
+    "karma-jasmine": "~0.2.2",
+    "karma-ng-html2js-preprocessor": "~0.1",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "load-grunt-tasks": "~0.2.0",
+    "jquery": "latest",
+    "jhonny": "git+ssh://git@github.com:Olapic/Johnny.git#v1.0.60",
+    "jquery-ui": "git+ssh://git@github.com:components/jqueryui#^1.11.4"
+  }
+}

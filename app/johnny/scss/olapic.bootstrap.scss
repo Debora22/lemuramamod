@@ -1,0 +1,333 @@
+// Dependencies // ------------------------------
+
+@import 'colors';
+@import 'type';
+@import 'zIndex';
+
+// General // ------------------------------
+
+body {
+    background-color: rgba(249, 249, 251, 1);
+    font-size: $type-paragraph;
+    font-family: $primary-font;
+    color: $color-text;
+    margin: 0;
+    padding: 0;
+}
+h1,
+h2,
+h3,
+h4 {
+    font-family: $heading-font;
+    color: $color-text;
+    font-weight: 300;
+}
+h1 {
+    font-size: $type-xl;
+}
+h2 {
+    font-size: $type-l;
+}
+h3 {
+    font-size: $type-m;
+}
+h3 i {
+    float: left;
+    margin-top: 2px;
+    margin-right: 10px;
+}
+h4 {
+    font-size: $type-s;
+}
+a {
+    color: $color-primary;
+}
+a:hover, a:active, a:focus {
+    text-decoration: none;
+    color: $color-primary;
+    outline: none;
+    outline-offset: 0;
+}
+hr {
+    width: 100%;
+    color: $color-border;
+}
+:focus,
+:active {
+    outline: none;
+}
+
+// Forms // ------------------------------
+
+.form-control {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    height: 35px;
+    border-color: $color-border;
+    border-radius: 3px;
+}
+.form-control:focus {
+    border-color: $color-primary;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    outline: none;
+}
+.input-group-btn:last-child > .btn,
+.input-group-btn:last-child > .btn-group {
+    height: 35px;
+}
+.input-group-btn:last-child > .btn:hover,
+.input-group-btn:last-child > .btn-group:hover {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+}
+textarea {
+    resize: none;
+}
+.caret{
+    float: right;
+    margin-top: 8px;
+    text-align: right;
+}
+.label {
+    padding: 15px 20px;
+    display: inline-block;
+    margin: 10px 10px 0 0;
+    list-style: none;
+    background-color: $color-primary;
+    color: $color-white;
+    border-radius: 3px;
+    font-weight: 400;
+    font-size: $type-paragraph;
+}
+
+// Dropdown // ------------------------------
+
+.dropdown {
+    color: $color-text;
+    border-color: $color-border;
+    display: inline-block;
+}
+.dropdown-menu {
+    padding: 9px 0px;
+    margin-top: 5px;
+}
+.dropdown-menu:focus,
+.dropdown-menu:active {
+    outline: none;
+}
+.dropdown ul.dropdown-menu li {
+    display: block;
+    width: 100%;
+    padding: 0;
+    height: inherit;
+    line-height: normal;
+}
+.dropdown-menu>li>a {
+    color: $color-text;
+    padding: 7px 10px;
+    cursor: pointer;
+}
+.dropdown-menu>.active>a,
+.dropdown-menu>.active>a:hover,
+.dropdown-menu>.active>a:focus {
+    color: $color-white;
+    background-color: $color-primary;
+}
+.dropdown-menu>li>a i {
+    margin-right: 8px;
+}
+.dropdown-menu .divider {
+    border-top: 1px solid $color-border;
+}
+.open > .dropdown-toggle.btn-default {
+    background-color: rgba(250, 250, 250, 1);
+}
+.dropdown-toggle {
+    cursor: pointer;
+}
+.dropdown .btn:hover {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+}
+
+// Autocomplete // ------------------------------
+
+.autocomplete-item {
+    display: inline-table !important;
+    table-layout: fixed;
+    width: 100%;
+}
+.autocomplete-item span {
+    margin-right: 15px;
+}
+.autocomplete-item i {
+    float: right;
+    margin-top: 3px;
+}
+
+// Buttons // ------------------------------
+
+.btn-default {
+    color: $color-text;
+    background-color: $color-white;
+    border-color: $color-border;
+}
+.btn-default:focus,
+.btn-default:active {
+    background-color: none;
+}
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+    outline: thin dotted;
+    outline: 0;
+    outline-offset: 0px;
+}
+.btn:hover,
+.btn:focus,
+.btn.focus {
+    text-decoration: none;
+}
+.btn:hover {
+    box-shadow: 0 0px 5px rgba(43,59,93,.35);
+    -webkit-box-shadow: 0 0px 5px rgba(43,59,93,.35);
+    -moz-box-shadow: 0 0px 5px rgba(43,59,93,.35);
+}
+.btn:active,
+.btn.active {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.btn-select,
+.btn-select:hover
+.btn-select:focus,
+.btn-default:hover,
+.btn-default:focus {
+    color: $color-text;
+    background-color: $color-white;
+    border-color: $color-border;
+}
+.btn-select:active,
+.btn-default:active {
+    background-color: $color-border;
+    color: $color-text;
+}
+.btn .caret {
+    margin-left: 5px;
+}
+.btn-warning,
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning:active {
+    border: 1px solid $color-danger;
+    background-color: $color-danger;
+    color: $color-white;
+}
+.btn-success,
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active {
+    border: 1px solid $color-success;
+    background-color: $color-success;
+    color: $color-white;
+}
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-xs:hover,
+.btn-xs:focus,
+.btn-xs:active {
+    background-color: $color-primary;
+    border: 1px solid $color-primary;
+    color: $color-white;
+}
+.btn-xs {
+    border: 1px solid $color-primary;
+    color: $color-primary;
+    background-color: $color-white;
+}
+.btn.disabled,
+.btn[disabled],
+fieldset[disabled] .btn {
+    opacity: .4;
+}
+
+// Tabs // ------------------------------
+
+.nav-tabs>li>a {
+  color: $color-text;
+  border: none;
+}
+.nav-tabs>li>a:hover {}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+  border: none;
+  border-bottom: 3px solid $color-primary;
+  color: $color-primary;
+  background: none;
+}
+.nav-tabs>li>a:hover {
+  background: none;
+}
+.tab-content>.tab-pane {
+  margin-bottom: 20px;
+}
+
+// Notifications // ------------------------------
+
+.alert-container {
+  position: absolute;
+  top: 70px;
+  right: 15px;
+  z-index: $zIndex-8;
+}
+.alert-container ul {
+  padding: 0;
+  margin-right: 0;
+}
+.alert-container ul li {
+  list-style: none;
+  margin-bottom: 10px;
+}
+.alert {
+  color: $color-white;
+  border: none;
+  padding: 12px 15px;
+  margin: 10px;
+  border-radius: 3px;
+  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.20);
+  -webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.20);
+  -moz-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.20);
+}
+.alert i {
+  margin-left: 15px;
+}
+.alert button.close {
+  outline: 0;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+}
+.alert-dismissable, .alert-dismissible {
+  padding-right: 35px;
+}
+.alert-success {
+  background-color: $color-success;
+}
+.alert-info {
+  background-color: $color-primary;
+}
+.alert-warning {
+  background-color: $color-warning;
+}
+.alert-danger {
+  background-color: $color-danger;
+}

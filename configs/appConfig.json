@@ -1,0 +1,50 @@
+{
+  "appConstant": {
+    "appName": "lemuramav2",
+    "authServer": {
+      "url": "/auth"
+    },
+    "photorankAPI": {
+      "url": ""
+    },
+    "adminAPI": {
+      "url": ""
+    },
+    "adminAPI2": {
+      "url": ""
+    },
+    "enviroment": "middleware",
+    "fullstory": false,
+    "photorank": {
+      "url": "https://local.photorank.me"
+    },
+    "base_image": {
+      "url": "https://s3.amazonaws.com/photorank-media/media/"
+    },
+    "anafrus": {
+      "url": "/data",
+      "enabled": true,
+      "bulkLimit": 10
+    },
+    "translate": {
+      "url": "/translate/"
+    },
+    "sso": {
+      "url": "https://sso.photorank.me"
+    },
+    "intercom": {
+      "enabled": false,
+      "showIconChat": false,
+      "data": {
+        "appID": "mpj8a0bm",
+        "company": {
+          "ID": 32,
+          "name": "[Internal] Modsquad Moderators"
+        }
+      }
+    },
+    "debugInfo": false,
+    "actionCountersWaitingTime": 1000,
+    "actionCountersRetryTimes": 5
+  }
+}

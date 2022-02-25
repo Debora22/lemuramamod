@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+    <title>Demo - Tagging</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic-icons.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/modal.css">
+</head>
+<body ng-app="app" ng-controller="demo">
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="modal-wrapper">
+        <div class="modal-media-bulk">
+          <img src="" class="hoverImage" style="width: 320px; height: 319px; top: 70px; position: absolute; display: none;" />
+        </div>
+        <div class="modal-block-content">
+          <div role="tabpanel">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active"><a href="#tags" aria-controls="tags" role="tab" data-toggle="tab">Tags</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- Tags -->
+                <div role="tabpanel" class="tab-pane fade in active" id="tags">
+                    <!--DIRECTIVE HERE -->
+                    <op-tagging streams="streamsForTagging"></op-tagging>
+                    <!--DIRECTIVE HERE -->
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script src="../../bower_components/jquery-ui/jquery-ui.js"></script>
+<script src="../../bower_components/angular/angular.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="../../bower_components/angular-ui-sortable/sortable.js"></script>
+
+<script src="../../api/src/api.js"></script>
+<script src="../../api/src/services/adminAPIService.js"></script>
+<script src="../../api/src/services/apiService.js"></script>
+
+<script src="../../tagging/src/tagging.js"></script>
+<script src="../../tagging/src/services/taggingService.js"></script>
+<script src="../../tagging/src/services/taggingToolService.js"></script>
+<script src="../../tagging/src/directives/taggingDirective.js"></script>
+
+<script type="text/javascript">
+angular.module('appConfig', [])
+    .constant('appConstant', {
+        enviroment: 'local',
+        adminAPI2: {
+            url: 'https://admin-api-v2.photorank.me/'
+        },
+        adminAPI: {
+            url: ''
+        },
+        base_image: {
+            url: 'https://s3.amazonaws.com/photorank-media/media/'
+        }
+    });
+
+angular
+    .module('app', ['op.tagging', 'op.api', 'appConfig'])
+    .controller('demo', ['$scope', '$http', 'taggingService', '$timeout', 'adminAPIService', 'appConstant',
+    function ($scope, $http, TaggingService, $timeout, adminAPIService, appConstant) {
+
+        var testAccessToken = '0d9977bce74f5bcd8c0d7ec62dbc029de0d60594';
+
+        var getStreams = function(query) {
+            var options = {
+                method: 'GET',
+                url: appConstant.adminAPI2.url + 'streams/search?phrase=QUERY&items_per_page=6',
+                headers: {
+                    Authorization: 'Bearer '+testAccessToken
+                }
+            };
+            options.url = options.url.replace('QUERY', query);
+            return $http(options).then(function(response) {
+                var batch = response.data.data.streams.map(adminAPIService.streamNormalizer);
+                return {batch: batch};
+            });
+        };
+
+        function init(){
+
+            $scope.tagging = new TaggingService({
+                templatePath: '../',
+                sorting : true,
+                callbacks: {
+                    itemRemoved: function(entity){
+                        console.log('Entity removed!', entity);
+                    },
+                    itemAdded: function(entity){
+                        console.log('Entity added!', entity);
+                    },
+                    loadContent: function(query, finish){
+                        getStreams(query.q).then(finish);
+                    },
+                    emptyField: function(){
+                        console.log('emptyField');
+                        angular.element('.hoverImage').attr('src', '').hide();
+                    },
+                    resultItemOnHover: function(item){
+                        angular.element('.hoverImage').attr('src', item.base_image).show()
+                    },
+                    resultItemOnOut: function(item){
+                        angular.element('.hoverImage').attr('src', '').hide();
+                    }
+                }
+            });
+
+            getStreams('test').then(function(response){
+                 $scope.streamsForTagging = response.batch;
+             });
+        }
+
+        $timeout(function() {
+            init()
+        }, 2000);
+    }]);
+</script>
+
+</body>
+</html>

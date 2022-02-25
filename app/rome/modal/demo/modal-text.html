@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+    <title>Demo - Modal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic-icons.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/modal.css">
+</head>
+<body ng-app="app" ng-controller="demo">
+
+<div><a href="" ng-click="open()">Open modal as text</a></div>
+<div><a href="" ng-click="openImage()">Open modal as image</a></div>
+<op-modal></op-modal>
+<op-modal modal="modalText"></op-modal>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="../../bower_components/angular/angular.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="../../bower_components/angular-ui-sortable/sortable.js"></script>
+<script src="../../bower_components/jquery-zoom/jquery.zoom.js"></script>
+
+<script src="../../modal/src/modal.js"></script>
+<script src="../../modal/src/services/modalService.js"></script>
+<script src="../../modal/src/services/modalToolService.js"></script>
+<script src="../../modal/src/directives/modalDirective.js"></script>
+<script src="../../modal/src/directives/modalExtrasDirective.js"></script>
+<script src="../../modal/src/directives/modalMediaDirective.js"></script>
+<script src="../../modal/src/controllers/ModalController.js"></script>
+
+<script type="text/javascript">
+angular
+    .module('app', ['op.modal'])
+    .controller('demo', ['$scope', 'modalService', '$timeout', function ($scope, ModalService, $timeout) {
+        function init(){
+
+            $scope.modal = new ModalService({
+                templatePath: '../',
+                fullscreen: false,
+                callbacks: {
+                    afterOpen: function(){
+                        console.log('afterOpen modalImage');
+                    },
+                    afterClose: function(){
+                        console.log('afterClose modalImage');
+                    }
+                }
+            });
+
+            $scope.modalText = new ModalService({
+                templatePath: '../',
+                template: 'text',
+                fullscreen: false,
+                callbacks: {
+                    afterOpen: function(){
+                        console.log('afterOpen modalText');
+                    },
+                    afterClose: function(){
+                        console.log('afterClose modalText');
+                    }
+                }
+            });
+
+            $scope.openImage = function(){
+                $scope.modal.actions.open([{
+                    "id": 1796021987,
+                    "caption": "#asado #olapic #starting",
+                    "key": "qoygwe3",
+                    "images": {
+                        "bthumbnail": "https://s3.amazonaws.com/photorank-media/media/q/o/y/qoygwe3/bthumbnail.jpg",
+                        "masonry": "https://s3.amazonaws.com/photorank-media/media/q/o/y/qoygwe3/masonry.jpg",
+                        "mini": "https://s3.amazonaws.com/photorank-media/media/q/o/y/qoygwe3/mini.jpg",
+                        "mobile": "https://s3.amazonaws.com/photorank-media/media/q/o/y/qoygwe3/mobile.jpg",
+                        "normal": "https://s3.amazonaws.com/photorank-media/media/q/o/y/qoygwe3/normal.jpg",
+                        "slideshow": "https://s3.amazonaws.com/photorank-media/media/q/o/y/qoygwe3/slideshow.jpg",
+                        "square": "https://s3.amazonaws.com/photorank-media/media/q/o/y/qoygwe3/square.jpg",
+                        "thumbnail": "https://s3.amazonaws.com/photorank-media/media/q/o/y/qoygwe3/thumbnail.jpg"
+                    },
+                    "date_submitted": "2013-08-06T19:06:49+0000",
+                    "type": "IMAGE",
+                    "status": "OK",
+                    "status_id": 40,
+                    "source": {
+                        "name": "instagram",
+                        "url": "http://instagram.com/p/cRb9FzAfIU/",
+                        "data": {
+                            "id": "509311178237932052_183470123",
+                            "url": "http://instagram.com/p/cRb9FzAfIU/",
+                            "filter": "",
+                            "comments": 1,
+                            "likes": {
+                                "count": 7
+                            },
+                            "user_ids": null,
+                            "usernames": null
+                        }
+                    },
+                    "user": {
+                        "id": 1143184,
+                        "name": "Horacio Oliva",
+                        "email": "horacioliva@fake.instagram.com",
+                        "language": "en_US",
+                        "username": "horacioliva",
+                        "source": "INSTAGRAM_UPLOAD",
+                        "partner_id": null
+                    },
+                    "streams": [
+                        {
+                            "id": 1975619675,
+                            "name": "Olapic Gallery",
+                            "tag_based_key": null,
+                            "$$hashKey": "00Y"
+                        }
+                    ],
+                    "rights": "NOT-REQUESTED",
+                    "video_url": null,
+                    "zoolander_ads": {},
+                    "sonar_place": {},
+                    "$$hashKey": "005"
+                }]);
+            };
+        }
+
+        $timeout(function() {
+            init()
+        }, 2000);
+    }]);
+</script>
+
+</body>
+</html>

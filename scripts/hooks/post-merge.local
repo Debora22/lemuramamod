@@ -1,0 +1,6 @@
+#!/bin/sh
+NODEVERSION=`node -v`;
+REQUIREVERSION=`cat .nvmrc`;
+
+ECHO "You're running NodeJS version $NODEVERSION and this project requires $REQUIREVERSION."
+npm install || exit 1;

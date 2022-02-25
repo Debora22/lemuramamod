@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+    <title>Demo - Loading</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.theme.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic-icons.css"/>
+</head>
+<body ng-app="app" ng-controller="demoController">
+<h1><a href="javascript: alert('1');">A simple action</a></h1>
+<a href="#" ng-click="enable();">Show Loading</a>
+<op-loading></op-loading>
+<h2><a href="javascript: alert('2');">Another action</a></h2>
+
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="../../bower_components/angular/angular.js"></script>
+
+<script src="../src/loading.js"></script>
+<script src="../src/services/loadingService.js"></script>
+<script src="../src/directives/loadingDirective.js"></script>
+<script type="text/javascript">
+    angular
+        .module('app', ['op.loading'])
+        .controller('demoController', ['$scope', '$timeout', 'loadingService', function($scope, $timeout, loading){
+            $scope.enable = function(){
+                loading.on();
+                $timeout($scope.disable, 1500);
+            };
+            $scope.disable = function(){
+                loading.off();
+            };
+        }]);
+</script>
+</body>
+</html>

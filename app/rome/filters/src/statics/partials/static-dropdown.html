@@ -1,0 +1,10 @@
+<p class="fixed" ng-show="label">{{label}}</p>
+<div class="dropdown" uib-dropdown>
+    <button class="btn btn-default btn-select uib-dropdown-toggle" type="button" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false" ng-disabled="disabled">
+        <span class="pull-left">{{itemSelected.title}}</span>
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li ng-repeat="item in items"><a href ng-click="disabled || onChange(item)">{{item.title}}</a></li>
+    </ul>
+</div>

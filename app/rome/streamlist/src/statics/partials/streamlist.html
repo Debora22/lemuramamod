@@ -1,0 +1,23 @@
+<div ng-hide="loaded" class="streamlist-loading olapic-spinner olapic-spinner-bounce">
+    <div class="olapic-bounce1"></div>
+    <div class="olapic-bounce2"></div>
+</div>
+<div ng-show="!streams.length && loaded" class="streamlist-notags">
+    <i class="icon-tags"></i>
+    <p>No streams have been tagged to this photo</p>
+</div>
+<ul ng-model="streams" class="streamlist">
+    <li ng-repeat="stream in streams" op-streamlist-repeat data-stream-id="{{stream.id}}">
+        <div id="assigned-stream-{{stream.id}}" class="streambox">
+            <div class="streambox-thumbnail" style="background-image:url({{stream.base_image}});">
+                <span class="no-image icon-polaroids" ng-if="!stream.base_image"></span>
+            </div>
+            <div class="streambox-info">
+                <h5>{{stream.name}}</h5>
+                <p>Product URL: <a class="streambox-info-link" ng-if="stream.product_url" href="{{stream.product_url}}" target="blank" title="Go to {{stream.product_url}}">{{stream.product_url || 'n/a'}}</a><span ng-if="!stream.product_url">n/a</span></p>
+                <p>Product Identifier: {{stream.tag_based_key || 'n/a'}}</p>
+                <div class="streambox-actions"></div>
+            </div>
+        </div>
+    </li>
+</ul>

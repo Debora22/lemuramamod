@@ -1,0 +1,8 @@
+echo "Pre commit validations:"
+
+# run jshint
+$(npm bin)/grunt jshint || exit 2;
+
+# run unit
+npm run middleware:test || exit 2;
+$(npm bin)/grunt test || exit 2;

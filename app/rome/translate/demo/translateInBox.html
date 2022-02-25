@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+    <title>Demo - Translate</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.theme.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic-icons.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/box.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/translate.css"/>
+</head>
+<body ng-app="app" ng-controller="demoController" style="padding: 10px;">
+<h1>Translate Demo</h1>
+<op-box></op-box>
+
+<script src="../../bower_components/angular/angular.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="../../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="../../bower_components/ngstorage/ngStorage.min.js"></script>
+
+<script src="../../translate/src/translate.js"></script>
+<script src="../../translate/src/config/translateConfig.js"></script>
+<script src="../../translate/src/services/translateService.js"></script>
+<script src="../../translate/src/services/translateAPIService.js"></script>
+<script src="../../translate/src/directives/translateDirective.js"></script>
+
+<script src="../../box/src/box.js"></script>
+<script src="../../box/src/services/boxService.js"></script>
+<script src="../../box/src/services/boxToolsService.js"></script>
+<script src="../../box/src/directives/boxDirective.js"></script>
+
+<script type="text/javascript">
+    angular.module('app', ['op.box', 'op.translate'])
+        .constant('appConstant', {
+            translate: {
+                url: 'mocks/translate.json'
+            }
+        })
+        .controller('demoController', [
+            '$scope',
+            'boxService',
+            'translateService',
+            function($scope, boxService, translateService) {
+                $scope.entity = {
+                    id:1307546851,
+                    caption:'Vanavond goede Avond met deze sterren @ The Grand vanaf 23:00! #crazyness #vodka #verkleden #bier',
+                    key:'vtfkf23',
+                    images:{
+                        bthumbnail:'https://s3.amazonaws.com/photorank-media/media/v/t/f/vtfkf23/bthumbnail.jpg',
+                        masonry:'https://s3.amazonaws.com/photorank-media/media/v/t/f/vtfkf23/masonry.jpg',
+                        mini:'https://s3.amazonaws.com/photorank-media/media/v/t/f/vtfkf23/mini.jpg',
+                        mobile:'https://s3.amazonaws.com/photorank-media/media/v/t/f/vtfkf23/mobile.jpg',
+                        normal:'https://s3.amazonaws.com/photorank-media/media/v/t/f/vtfkf23/normal.jpg',
+                        slideshow:'https://s3.amazonaws.com/photorank-media/media/v/t/f/vtfkf23/slideshow.jpg',
+                        square:'https://s3.amazonaws.com/photorank-media/media/v/t/f/vtfkf23/square.jpg',
+                        thumbnail:'https://s3.amazonaws.com/photorank-media/media/v/t/f/vtfkf23/thumbnail.jpg'
+                    },
+                    date_submitted:'2013-02-21T01:32:07+0000',
+                    type:'IMAGE',
+                    status:'OK',
+                    status_id:40,
+                    source:{
+                        name:'instagram',
+                        data:{
+                            id:'395856183324900199_193278645',
+                            url:'http://instagr.am/p/V-XRn1OPtn/',
+                            filter:'normal',
+                            comments:4,
+                            likes: { count:15 },
+                            user_ids:null,
+                            usernames:null
+                        }
+                    },
+                    user:{
+                        id:1060610,
+                        name:'cheanaven wheatley aka venni',
+                        email:'vennilove_coupon_diva@fake.instagram.com',
+                        language:'en_US',
+                        username:'vennilove_coupon_diva',
+                        source:'INSTAGRAM_UPLOAD',
+                        partner_id:null
+                    },
+                    streams:[],
+                    rights:'NOT-REQUESTED',
+                    zoolander_ads:{},
+                    sonar_place:{},
+                    favorite:false
+                };
+                $scope.box = boxService({
+                    templatePath: '/box/',
+                    showCheckbox: false,
+                    translate: translateService({
+                        templatePath: '/translate/',
+                        showIcon: true,
+                        showTransitionEffect: true
+                    })
+                });
+            }]);
+</script>
+</body>
+</html>

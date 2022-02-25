@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+    <title>Demo - Autocomplete</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic-icons.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/sidebar.css"/>
+</head>
+<body ng-app="app" ng-controller="demo">
+
+<div class="container-fluid">
+    <h1>Autocomplete</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <pre>Selected: {{selected | json}}</pre>
+        </br>
+            <input type="text" class="form-control" op-autocomplete="mediaAutocomplete" placeholder="type: olapic or shoes">
+        </div>
+    </div>
+</div>
+
+<script src="../../bower_components/angular/angular.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="../../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+
+<!-- <script src="//photorankstatics-a.akamaihd.net/static/frontend/OlapicSearchClient/master/dist/osc.min.js"> -->
+<!-- </script> -->
+
+<script src="../../autocomplete/src/autocomplete.js"></script>
+<script src="../../autocomplete/src/services/autocompleteService.js"></script>
+<script src="../../autocomplete/src/services/autocompleteToolsService.js"></script>
+<script src="../../autocomplete/src/directives/autocompleteDirective.js"></script>
+
+<script type="text/javascript">
+    angular
+        .module('app', ['op.autocomplete'])
+        .controller('demo', ['$scope', 'autocompleteService', '$http',
+        function ($scope, AutocompleteService, $http) {
+
+            var testAccessToken = '0d9977bce74f5bcd8c0d7ec62dbc029de0d60594';
+
+            var request = {
+                method: 'GET',
+                url: 'https://admin-api-v2.photorank.me/search/suggestions?phrase=QUERY&version=v2.2',
+                headers: {
+                    Authorization: 'Bearer '+testAccessToken
+                }
+            };
+
+            $scope.mediaAutocomplete = new AutocompleteService({
+                templatePath: '/autocomplete/',
+                minimumTermLength: 3,
+                callbacks: {
+                    getData: function(term) {
+                        var options = angular.copy(request);
+                        options.url = options.url.replace('QUERY', term);
+                        return $http(options);
+                    },
+                    formatData: function(res, push) {
+                        angular.forEach(res.data.data, function(item){
+                            push('tags', item.name, item);
+                        });
+                    },
+                    onSelect: function(item) {
+                        $scope.selected = item;
+                    }
+                }
+            });
+    }]);
+</script>
+
+</body>
+</html>

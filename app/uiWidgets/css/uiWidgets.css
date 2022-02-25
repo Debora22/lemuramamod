@@ -1,0 +1,18 @@
+/** New filters signal **/
+
+.filtersNewSignal
+{
+    font: 100 11px PT Sans, Helvetica, Arial, sans-serif;
+    line-height: 11px;
+
+    width: 36px;
+    height: 19px;
+    margin-right: 20px;
+    padding-top: 4px;
+
+    text-align: center;
+
+    color: #f50c46;
+    border: 1px solid #f4003c;
+    border-radius: 6px;
+}

@@ -1,0 +1,286 @@
+<!doctype html>
+<html>
+<head>
+    <title>Demo - Translate</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.theme.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic-icons.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/translate.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/box.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/library.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/modal.css">
+
+    <style type="text/css">
+        .library-actions-container {
+            margin: 0 0 20px;
+            padding: 0 33px 0 0;
+        }
+
+        .library-media-container {
+            margin: 0;
+        }
+
+        .sidebar-item p {
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .sidebar-item button {
+            width: 170px;
+        }
+
+        .dropdown-menu {
+            max-height: 300px;
+            overflow: scroll;
+        }
+    </style>
+</head>
+<body ng-app="app" ng-controller="demoController" style="padding: 10px;">
+<h1>Translate Demo</h1>
+<div class="library-actions-container">
+    <div class="pull-left">
+        <h5>Library Actions</h5>
+        <a href="" class='btn btn-xs btn-info' ng-click="clearLibrary()">Clear content</a>
+        <a href="" class='btn btn-xs btn-info' ng-click="loadMoreLibrary()">Load more content</a>
+    </div>
+    <div class="tools tools-filter pull-right">
+        <ul>
+            <li>
+                <op-static-dropdown-filter settings='filtersLanguageService'></op-static-dropdown-filter>
+            </li>
+        </ul>
+    </div>
+</div>
+<op-library></op-library>
+<op-modal></op-modal>
+<op-loading></op-loading>
+
+<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../../bower_components/angular/angular.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="../../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="../../bower_components/ngstorage/ngStorage.min.js"></script>
+<script src="../../bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js"></script>
+
+<script src="../../translate/src/translate.js"></script>
+<script src="../../translate/src/config/translateConfig.js"></script>
+<script src="../../translate/src/services/translateService.js"></script>
+<script src="../../translate/src/services/translateAPIService.js"></script>
+<script src="../../translate/src/directives/translateDirective.js"></script>
+
+<script src="../../box/src/box.js"></script>
+<script src="../../box/src/services/boxService.js"></script>
+<script src="../../box/src/services/boxToolsService.js"></script>
+<script src="../../box/src/directives/boxDirective.js"></script>
+
+<script src="../../library/src/library.js"></script>
+<script src="../../library/src/services/libraryService.js"></script>
+<script src="../../library/src/directives/libraryDirective.js"></script>
+<script src="../../library/src/directives/ngRepeatFinishDirective.js"></script>
+
+<script src="../../loading/src/loading.js"></script>
+<script src="../../loading/src/services/loadingService.js"></script>
+<script src="../../loading/src/directives/loadingDirective.js"></script>
+
+<script src="../../filters/src/filters.js"></script>
+<script src="../../filters/src/services/staticFiltersService.js"></script>
+<script src="../../filters/src/directives/staticDropdownFilterDirective.js"></script>
+
+<script src="../..//modal/src/modal.js"></script>
+<script src="../..//modal/src/services/modalService.js"></script>
+<script src="../..//modal/src/services/modalToolService.js"></script>
+<script src="../..//modal/src/directives/modalDirective.js"></script>
+<script src="../..//modal/src/directives/modalMediaDirective.js"></script>
+<script src="../..//modal/src/controllers/ModalController.js"></script>
+<script type="text/javascript">
+    angular.module('app', ['op.library', 'op.box', 'op.translate', 'op.loading', 'op.filters', 'op.modal'])
+        .constant('appConstant', {
+            translate: {
+                url: 'mocks/translate.json'
+            }
+        })
+        .controller('demoController', [
+            '$scope',
+            'libraryService',
+            'boxService',
+            'translateService',
+            'loadingService',
+            'StaticFiltersService',
+            'modalService',
+            'translateAPIService',
+            'translateConfig',
+            '$localStorage',
+            '$q',
+            '$timeout',
+            function($scope, libraryService, boxService, translateService, loading, StaticFiltersService, modalService, translateAPIService, translateConfig, $localStorage, $q, $timeout) {
+                var controlLimit = 20;
+                var getEntityDemo = function() {
+                    return {
+                        id: Math.random(),
+                        caption:'Vanavond goede Avond met deze sterren @ The Grand vanaf 23:00! #crazyness #vodka #verkleden #bier',
+                        key:'vtfkf23',
+                        images:{
+                            bthumbnail:'https://s3.amazonaws.com/photorank-media/media/v/t/f/vtfkf23/bthumbnail.jpg',
+                            masonry:'https://s3.amazonaws.com/photorank-media/media/v/t/f/vtfkf23/masonry.jpg',
+                            mini:'https://s3.amazonaws.com/photorank-media/media/v/t/f/vtfkf23/mini.jpg',
+                            mobile:'https://s3.amazonaws.com/photorank-media/media/v/t/f/vtfkf23/mobile.jpg',
+                            normal:'https://s3.amazonaws.com/photorank-media/media/v/t/f/vtfkf23/normal.jpg',
+                            slideshow:'https://s3.amazonaws.com/photorank-media/media/v/t/f/vtfkf23/slideshow.jpg',
+                            square:'https://s3.amazonaws.com/photorank-media/media/v/t/f/vtfkf23/square.jpg',
+                            thumbnail:'https://s3.amazonaws.com/photorank-media/media/v/t/f/vtfkf23/thumbnail.jpg'
+                        },
+                        date_submitted:'2013-02-21T01:32:07+0000',
+                        type:'IMAGE',
+                        status:'OK',
+                        status_id:40,
+                        source:{
+                            name:'instagram',
+                            data:{
+                                id:'395856183324900199_193278645',
+                                url:'http://instagr.am/p/V-XRn1OPtn/',
+                                filter:'normal',
+                                comments:4,
+                                likes: { count:15 },
+                                user_ids:null,
+                                usernames:null
+                            }
+                        },
+                        user:{
+                            id:1060610,
+                            name:'cheanaven wheatley aka venni',
+                            email:'vennilove_coupon_diva@fake.instagram.com',
+                            language:'en_US',
+                            username:'vennilove_coupon_diva',
+                            source:'INSTAGRAM_UPLOAD',
+                            partner_id:null
+                        },
+                        streams:[],
+                        rights:'NOT-REQUESTED',
+                        zoolander_ads:{},
+                        sonar_place:{},
+                        favorite:false
+                    };
+                };
+                var viewService = boxService({
+                    templatePath: '/box/',
+                    showCheckbox: false,
+                    translate: translateService({
+                        templatePath: '/translate/',
+                        showIconWhenTranslated: true
+                    }),
+                    callbacks: {
+                        afterPhotoClick: function(entity) {
+                            $scope.modal.actions.setTitle('Edit Media');
+                            $scope.modal.translate.showIcon = isTranslating();
+                            $scope.modal.actions.navigation($scope.library.actions.items());
+                            $scope.modal.actions.open([entity]);
+                        }
+                    }
+                });
+
+                $scope.library = libraryService({
+                    entityView: viewService,
+                    templatePath: '/library/',
+                    callbacks: {
+                        loading: {
+                            start: function() {
+                                loading.on();
+                            },
+                            end: function() {
+                                loading.off();
+                            }
+                        },
+                        loadContent: function(finish) {
+                            var data = [];
+                            for (var i = 0; i < controlLimit; i++) {
+                                data.push(getEntityDemo());
+                            }
+                            $timeout(function() {
+                                finish({ batch: data });
+                                if (isTranslating()) {
+                                    $scope.translateData(data);
+                                }
+                            }, 100);
+                        }
+                    }
+                });
+
+                $scope.modal = modalService({
+                    templatePath: '/modal/',
+                    fullscreen: false,
+                    translate: translateService({
+                        templatePath: '/translate/',
+                        showIcon: true,
+                        showIconWhenTranslated: true
+                    })
+                });
+
+                $scope.loadMoreLibrary = function() {
+                    $scope.library.actions.loadMore();
+                };
+                $scope.clearLibrary = function() {
+                    $scope.library.actions.clear();
+                };
+
+                var performTranslate = function(data) {
+                    return translateAPIService.translate(data.map('caption')).then(function(translation) {
+                        angular.forEach(data, function(item, i) {
+                            item.captionTranslated = translation[i].translatedText;
+                            item.captionTranslating = false;
+                            item.captionShowTranslated = true;
+                        });
+                    });
+                };
+
+                $scope.translateData = function(data) {
+                    angular.forEach(data, function(item) {
+                        item.captionTranslating = true;
+                    });
+                    var promises = [];
+                    //Vanilla version of Lodash array chunk
+                    for (var i = 0, j = data.length; i < j; i += controlLimit) {
+                        promises.push(performTranslate(data.slice(i, i + controlLimit)));
+                    }
+
+                    $q.all(promises).then(function() {
+                        $scope.filtersLanguageService.actions.setDisabled(false);
+                    }, function() {
+                        angular.forEach(data, function(item) {
+                            item.captionTranslating = false;
+                        });
+                        $scope.filtersLanguageService.actions.setDisabled(false);
+                        alert('Unable to translate due to an error. Please try again. If the issue persists, please contact support@olapic.com');
+                    });
+                };
+
+                var initialValue = { title: '- Original language -', value: 0 };
+                translateConfig.googleTranslate.languages.unshift(initialValue);
+                $scope.filtersLanguageService = new StaticFiltersService({
+                    label: 'Show captions in:',
+                    templatePath: '/filters/',
+                    data: translateConfig.googleTranslate.languages,
+                    initialValue: $localStorage.filterTranslateLanguage || initialValue,
+                    callbacks: {
+                        onChange: function(item) {
+                            if (item.value === 0) {
+                                angular.forEach($scope.library.actions.items(), function(item) {
+                                    item.captionShowTranslated = false;
+                                    item.captionTranslated = false;
+                                });
+                            } else {
+                                $scope.filtersLanguageService.actions.setDisabled(true);
+                                $localStorage.translateTargetLanguage = item.value;
+                                $scope.translateData($scope.library.actions.items());
+                            }
+                            $localStorage.filterTranslateLanguage = item;
+                        }
+                    }
+                });
+                var isTranslating = function() {
+                    return $scope.filtersLanguageService.actions.getSelectedItem().value !== 0;
+                };
+            }]);
+</script>
+</body>
+</html>

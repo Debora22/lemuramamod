@@ -1,0 +1,74 @@
+// Dependencies // ------------------------------
+@import 'colors';
+
+/*End dependencies*/
+
+header {
+    width: 100%;
+    height: 60px;
+    padding: 0 15px;
+    margin-bottom: 20px;
+    background-color: rgba(250, 250, 250, 1);
+    border-bottom: 1px solid $color-border;
+}
+header .olapic-logo {
+    width: 36px;
+    height: 36px;
+    margin: 12px 70px 12px 0;
+    float: left;
+}
+header a {
+    color: $color-text;
+}
+header nav ul {
+    float: left;
+    padding: 0;
+    margin: 0;
+}
+header nav ul li {
+    padding: 18px 15px;
+    float: left;
+    list-style: none;
+}
+.nav-active {
+    border-bottom: 3px solid $color-primary;
+}
+.menu-right {
+    float: right;
+}
+.menu-right ul {
+    float: left;
+    margin: 0;
+}
+.menu-right ul li {
+    float: left;
+    padding: 0 15px;
+    height: 60px;
+    line-height: 60px;
+    list-style: none;
+}
+.menu-right .dropdown {
+    height: 65px;
+    padding: 9px 0 0;
+}
+.menu-right .dropdown .btn-select {
+    background: rgba(250, 250, 250, 1);
+    border: none;
+    color: $color-primary;
+    margin-bottom: 18px;
+}
+.user-avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 3px;
+}
+.user-avatar .btn {
+    padding: 0;
+    margin-top: -3px;
+}
+.user-avatar .btn-select .caret {
+    color: $color-text;
+}
+.user-name {
+    text-align: center;
+}

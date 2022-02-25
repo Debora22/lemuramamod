@@ -1,0 +1,247 @@
+<!doctype html>
+<html>
+<head>
+    <title>Demo - Filters</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic-icons.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/sidebar.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/calendar.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.theme.css"/>
+</head>
+<body ng-app="app" ng-controller="demo">
+
+<op-loading></op-loading>
+<op-filters settings='filtersService'>
+    <op-static-dropdown-filter settings='filtersSortingService'></op-static-dropdown-filter>
+    <op-static-dropdown-filter settings='filtersStatusService'></op-static-dropdown-filter>
+</op-filters>
+
+<script src="../../bower_components/angular/angular.js"></script>
+<script src="//photorankstatics-a.akamaihd.net/static/frontend/OlapicSearchClient/master/dist/osc.min.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="../../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+
+
+<script src="../../api/src/api.js"></script>
+<script src="../../api/src/services/adminAPIService.js"></script>
+<script src="../../api/src/services/apiService.js"></script>
+
+<script src="../../filters/src/filters.js"></script>
+<script src="../../filters/src/services/filtersService.js"></script>
+<script src="../../filters/src/services/staticFiltersService.js"></script>
+<script src="../../filters/src/directives/filtersDirective.js"></script>
+<script src="../../filters/src/directives/staticDropdownFilterDirective.js"></script>
+
+<script src="../../loading/src/loading.js"></script>
+<script src="../../loading/src/services/loadingService.js"></script>
+<script src="../../loading/src/directives/loadingDirective.js"></script>
+
+<script src="../../autocomplete/src/autocomplete.js"></script>
+<script src="../../autocomplete/src/services/autocompleteService.js"></script>
+<script src="../../autocomplete/src/services/autocompleteToolsService.js"></script>
+<script src="../../autocomplete/src/directives/autocompleteDirective.js"></script>
+
+
+<script type="text/javascript">
+
+    angular.module('appConfig', [])
+        .constant('appConstant', {
+            enviroment: 'local',
+            sortingPresets: {
+                ctr: {
+                    title: 'Click Through Rate',
+                    value: [{field: 'media_analytics.ctr', order: 'desc'}]
+                },
+                oldest: {
+                    title: 'Oldest',
+                    value: [{field: 'media_date.submitted', order: 'asc'}]
+                },
+                newest: {
+                    title: 'Newest',
+                    value: [{field: 'media_date.submitted', order: 'desc'}]
+                },
+                oldest_updated: {
+                    title: 'Oldest',
+                    value: [{field: 'media_date.updated', order: 'asc'}]
+                },
+                newest_updated: {
+                    title: 'Newest',
+                    value: [{field: 'media_date.updated', order: 'desc'}]
+                },
+                photorank: {
+                    title: 'Photorank',
+                    value: [{field: 'media_score.score', order: 'desc'}]
+                }
+            }
+        });
+
+    angular
+        .module('app', ['op.api', 'op.filters', 'op.loading', 'op.autocomplete', 'appConfig'])
+        .config(['$httpProvider',
+            function($httpProvider) {
+                $httpProvider.defaults.useXDomain = true;
+                delete $httpProvider.defaults.headers.common['X-Requested-With'];
+            }
+        ])
+        .controller('demo', function(
+            $scope,
+            filtersService,
+            $q,
+            $http,
+            $filter,
+            $window,
+            loadingService,
+            StaticFiltersService,
+            autocompleteService,
+            appConstant,
+            apiService) {
+
+            var testAccessToken = '0d9977bce74f5bcd8c0d7ec62dbc029de0d60594';
+            // apiService.setToken(testAccessToken);
+
+            var searchAutocomplete = function(term) {
+                var options = {
+                    method: 'GET',
+                    url: 'https://admin-api-v2.photorank.me/search/suggestions?phrase=QUERY&version=v2.2',
+                    headers: {
+                        Authorization: 'Bearer '+testAccessToken
+                    }
+                };
+                options.url = options.url.replace('QUERY', term);
+                return $http(options);
+            };
+            var getSortingPreset = function(key) {
+                var result;
+                if (appConstant.sortingPresets[key]) {
+                    result = appConstant.sortingPresets[key];
+                } else {
+                    throw new Error('Invalid sorting key: ', key);
+                }
+
+                return result || key;
+            };
+            var claenEmptyFilters = function(filters) {
+                return filters.filter(function(item) {
+                    return item.values.length;
+                });
+            };
+            var search = function(query) {
+                console.log('Searching ', query);
+                loadingService.on();
+                apiService.get('mocks/filters.json', query, {Authorization: 'Bearer ' + testAccessToken})
+                .then(function(res) {
+                    loadingService.off();
+                    $scope.filtersService.actions.fill(claenEmptyFilters(res.data.aggs));
+                }).catch(function() {
+                    console.log('Uh Oh! There was an error when trying to load filters information.');
+                });
+            };
+            var AutocompleteService = autocompleteService;
+            var FiltersService = filtersService;
+
+            var autocomplete = new AutocompleteService({
+                templatePath: '/autocomplete/',
+                minumumTermLength: 1,
+                callbacks: {
+                    getData: function(term) {
+                        return searchAutocomplete(term);
+                    },
+                    formatData: function(res, push) {
+                        angular.forEach(res.data.data, function(item) {
+                            push('tags', item.name, item);
+                        });
+                    },
+                    onSelect: function(item) {
+                        if(item.type === 'stream'){
+                            $scope.filtersService.actions.injectFilterCondition('Stream', parseInt(stream.id));
+                        } else if(item.type === 'user') {
+                            $scope.filtersService.actions.injectFilterCondition('user', user.key);
+                        } else if(item.type === 'place') {
+                            $scope.filtersService.actions.injectFilterCondition('Place', place.name);
+                        }
+                        search($scope.filtersService.query);
+                    }
+                }
+            });
+
+            var q = {
+                aggs: [
+                    {key: 'user'},
+                    {key: 'source'},
+                    {key: 'Stream'},
+                    {key: 'Place'}
+                ],
+                filters: {
+                    status_id: {
+                        values: [20]
+                    }
+                },
+                staticFilters: {
+                    phrase: ''
+                },
+                sort: [getSortingPreset('ctr').value]
+            };
+
+            $scope.filtersService = new FiltersService({
+                query: q,
+                templatePath: '/filters/',
+                autocompleteService: autocomplete,
+                showTotal: {position: 2},
+                loading: q.aggs,
+                callbacks: {
+                    onChange: function(newQ) {
+                        console.log('Filters changes', newQ);
+                    }
+                },
+                itemsOrder: {
+                    stream: 26,
+                    source: 28,
+                    user: 29
+                }
+            });
+
+            $scope.filtersStatusService = new StaticFiltersService({
+                templatePath: '/filters/',
+                label: 'Status',
+                position: 9,
+                data: [
+                    {title: 'Approved', value: 40},
+                    {title: 'Pending', value: 20},
+                    {title: 'Save for Later', value: 23},
+                    {title: 'Reported', value: 22}
+                ],
+                callbacks: {
+                    onChange: function(item) {
+                        $scope.filtersService.actions.clear();
+                        $scope.filtersService.actions.replaceFilterCondition('status_id', item.value);
+                        search($scope.filtersService.query);
+                    }
+                }
+            });
+
+            $scope.filtersSortingService = new StaticFiltersService({
+                templatePath: '/filters/',
+                position: 4,
+                label: 'Order',
+                data: [
+                    {title: 'Click Through Rate', value: 'ctr'},
+                    {title: 'Photorank', value: 'photorank'},
+                    {title: 'Oldest', value: 'oldest'},
+                    {title: 'Newest', value: 'newest'}
+                ],
+                callbacks: {
+                    onChange: function(item) {
+                        q.sort = getSortingPreset(item.value).value;
+                        q.sort = item.value;
+                        search(q);
+                    }
+                }
+            });
+            search(q);
+    });
+</script>
+
+</body>
+</html>

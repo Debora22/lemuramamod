@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+    <title>Demo - Stream List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.theme.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic-icons.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/modal.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/streamlist.css">
+</head>
+<body ng-app="app" ng-controller="demo">
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="modal-wrapper">
+        <div class="modal-media-bulk">
+          <img src="" class="hoverImage" style="width: 320px; height: 319px; top: 70px; position: absolute; display: none;" />
+        </div>
+        <div class="modal-block-content">
+          <div role="tabpanel">
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="onetab-pane">
+                    <h3>Stream List</h3>
+                    <!--DIRECTIVE HERE -->
+                    <op-streamlist settings="streamlist" streams="streams" loaded="loaded"></op-streamlist>
+                    <!--DIRECTIVE HERE -->
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../../bower_components/angular/angular.min.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+
+<script src="../../streamlist/src/streamlist.js"></script>
+<script src="../../streamlist/src/services/streamlistService.js"></script>
+<script src="../../streamlist/src/directives/streamlistDirective.js"></script>
+
+<script src="../../actions/src/actions.js"></script>
+<script src="../../actions/src/directives/actionsDirective.js"></script>
+<script src="../../actions/src/services/actionService.js"></script>
+
+<script type="text/javascript">
+angular.module('appConfig', []).constant('appConstant', { enviroment: 'local' });
+
+angular
+    .module('app', ['op.streamlist', 'op.actions'])
+    .controller('demo', ['$scope', '$http', 'streamlistService', 'actionService', function($scope, $http, StreamlistService, ActionService) {
+
+        var repository = {
+            search : function() {
+                return $http.get('mocks/mocks-streams.json');
+            }
+        };
+
+        $scope.streams = [];
+        $scope.loaded = false;
+        $scope.streamlist = new StreamlistService({
+            templatePath: '/streamlist/',
+            streamActions: {
+                selector: '.streambox-actions',
+                directive: '<op-actions actions="streamActions.actions" type="button" template-path="/actions/" entity="stream"></op-actions>',
+                actions: [
+                    new ActionService({
+                        title: 'View stream',
+                        iconClass: 'btn btn-default',
+                        callback: function(stream) {
+                            console.log('callback', stream);
+                        }
+                    }),
+                    new ActionService({
+                        title: 'Share stream',
+                        iconClass: 'btn btn-default',
+                        callback: function(stream) {
+                            console.log('callback', stream);
+                        }
+                    })
+                ]
+            }
+        });
+
+        // Dummy fill option, this should contain the already associate streams
+        repository.search().then(function(response) {
+            $scope.streams = response.data.data.streams;
+            $scope.loaded = true;
+        });
+    }]);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+// Dependencies // ------------------------------
+
+@import 'colors';
+
+// Styles // ------------------------------
+
+input.status-switch:empty {
+    display: none;
+    opacity: 0
+}
+input.status-switch:empty ~ label {
+    position: relative;
+    line-height: 26px;
+    text-indent: 0;
+    padding: 0;
+    margin: 0 60px 0;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+input.status-switch:empty ~ label:before,
+input.status-switch:empty ~ label:after {
+    position: absolute;
+    display: block;
+    top: 1px;
+    bottom: 0;
+    left: -10px;
+    content: ' ';
+    width: 50px;
+    height: 26px;
+    background-color: $color-progressbuttonred;
+    border-radius: 50px;
+    -webkit-transition: all 100ms ease-in;
+    transition: all 100ms ease-in;
+}
+input.status-switch:empty ~ label:after {
+    font-family: 'olapic-icons';
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    content: "\e635";
+    top: 0.1em;
+    bottom: 0.1em;
+    margin: 1px 0 0 1px;
+    color: $color-progressbuttongrey;
+    background-color: $color-white;
+    border-radius: 100%;
+    padding-left: 0px;
+    font-size: 12px;
+}
+input.status-switch:checked ~ label:before {
+    background-color: $color-progressbuttongreen;
+}
+input.status-switch:checked ~ label:after {
+    margin-left: 24px;
+}

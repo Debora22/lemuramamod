@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+<head>
+    <title>Demo - Actions</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.theme.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic-icons.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/box.css"/>
+</head>
+<body ng-app="app" ng-controller="demoController">
+
+
+
+<div style="width: 400px; margin: 100px auto;">
+    <h3>Actions list</h3>
+    <div class="box-header">
+        <op-actions actions="actions" template-path="../../actions/" entity="entity" list-limit="{{config.dynListLimit}}"></op-actions>
+        <label> ListLimit <input name="listLimit" ng-model="config.dynListLimit" size="2"/></label>
+    </div>
+
+    <br />
+    <h3>Dowpdown</h3>
+    <op-actions actions="shortActions" type="select" template-path="../../actions/" entity="entity"></op-actions>
+
+    <h3>Radio</h3>
+    <op-actions actions="shortActions" type="radio" name="action" template-path="../../actions/" entity="entity"></op-actions>
+
+    <h3>Checkboxes</h3>
+    <op-actions actions="shortActions" type="checkbox" name="checkboxActions" template-path="../../actions/" entity="entity"></op-actions>
+
+    <h3>Links</h3>
+    <op-actions actions="actionsBtn" type="button" template-path="../../actions/" entity="entity"></op-actions>
+</div>
+<style type="text/css">
+    label{
+        display: block;
+    }
+    a.check, a.close{
+        margin: 13px;
+        border: 1px solid #DEDEDE;
+    }
+</style>
+
+<script src="../../bower_components/angular/angular.min.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+<script src="../../actions/src/actions.js"></script>
+<script src="../../actions/src/directives/actionsDirective.js"></script>
+<script src="../../actions/src/services/actionService.js"></script>
+<script type="text/javascript">
+    angular
+        .module('app', ['op.actions'])
+        .controller('demoController', ['$scope', '$timeout', 'actionService', function($scope, $timeout, ActionService){
+
+            function init(){
+
+                $scope.config = {};
+                $scope.config.dynListLimit = 2;
+
+                $scope.entity = {
+                    name: 'Testing'
+                };
+
+                $scope.actions = [
+                    new ActionService({
+                        title : 'Action 1',
+                        iconClass : 'check',
+                        callback: function(entity){
+                            console.log('custom Callback 1', entity);
+                        }
+                    }),
+                    new ActionService({
+                        title : 'Action 2',
+                        iconClass : 'close',
+                        callback: function(entity){
+                            console.log('custom Callback 2', entity);
+                        }
+                    }),
+                    new ActionService({
+                        title : 'Hidden Action',
+                        iconClass : 'calendar',
+                        callback: function(entity){
+                            console.log('hidden function', entity);
+                        },
+                        showIf: function(){
+                            return false;
+                        }
+                    }),
+                    new ActionService({
+                        title : 'Action 3',
+                        iconClass : 'bin',
+                        callback: function(entity){
+                            console.log('custom Callback 3', entity);
+                        }
+                    }),
+                    new ActionService({
+                        title : 'Action 4',
+                        iconClass : 'list',
+                        callback: function(entity){
+                            console.log('custom Callback 4', entity);
+                        }
+                    })
+                ];
+
+                $scope.shortActions = [
+                    new ActionService({
+                        title : 'Action 1',
+                        iconClass : 'check',
+                        callback: function(entity){
+                            console.log('custom Callback 1', entity);
+                        }
+                    }),
+                    new ActionService({
+                        title : 'Action 2',
+                        iconClass : 'close',
+                        callback: function(entity){
+                            console.log('custom Callback 2', entity);
+                        }
+                    })
+                ];
+
+                $scope.actionsBtn = [
+                    new ActionService({
+                        title : 'Action 1',
+                        iconClass : 'btn btn-default',
+                        callback: function(entity){
+                            console.log('custom Callback 1', entity);
+                        }
+                    }),
+                    new ActionService({
+                        title : 'Action 2',
+                        iconClass : 'btn btn-info',
+                        callback: function(entity){
+                            console.log('custom Callback 2', entity);
+                        }
+                    })
+                ];
+
+            }
+            $timeout(function() {
+                init()
+            }, 2000);
+
+        }])
+</script>
+</body>
+</html>

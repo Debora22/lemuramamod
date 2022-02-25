@@ -1,0 +1,21 @@
+<div>
+    <div data-media-id="{{entity.id}}" data-media-username="{{entity.user.username}}" id="box-{{entity.id}}">
+        <div class="box-header">
+            <div class="box-user">
+                <i class="icon-{{entity.source.name}}"></i>
+                <span ng-if="!entity.source.data.url">
+                    @{{entity.user.username}}
+                </span>
+                <a ng-if="entity.source.data.url" href="{{entity.source.data.url}}" target="_blank" >
+                    @{{entity.user.username}}
+                </a>
+            </div>
+            <div class="content_actions"></div>
+        </div>
+        <div class="box-media-wrapper">
+            <div class="box-media" style="background-image:url({{entity.images.mobile}})">
+                <i class="icon-play" ng-if="entity.video_url"></i>
+            </div>
+        </div>
+    </div>
+</div>

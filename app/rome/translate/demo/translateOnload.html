@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+    <title>Demo - Translate</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.theme.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic-icons.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/translate.css"/>
+
+    <style type="text/css">
+        .iconTranslate {
+            position: absolute;
+            top: 40px;
+            left: 270px;
+            font-size: 1.8em;
+            cursor: pointer;
+        }
+
+        .translateContainer {
+            width: 288px;
+            padding: 10px;
+            border-radius: 3px;
+            background-color: #fff;
+            -webkit-box-shadow: inset 0px 0px 0px 2px #e0e0e0;
+            -moz-box-shadow: inset 0px 0px 0px 2px #e0e0e0;
+            box-shadow: inset 0px 0px 0px 2px #e0e0e0;
+        }
+
+        .translateContainer p {
+            width: 268px;
+        }
+
+        .box-content-container-content {
+            position: relative;
+            top: 0;
+        }
+    </style>
+</head>
+<body ng-app="app" ng-controller="demoController" style="padding: 10px;">
+<h1>Translate Demo</h1>
+<i class="iconTranslate icon-earth" ng-click="translateText();" tooltip="{{showTranslated ? 'View original caption' : 'View translated caption'}}" tooltip-placement="right"></i>
+<div class="translateContainer" op-translate="translate" texttotranslate="texttotranslate" texttranslated="texttranslated" texttranslating="texttranslating" showtranslated="showtranslated" showicon="showicon"></div>
+
+<script src="../../bower_components/angular/angular.min.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="../../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="../../bower_components/ngstorage/ngStorage.min.js"></script>
+
+<script src="../../translate/src/translate.js"></script>
+<script src="../../translate/src/config/translateConfig.js"></script>
+<script src="../../translate/src/services/translateService.js"></script>
+<script src="../../translate/src/services/translateAPIService.js"></script>
+<script src="../../translate/src/directives/translateDirective.js"></script>
+<script type="text/javascript">
+    angular.module('app', ['op.translate'])
+        .constant('appConstant', {
+            translate: {
+                url: 'mocks/translate.json'
+            }
+        })
+        .controller('demoController', [
+            '$scope',
+            'translateService',
+            function($scope, translateService) {
+                $scope.texttotranslate = 'Fashion doesn\'t have to be so serious. Loved the vibe at the @bananarepublic #show #show!';
+                $scope.showTranslated = false;
+
+                $scope.translate = translateService({
+                    templatePath: '/translate/',
+                    translateOnload: true
+                });
+
+                $scope.translateText = function() {
+                    $scope.translate.actions.translate();
+                    $scope.showTranslated = !$scope.showTranslated;
+                };
+            }]);
+</script>
+</body>
+</html>

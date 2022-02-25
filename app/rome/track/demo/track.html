@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+    <title>Demo - Track</title>
+</head>
+<body ng-app="app" ng-controller="demo">
+
+<script src="../../bower_components/angular/angular.min.js"></script>
+<script src="../../track/src/track.js"></script>
+<script src="../../track/src/provider/trackProvider.js"></script>
+
+<script type="text/javascript">
+angular
+    .module('app', ['op.track'])
+    .constant('appConstant', {
+        modSquadReport: {
+            url: 'https://modsquad.olapic.com/event'
+        }
+    })
+    .config(['trackProvider', 'appConstant', function(trackProvider, appConstant) {
+        trackProvider.setSettings({
+            url: appConstant.modSquadReport.url,
+            enabled: true
+        });
+    }])
+    .controller('demo', ['$scope', 'track', 'appConstant',
+        function($scope, track, appConstant){
+
+            // Mock event
+            var event_mock = {
+                "user": "test-user",
+                "customer":"Luis Demo",
+                "action": "expressmoderationlibrary.deleted-on-premod",
+                "media_id": "10234",
+                "gallery_id": "12323"
+            };
+
+            // Send event
+            track.event(event_mock);
+        }
+    ]);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!doctype html>
+<html>
+<head>
+    <title>Demo - Modal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic-icons.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/modal.css">
+    <style type="text/css">
+    .tagging-preview-image {
+        margin-top: 20px;
+        width: 450px;
+        height: 640px;
+        border: rgb(198, 198, 198) 1px solid;
+        background-size: contain;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+    }
+
+    .tagging-preview-image.fixed {
+        position: fixed;
+        top: 0px
+    }
+    </style>
+</head>
+<body ng-app="app" ng-controller="demo">
+
+<div><a href="" ng-click="bulk()">Open modal as bulk</a></div>
+<div ng-repeat="item in list" style="float:left; margin: 10px;">
+    <a href="" ng-click="open(item);"><img ng-src="{{item.images.square}}" /></a>
+</div>
+<op-modal></op-modal>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="../../bower_components/jquery-ui/jquery-ui.js"></script>
+<script src="../../bower_components/angular/angular.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="../../bower_components/angular-ui-sortable/sortable.js"></script>
+<script src="../../bower_components/jquery-zoom/jquery.zoom.js"></script>
+
+<script src="../../modal/src/modal.js"></script>
+<script src="../../modal/src/services/modalService.js"></script>
+<script src="../../modal/src/services/modalToolService.js"></script>
+<script src="../../modal/src/directives/modalDirective.js"></script>
+<script src="../../modal/src/directives/modalExtrasDirective.js"></script>
+<script src="../../modal/src/directives/modalMediaDirective.js"></script>
+<script src="../../modal/src/directives/modalMediaPreviewDirective.js"></script>
+<script src="../../modal/src/controllers/ModalController.js"></script>
+
+<script src="../../actions/src/actions.js"></script>
+<script src="../../actions/src/directives/actionsDirective.js"></script>
+<script src="../../actions/src/services/actionService.js"></script>
+
+<script src="../../tagging/src/tagging.js"></script>
+<script src="../../tagging/src/services/taggingService.js"></script>
+<script src="../../tagging/src/services/taggingToolService.js"></script>
+<script src="../../tagging/src/directives/taggingDirective.js"></script>
+
+<script type="text/javascript">
+angular.module('appConfig', [])
+    .constant('appConstant', {
+        enviroment: 'local'
+    });
+
+angular
+    .module('app', ['op.modal', 'op.actions', 'op.tagging'])
+    .controller('demo', ['$scope', '$http', 'modalService', 'taggingService', '$timeout', 'actionService', '$timeout',
+    function ($scope, $http, ModalService, TaggingService, $timeout, ActionService, $timeout) {
+        function init(){
+
+            //======================================================================================================
+            // Tagging
+            //======================================================================================================
+
+            var streamRepository = {
+                search : function() {
+                    return $http.get('mocks/mock-streams.json');
+                }
+            };
+
+            $scope.tagging = new TaggingService({
+                templatePath: '../../tagging/',
+                callbacks: {
+                    itemRemoved: function(entity){
+                        console.log('Entity removed!', entity);
+                    },
+                    itemAdded: function(entity){
+                        console.log('Entity added!', entity);
+                    },
+                    emptyField: function(){
+                        $scope.modal.preview.hide();
+                    },
+                    loadContent: function(query, finish){
+                        $scope.modal.preview.hide();
+                        streamRepository.search(query).then(function(response){
+                            finish(response.data.data.streams);
+                        });
+                    },
+                    resultItemOnHover: function(entity){
+                        $scope.modal.preview.update(entity.base_image);
+                        $scope.modal.preview.show();
+                    },
+                    resultItemOnOut: function(){
+                        $scope.modal.preview.hide();
+                    }
+                }
+            });
+
+            //======================================================================================================
+            // Actions
+            //======================================================================================================
+
+            $scope.actions = [new ActionService({
+                title: 'Approve media',
+                iconClass: 'check',
+                callback: function(entity){
+                    console.log('approve', entity);
+                }
+            }), new ActionService({
+                title: 'Reject media',
+                iconClass: 'close',
+                callback: function(entity){
+                    console.log('reject', entity);
+                }
+            })];
+
+            //======================================================================================================
+            // Modal
+            //======================================================================================================
+
+            $scope.modal = new ModalService({
+                templatePath: '../',
+                zoom: true,
+                extras: [{
+                    title: 'Tagging',
+                    role: 'TaggingService',
+                    directive: '<op-tagging></op-tagging>',
+                    scope: $scope,
+                    before: function(){
+                        $scope.streams = [];
+                    },
+                    after: function(data){
+                        if(angular.isArray(data)){
+                            // Do the extract because is bulk!
+                        } else {
+                            $scope.streams = data.streams;
+                        }
+                    }
+                }],
+                directives: [{
+                    selector: '.modal-tools',
+                    directive: '<op-actions actions="actions" template-path="../../actions/" entity="entity"></op-actions>',
+                    scope: function(settings){
+                        $scope.entity = settings.current[0];
+                        return $scope;
+                    }
+                }],
+                callbacks: {
+                    afterOpen: function(){
+                        console.log('afterOpen');
+                    },
+                    afterClose: function(entities){
+                        console.log('afterClose', entities);
+                    },
+                    afterMove: function(direction){
+                        console.log(direction);
+                    }
+                }
+            });
+
+            //======================================================================================================
+            // Methods of the implementation not of Rome
+            //======================================================================================================
+
+            var repository = {
+                search : function() {
+                    return $http.get('mocks/mock.json');
+                }
+            };
+
+            repository.search().then(function(response){
+                $scope.list = response.data.data.media;
+                $scope.modal.actions.navigation(response.data.data.media);
+            });
+
+            $scope.open = function(entity){
+                $scope.modal.actions.open([entity]);
+                $scope.modal.actions.setTitle('Edit Media');
+            };
+
+            $scope.bulk = function(){
+                $scope.modal.actions.open(angular.copy($scope.list));
+                $scope.modal.actions.setTitle('Edit Selected Media');
+            };
+        }
+
+        $timeout(function() {
+            init()
+        }, 2000);
+    }]);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+'use strict';
+
+// TODO this is a bad fix, digg around for alternatives
+// disable cert checking between services
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
+const container = require('../src/server/index.live.js')(`${__dirname}/../`);
+const server = container.get('app').express.listen(process.env.PORT, () => {
+  console.log(`Ready on port ${server.address().port}`);
+});

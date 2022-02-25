@@ -1,0 +1,248 @@
+@import 'colors';
+
+.opSubmitActivityPopup {
+    &_title {
+        color: $color-black;
+        font-family: "Source Sans Pro";
+        font-size: 30px;
+        font-weight: 300;
+        height: 45px;
+        line-height: 45px;
+        margin: 42px auto 0 auto;
+        text-align: center;
+        width: 460px;
+    }
+
+    &_body {
+        float: left;
+        font-family: "PT Sans";
+        font-size: 15px;
+        min-height: 118px;
+        position: relative;
+        width: 100%;
+        z-index: 99;
+
+        &_text {
+            margin: 26px auto 0 auto;
+            text-align: center;
+            width: 360px;
+        }
+    }
+
+    &_body, input[type=number]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        margin: 0;
+    }
+
+    &_body .olapic-spinner {
+        display: none;
+    }
+
+    &_loading .olapic-spinner {
+        display: block;
+        float: left;
+        left: 50% !important;
+        position: relative !important;
+        top: -80px;
+    }
+
+    &_table {
+        -moz-border-radius: 5px;
+        border: 1px solid black;
+        border-radius: 8px;
+        margin: 10px auto 10px auto;
+        padding: 5px;
+
+        &_header {
+            color: $color-dark-grey;
+            font-size: 12px;
+            font-weight: bold;
+            height: 20px;
+            line-height: 18px;
+            width: 43px;
+        }
+
+        &.-loading {
+            opacity: .3;
+        }
+    }
+
+    &_table, th {
+        color: $color-header-timer;
+        font-size: 12px;
+        font-weight: bold;
+        height: 30px;
+        line-height: 18px;
+        min-width: 106px;
+        padding-left: 12px;
+    }
+
+    &_table, th, td, tr {
+        border: 1px solid $color-light-grey;
+        border-collapse: collapse;
+        border-radius: 8px;
+        margin: 10px auto 10px auto;
+    }
+
+    &_table, td {
+        padding: 10px 12px;
+    }
+
+    &_inputContainer {
+        display: inline-block;
+        position: relative;
+    }
+
+    &_editIconAction,
+    &_editIconTime {
+        bottom: 11px;
+        position: absolute;
+    }
+
+    &_editIconTime {
+        right: 2px;
+    }
+
+    &_editIconAction {
+        right: 7px;
+    }
+
+    &_timeInput {
+        background-color: $color-white;
+        border: 1px solid $color-light-grey;
+        border-radius: 3px;
+        color: $color-black;
+        font-size: 18px;
+        height: 34px;
+        line-height: 27px;
+        padding-left: 9px;
+        width: 48px;
+
+        &:hover {
+            border-color: $color-dark-grey-2;
+            box-shadow: 0 0 3px 0 rgba(0,0,0,0.21);
+            transition: 0.1s;
+        }
+    }
+
+    &_actionInput {
+        background-color: $color-white;
+        border: 1px solid $color-light-grey;
+        border-radius: 3px;
+        color: $color-black;
+        font-size: 18px;
+        height: 34px;
+        line-height: 27px;
+        padding-left: 12px;
+        width: 82px;
+
+        &:hover {
+            border-color: $color-dark-grey-2;
+            box-shadow: 0 0 3px 0 rgba(0,0,0,0.21);
+            transition: 0.1s;
+        }
+    }
+
+    &_timeLabel {
+        color: $color-black;
+        font-size: 18px;
+        height: 27px;
+        line-height: 27px;
+        margin-right: 10px;
+        width: 16px;
+    }
+
+    &_requiredIcon {
+        color: $color-required-icon;
+        margin-right: 3px;
+    }
+
+    &_reasonText {
+        display: block;
+        font-size: 15px;
+        line-height: 22px;
+        margin: 0 0 5px 30px;
+    }
+
+    &_textArea {
+        border: 1px solid $color-light-grey;
+        border-radius: 3px;
+        font-size: 15px;
+        height: 60px;
+        line-height: 22px;
+        margin: 0 30px 15px;
+        padding: 3px 0 0 9px;
+        width: 493px;
+    }
+
+    &_footer {
+        text-align: center;
+    }
+
+    &_cancenlButton {
+        background-color: $color-white;
+        border: 1px solid $color-light-grey-2;
+        border-radius: 3px;
+        box-sizing: border-box;
+        color: $color-light-grey-2;
+        font-size: 15px;
+        font-weight: bold;
+        height: 36px;
+        line-height: 16px;
+        width: 89px;
+
+        &:hover {
+            background-color: $color-grey-cancel-hover;
+            transition: 0.6s;
+        }
+
+        &.-loading {
+          background-color: $color-light-grey-2;
+          border-color: $color-light-grey-2;
+          color: $color-white;
+          font-weight: normal;
+
+          &:hover {
+            background-color: $color-light-grey-2;
+          }
+        }
+    }
+
+    &_confirmButton {
+        background-color: $color-primary;
+        border: none;
+        border-radius: 3px;
+        color: $color-white;
+        font-size: 15px;
+        height: 35px;
+        line-height: 16px;
+        margin: 0 0 42px 15px;
+        width: 235px;
+
+        &:hover {
+            background-color: $color-blue-secondary;
+            transition: 0.6s;
+        }
+
+        &.-loading {
+            background-color: $color-light-grey-2;
+            border-color: $color-light-grey-2;
+            color: $color-white;
+        }
+    }
+
+    &_errorContainer {
+        background-color: $color-error-background;
+        color: $color-error-color;
+        margin: 0 auto 10px auto;
+        padding: 5px 0;
+        width: 505px;
+    }
+
+    &_errorMessage {
+        margin: 0;
+        padding-left: 10px;
+    }
+}

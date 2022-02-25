@@ -1,0 +1,87 @@
+<form name="submissionForm" class="opSubmitActivityPopup" ng-submit="submitActivity()">
+    <div class="opSubmitActivityPopup_header">
+        <p class="opSubmitActivityPopup_title">Submit & Edit Your Work</p>
+    </div>
+    <div id="submitActivityModal" ng-class="{true:'opSubmitActivityPopup_body opSubmitActivityPopup_loading', false:'opSubmitActivityPopup_body'}[stats.loading]">
+        <table ng-class="{true:'opSubmitActivityPopup_table -loading', false:'opSubmitActivityPopup_table'}[stats.loading]"
+            <tr>
+                <th>TIME MODERATED</th>
+                <th>TAGGED</th>
+                <th>APPROVED</th>
+                <th>DELETED</th>
+            </tr>
+            <tr>
+                <td>
+                    <div class="opSubmitActivityPopup_inputContainer">
+                        <input id="timeModeratedHoursValue" ng-keypress="validateDigits($event)" type="text"
+                            maxlength="2" ng-model="stats.hours" ng-change="checkEditions()" required
+                            class="opSubmitActivityPopup_timeInput" ng-disabled="stats.loading" />
+                        <i ng-if="isFieldEdited('hours')" class="opSubmitActivityPopup_editIconTime icon-edit-square"></i>
+                    </div>
+                    <label for="timeModeratedHoursValue" class="opSubmitActivityPopup_timeLabel">hr</label>
+                    <div class="opSubmitActivityPopup_inputContainer">
+                        <input id="timeModeratedMinutesValue" ng-keypress="validateDigits($event)" type="text"
+                            maxlength="2" ng-model="stats.minutes" ng-change="checkEditions()" required
+                            class="opSubmitActivityPopup_timeInput" ng-disabled="stats.loading" />
+                        <i ng-if="isFieldEdited('minutes')" class="opSubmitActivityPopup_editIconTime icon-edit-square"></i>
+                    </div>
+                    <label for="timeModeratedMinutesValue" class="opSubmitActivityPopup_timeLabel">min</label>
+                </td>
+                <td>
+                    <div class="opSubmitActivityPopup_inputContainer">
+                        <input id="activityTaggedValue" ng-keypress="validateDigits($event)" type="text"
+                            maxlength="4" ng-model="stats.tagged" ng-change="checkEditions()" required
+                            class="opSubmitActivityPopup_actionInput" ng-disabled="stats.loading" />
+                        <i ng-if="isFieldEdited('tagged')" class="opSubmitActivityPopup_editIconAction icon-edit-square"></i>
+                    </div>
+                </td>
+                <td>
+                    <div class="opSubmitActivityPopup_inputContainer">
+                        <input id="activityApprovedValue" ng-keypress="validateDigits($event)" type="text"
+                            maxlength="4" ng-model="stats.approved" ng-change="checkEditions()" required
+                            class="opSubmitActivityPopup_actionInput" ng-disabled="stats.loading" />
+                        <i ng-if="isFieldEdited('approved')" class="opSubmitActivityPopup_editIconAction icon-edit-square"></i>
+                    </div>
+                </td>
+                <td>
+                    <div class="opSubmitActivityPopup_inputContainer">
+                        <input id="activityDeletedValue" ng-keypress="validateDigits($event)" type="text"
+                            maxlength="4" ng-model="stats.rejected" ng-change="checkEditions()" required
+                            class="opSubmitActivityPopup_actionInput" ng-disabled="stats.loading" />
+                        <i ng-if="isFieldEdited('rejected')" class="opSubmitActivityPopup_editIconAction icon-edit-square"></i>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div ng-if="hasEdited">
+            <label class="opSubmitActivityPopup_reasonText">
+                <span class="opSubmitActivityPopup_requiredIcon">*</span>Please add a reason(s) for your edit
+            </label>
+            <textarea id="activitySubmitReason" type="text" placeholder="Begin Typing..."  maxlength="250"
+                ng-model="stats.reason" ng-required="hasEdited" class="opSubmitActivityPopup_textArea">
+            </textarea>
+        </div>
+        <div ng-if="error.isError">
+            <div class="opSubmitActivityPopup_errorContainer">
+                <p class="opSubmitActivityPopup_errorMessage">
+                    {{error.message}}
+                </p>
+            </div>
+        </div>
+        <div class="olapic-spinner olapic-spinner-bounce">
+            <div class="olapic-bounce1"></div>
+            <div class="olapic-bounce2"></div>
+        </div>
+    </div>
+    <div class="opSubmitActivityPopup_footer">
+        <button type="button" id="btnActivityCancel"  ng-disabled="stats.loading"
+            ng-click="closeModal()"
+            ng-class="{true:'opSubmitActivityPopup_cancenlButton -loading', false:'opSubmitActivityPopup_cancenlButton'}[stats.loading]">
+            CANCEL
+        </button>
+        <button id="btnActivitySubmit" type="submit" ng-disabled="stats.loading"
+            ng-class="{true:'opSubmitActivityPopup_confirmButton -loading', false:'opSubmitActivityPopup_confirmButton'}[stats.loading]">
+            {{confirmText}}
+        </button>
+    </div>
+</form>

@@ -1,0 +1,3 @@
+<label ng-repeat="action in actions">
+    <input type="radio" name="{{name}}" ng-model="selectedAction" ng-click="applyAction(action)"/> {{action.title}}
+</label>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html ng-app="app" ng-controller="AppController">
+<head>
+    <meta charset="utf-8">
+    <title>Sortable Library Demo</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/box.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic-icons.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/library.css"/>
+
+    <!-- Angular -->
+    <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../../bower_components/jquery-ui/jquery-ui.js"></script>
+    <script src="../../bower_components/angular/angular.js"></script>
+    <script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="../../bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="../../bower_components/ng-infinite-scroller-origin/build/ng-infinite-scroll.min.js"></script>
+    <script src="../../bower_components/angular-ui-sortable/sortable.js"></script>
+    <script src="../../bower_components/angular-ui-sortable-multiselection/src/ui.sortable.multiselection.js"></script>
+    <!-- Olapic Search Client -->
+
+    <!-- Box -->
+    <script src="../../box/src/box.js"></script>
+    <script src="../../box/src/services/boxService.js"></script>
+    <script src="../../box/src/services/boxToolsService.js"></script>
+    <script src="../../box/src/directives/boxDirective.js"></script>
+    <!-- Library -->
+    <script src="../../library/src/library.js"></script>
+    <script src="../../library/src/services/libraryService.js"></script>
+    <script src="../../library/src/directives/libraryDirective.js"></script>
+    <script src="../../library/src/directives/ngRepeatFinishDirective.js"></script>
+    <!-- Actions -->
+    <script src="../../actions/src/actions.js"></script>
+    <script src="../../actions/src/directives/actionsDirective.js"></script>
+    <script src="../../actions/src/services/actionService.js"></script>
+
+    <script src="sortable.js"></script>
+
+    <style>
+    .library-media-container{
+        margin-left: 0px;
+    }
+    .item {
+        margin: 5px;
+        min-height: initial;
+        width: initial;
+    }
+    .item.box-container {
+        box-shadow: inset 0px 0px 0px 1px #e0e0e0;
+    }
+    .item > * {
+        zoom: 0.5;
+        border-size: 1px;
+    }
+    .item.ui-sortable-selected{
+        border-color:#0095f5;
+        box-shadow: 0px 0px 1px 2px rgba(0, 149, 245, 0.6);
+        background-color: rgba(0, 149, 245, 0.2);
+    }
+    .item .box-media {
+        cursor: initial;
+    }
+    .box-user{
+        width: 180px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-break: break-all;
+        white-space: nowrap;
+    }
+    .box-user a {
+        display: initial;
+        float: initial;
+    }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h1>Library</h1>
+        <h5>Use <i>Shift + Click</i> or <i>Cmd + Click</i> to select multiple items</h5>
+        <div>
+            <a href="" class='btn btn-xs btn-info pull-left' ng-click="loadMoreLibrary()">Load More</a>
+        </div>
+      <div class="row">
+        <div class="col-md-12">
+            <op-library></op-library>
+            <!-- <pre>Model: {{entities | json}}</pre> -->
+        </div>
+      </div>
+    </div>
+</body>
+</html>

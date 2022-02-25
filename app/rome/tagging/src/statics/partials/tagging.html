@@ -1,0 +1,86 @@
+<div class="modal-current-tags">
+    <p ng-show="!entities.length">You dont have tags assigned yet.</p>
+    <!-- Wrapper for slides -->
+    <div class="tags-container">
+        <ul ui-sortable="sortableOptions" ng-model="entities" ng-style="{'width': sliderScrollSize()}">
+            <li ng-repeat="entity in entities" data-stream-id="{{entity.id}}">
+                <div id="assigned-stream-{{entity.id}}" class="modal-current-tag-box"
+                        ng-class="{'inactive-stream': entity.status.name !== 'OK'}">
+                    <div class="modal-current-tag-box-thumbnail" style="background-image:url({{entity.base_image}});">
+                        <span class="no-image icon-polaroids" ng-if="!entity.base_image"></span>
+                        <a class="modal-current-tag-box-remove" ng-click="remove(entity, $index);">
+                            <i class="icon-bin"></i>
+                        </a>
+                    </div>
+                    <h5><op-tagging-tooltip text="{{entity.name}}" text-limit="20"></op-tagging-tooltip></h5>
+                    <p><span>Product ID:</span> {{entity.tag_based_key || 'n/a'}}</p>
+                    <p><span>Product Availability:</span> {{entity.status.name || 'n/a'}}</p>
+                    <a ng-show="entity.product_url" href="{{entity.product_url}}" target="_blank">Go to product</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="modal-tags-search">
+    <form class="form-inline">
+        <div class="form-group">
+            <div class="input-group">
+                <input type="text" autocomplete="off" id="search-stream" class="form-control"
+                placeholder="Search streams" ng-keypress="onInputSearchKeypress($event)" ng-change="onInputSearchChange()"
+                ng-model="bind.searchText" ng-model-options="{ debounce: 450 }" op-focus maxlength="255">
+                <a href="" ng-show="showClearBtn && !loading" class="clear-search" ng-click="onClearBtnClick()"><i class="icon-circle-delete"></i></a>
+                <div class="olapic-spinner olapic-spinner-bounce" ng-show="loading">
+                    <div class="olapic-bounce1"></div>
+                    <div class="olapic-bounce2"></div>
+                </div>
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" ng-click="search()"><i class="icon-search"></i></button>
+                </span>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="zoomonhover" ng-model="bind.zoomOnHover"> Zoom on hover
+                </label>
+            </div>
+        </div>
+    </form>
+    <div class="modal-empty" ng-show="!results.length">
+        <i ng-class="{false: 'icon-basket', true: 'icon-circle-delete'}[searchFail]"></i>
+        <p ng-show="!searchFail">Type a stream name to search</p>
+        <p ng-show="searchFail">Your search returned no results</p>
+    </div>
+
+    <op-tagging-suggestion ng-if="isSuggestionAvailable || isSuggestionFromCropAvailable && media.length === 1"
+        media="media"
+        show-suggestion="showSuggestion"
+        is-suggestion-available="isSuggestionAvailable"
+        add="add(item, section, position)"
+        hover="hover(action, item)"
+        remove="remove(item, index, byId)"
+        check-if-exists="checkIfExists(id)">
+    </op-tagging-suggestion>
+
+    <ul id="search-stream-result-list">
+        <li ng-repeat="item in results" data-stream-id="{{item.id}}">
+            <div class="modal-tags-search-box" ng-class="{'inactive-stream': item.status.name !== 'OK'}">
+                <div class="modal-tag-search-box-thumbnail" id="stream-{{item.id}}" ng-class="{true: 'active'}[checkIfExists(item.id)]"
+                    style="background-image:url({{item.base_image}});"
+                    ng-click="add(item, 'search-result')"
+                    ng-mouseenter="hover('in', item);"
+                    ng-mouseleave="hover('out', item);">
+                    <a class="modal-current-tag-box-remove" ng-click="remove(item, 0, true); $event.stopPropagation();">
+                        <i class="icon-bin"></i>
+                    </a>
+                    <span class="no-image icon-polaroids" ng-if="!item.base_image"></span>
+                </div>
+                <h4>{{::item.name}}</h4>
+                <p><span>Product ID:</span> {{item.tag_based_key || 'n/a'}}</p>
+                <p><span>Product Availability:</span> {{item.status.name || 'n/a'}}</p>
+                <a ng-show="item.product_url" ng-href="{{item.product_url}}" target="_blank">Go to product</a>
+            </div>
+        </li>
+    </ul>
+    <div class="load-more-tagging">
+        <button class="btn btn-default" type="button" ng-show="haveNextPage" ng-click="loadMoreContent()">Load More</button>
+    </div>
+</div>

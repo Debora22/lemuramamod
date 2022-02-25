@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html ng-app="app" ng-controller="AppController">
+<head>
+    <meta charset="utf-8">
+    <title>Simple Library Playground</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/box.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic-icons.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/library.css"/>
+
+    <!-- Angular -->
+    <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="keynavigator.js"></script>
+    <script src="../../bower_components/angular/angular.js"></script>
+    <script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="../../bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="../../bower_components/ng-infinite-scroller-origin/build/ng-infinite-scroll.min.js"></script>
+
+    <!-- Box -->
+    <script src="../../box/src/box.js"></script>
+    <script src="../../box/src/services/boxService.js"></script>
+    <script src="../../box/src/services/boxToolsService.js"></script>
+    <script src="../../box/src/directives/boxDirective.js"></script>
+    <!-- Library -->
+    <script src="../../library/src/library.js"></script>
+    <script src="../../library/src/services/libraryService.js"></script>
+    <script src="../../library/src/directives/libraryDirective.js"></script>
+    <script src="../../library/src/directives/ngRepeatFinishDirective.js"></script>
+    <!-- Actions -->
+    <script src="../../actions/src/actions.js"></script>
+    <script src="../../actions/src/directives/actionsDirective.js"></script>
+    <script src="../../actions/src/services/actionService.js"></script>
+
+    <script src="demo.js"></script>
+
+    <style>
+    .library-active-element{
+        border-color:#0095f5;
+        -webkit-box-shadow: 0px 1px 14px 0px rgba(0, 149, 245, 0.75);
+        -moz-box-shadow:    0px 1px 14px 0px rgba(0, 149, 245, 0.75);
+        box-shadow:         0px 1px 14px 0px rgba(0, 149, 245, 0.75);
+    }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+            <h1>Library Playground</h1>
+
+            <div id="loading-message" ng-show="isSectionLoading" style="position: fixed;bottom: 30px;z-index: 999;width: 300px;height: 23px;background-color: #fbb;right: 30px;">
+                Cool Loading ... ¯\_(ツ)_/¯
+            </div>
+            <h5>Library Actions</h5>
+            <a href="" class='btn btn-xs btn-info' ng-click="clearLibrary()">Clear Content</a>
+            <a href="" class='btn btn-xs btn-info' ng-click="loadMoreLibrary()">Load More Content</a>
+            <h5>Playground Actions</h5>
+            <a href="" class='btn btn-xs btn-info' ng-click="addMockEntity()">Add mock Entity</a>
+            <a href="" class='btn btn-xs btn-info' ng-click="reloadKeys()">Attack Keys</a>
+            <op-library></op-library>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

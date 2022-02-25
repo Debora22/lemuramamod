@@ -1,0 +1,36 @@
+<div class="suggested-products-wrapper" ng-if="$ctrl.showSuggestion">
+    <h2>Suggested Products</h2>
+    <div class="olapic-spinner olapic-spinner-bounce" ng-show="$ctrl.showLoadingSuggestion">
+        <div class="olapic-bounce1"></div>
+        <div class="olapic-bounce2"></div>
+    </div>
+    <div ng-show="$ctrl.suggestions" ng-repeat="(key, value) in $ctrl.suggestions">
+        <h3 ng-show="$ctrl.displayCategory" class="suggested-products-category">{{key}}</h3>
+        <div>
+            <ul>
+                <li ng-repeat="item in value" >
+                    <div class="modal-tags-search-box" ng-class="{'inactive-stream': item.status.name !== 'OK'}">
+                        <div class="modal-tag-search-box-thumbnail" id="stream-{{item.id}}" ng-class="{true: 'active'}[checkIfExists(item.id)]"
+                             style="background-image:url({{item.base_image}});"
+                             ng-click="add(item, 'suggestion', $index)"
+                             ng-mouseenter="hover('in', item);"
+                             ng-mouseleave="hover('out', item);">
+                            <a class="modal-current-tag-box-remove" ng-click="remove(item, 0, true); $event.stopPropagation();">
+                                <i class="icon-bin"></i>
+                            </a>
+                            <span class="no-image icon-polaroids" ng-if="!item.base_image"></span>
+                        </div>
+                        <h4>{{::item.name}}</h4>
+                        <p><span>Product ID:</span> {{item.tag_based_key || 'n/a'}}</p>
+                        <p><span>Product Availability:</span> {{item.status.name || 'n/a'}}</p>
+                        <a ng-show="item.product_url" ng-href="{{item.product_url}}" target="_blank">Go to product</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="modal-empty" ng-show="!$ctrl.showLoadingSuggestion && !$ctrl.suggestions">
+        <i class="icon-circle-delete"></i>
+        <p>No suggestions for this media</p>
+    </div>
+</div>

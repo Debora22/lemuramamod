@@ -1,0 +1,47 @@
+{
+  "publicPath": "app",
+  "behindBalancer": false,
+  "port": 9010,
+  "supportCors": true,
+  "debugRequest": true,
+  "services": {
+    "authServer" : {
+      "url" : "http://php-eiam-authnz-server.apps.192.168.87.200.xip.io",
+      "authenticationScope": "modsquad"
+    },
+    "photorankAPI" : {
+      "url" : "http://rest.local.photorank.me"
+    },
+    "adminAPI" :{
+      "url": "https://admin-api.local.photorank.me"
+    },
+    "adminAPI2" :{
+      "url": "http://php-admin-api-v2.apps.192.168.87.200.xip.io"
+    },
+    "photorank": {
+      "url": "https://local.photorank.me"
+    },
+    "anafrus": {
+      "url": "https://data.local.photorank.me",
+      "enabled": true,
+      "bulkLimit": 10
+    },
+    "google": {
+      "translate": {
+        "url": "https://www.googleapis.com",
+        "apiKey": "AIzaSyCrJy2_6OR9Snc-m_UScP4-qH1JX00E20Q"
+      }
+    },
+    "submission":{
+      "url": "http://php-modrepo.apps.192.168.87.200.xip.io"
+    },
+    "redis": {
+      "cacheStorage": {
+        "host": "192.168.87.200",
+        "port": 30004,
+        "db": 3
+      },
+      "sessionStorage": null
+    }
+  }
+}

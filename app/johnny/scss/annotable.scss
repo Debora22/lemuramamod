@@ -1,0 +1,98 @@
+@import 'colors';
+
+.op-annotable {
+
+    &-wrapper {
+        position: absolute;
+    }
+
+    &-search-tooltip {
+        background-color: $color-white;
+        border: 1px solid $color-annotations-border;
+        box-shadow: 0 6px 6px 0 $color-black-opacity-level-7, 0 10px 20px 0 $color-black-opacity-level-4;
+        height: 38px;
+        position: absolute;
+        width: 198px;
+        z-index: 30000;
+
+        input {
+            background-color: $color-white;
+            border: 1px solid $color-annotations-border;
+            box-shadow: 0 0 2px 0 $color-black-opacity-level-5, 0 0 3px 0 $color-black-opacity-level-2;
+            box-sizing: border-box;
+            border-radius: 0px;
+
+            height: 31px;
+            margin: 3px 0 0 5px;
+            width: 186px;
+
+            &:before {
+                border-bottom: 8px solid $color-black;
+                border-right: 8px solid transparent;
+                border-left: 8px solid transparent;
+                bottom: 100%;
+                content: '>';
+                left: 50%;
+                margin-left: -8px;
+                position: absolute;
+                width: 0; height: 0;
+            }
+        }
+
+        &-arrow {
+            height: 20px;
+            left: 0;
+            right: 0;
+            margin: auto;
+            position: absolute;
+            top: -13px;
+
+            &-lines {
+                fill: $color-white;
+                stroke: $color-annotations-border;
+                stroke-width: 1px;
+            }
+        }
+
+    }
+
+    &-destination-indicator {
+        box-sizing: border-box;
+        background-color: $color-black-opacity-level-1;
+        box-shadow: 0 3px 6px 0 $color-black-opacity-level-6, 0 3px 6px 0 $color-black-opacity-level-3;
+        border: 3px solid $color-white;
+        position: fixed;
+        display: none;
+        pointer-events: none;
+        z-index: 1000;
+
+        i {
+            display: block;
+            background-color: transparent;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            margin-left: 50%;
+            margin-top: calc(50% - 9px);
+            font-size: 18px;
+            line-height: 18px;
+            color: $color-white;
+            font-weight: bold;
+        }
+
+        &-tooltip {
+            position: absolute;
+            margin-left: 110%;
+            top: calc(50% - 13px);
+            background-color: $color-black;
+            color: $color-white;
+            width: 129px;
+            height: 25px;
+            box-shadow: 0 6px 6px 0 $color-black-opacity-level-7, 0 10px 20px 0 $color-black-opacity-level-4;
+            font-family: sans-serif;
+            font-size: 10px;
+            line-height: 10px;
+            padding: 7px 12px;
+        }
+    }
+}

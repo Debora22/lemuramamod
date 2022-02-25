@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+    <title>Demo - Box</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic-icons.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/box.css"/>
+</head>
+<body ng-app="app" ng-controller="demoController">
+
+<div ng-repeat="image in list">
+    <op-box entity="image"></op-box>
+</div>
+
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="../../bower_components/angular/angular.min.js"></script>
+<script src="//photorankstatics-a.akamaihd.net/static/frontend/OlapicSearchClient/master/dist/osc.min.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+<script src="../../box/src/box.js"></script>
+<script src="../../box/src/services/boxService.js"></script>
+<script src="../../box/src/services/boxToolsService.js"></script>
+<script src="../../box/src/directives/boxDirective.js"></script>
+
+<script src="../../repository/src/repository.js"></script>
+<script src="../../repository/src/services/mediaRepositoryService.js"></script>
+<script src="../../repository/src/services/streamRepositoryService.js"></script>
+<script src="../../repository/src/services/categoryRepositoryService.js"></script>
+<script src="../../repository/src/services/repositoryToolsService.js"></script>
+<script src="../../repository/src/factories/repositoryFactory.js"></script>
+
+<script src="../../actions/src/actions.js"></script>
+<script src="../../actions/src/directives/actionsDirective.js"></script>
+<script src="../../actions/src/services/actionService.js"></script>
+
+<script type="text/javascript">
+    angular.module('appConfig', [])
+        .constant('appConstant', {
+            enviroment: 'local'
+        });
+
+    angular
+        .module('app', ['op.repository', 'op.box', 'op.actions'])
+        .controller('demoController', ['$scope', 'boxService', 'RepositoryFactory', 'actionService', function($scope, boxService, RepositoryFactory, ActionService){
+
+            var repository = new RepositoryFactory({
+                type: ['media'],
+                account: 1
+            });
+
+            repository.search({
+                q: 'asado',
+                size: 2,
+                should: [{'media_status.name': 'OK'}]
+            }).then(function(response){
+                $scope.list = response.batch;
+            });
+
+            $scope.actions = [
+                new ActionService({
+                    title : 'Action 1',
+                    iconClass : 'check',
+                    callback: function(entity){
+                        console.log('custom Callback 1', entity);
+                    }
+                }),
+                new ActionService({
+                    title : 'Action 2',
+                    iconClass : 'close',
+                    callback: function(entity){
+                        console.log('custom Callback 2', entity);
+                    }
+                })
+            ];
+
+            $scope.box = boxService({
+                type: 'media',
+                headerActions: {
+                    directive: '<op-actions actions="actions" template-path="../../actions/" entity="entity"></op-actions>',
+                    scope: function(settings){
+                        var newScope = $scope.$new();
+                        newScope.entity = settings.entity;
+                        return newScope;
+                    }
+                },
+                templatePath: '../../box/',
+                callbacks: {
+                    afterPhotoClick: function(entity){
+                        console.log('<< afterPhotoClick >>', entity);
+                    },
+                    afterCheckboxChange: function(entity){
+                        console.log('<< afterCheckboxChange >>', entity);
+                    }
+                }
+            });
+
+        }]);
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+    "name": "LemuramaMiddleware",
+    "rootDir": "../",
+    "verbose": true,
+    "bail": true,
+    "automock": true,
+    "moduleFileExtensions": ["js", "json"],
+    "testPathIgnorePatterns": ["/node_modules/"],
+    "testRegex": "middleware/tests/components/.*?(spec|test).jsx?$",
+    "transform": {
+        "\\.jsx?$": "<rootDir>/middleware/tests/jest/preprocessor.js"
+    },
+    "timers": "fake",
+    "unmockedModulePathPatterns": [
+        "<rootDir>/node_modules/jasmine-expect",
+        "/helpers/",
+        "/babel",
+        "/mocks"
+    ],
+    "collectCoverage": true,
+    "coverageDirectory": "coverage"
+}

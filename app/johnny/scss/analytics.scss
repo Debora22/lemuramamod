@@ -1,0 +1,251 @@
+// Dependencies // ------------------------------
+
+@import 'colors';
+@import 'type';
+@import 'calendar';
+@import 'zIndex';
+
+// Containers // ------------------------------
+
+.analytics-wrapper {
+    width: 100%;
+    float: left;
+    margin: 15px 0;
+    background-color: $color-white;
+    border: 1px solid $color-border;
+    border-radius: 4px;
+    text-align: center;
+    display: table;
+}
+.analytics-wrapper-s {
+    height: 150px;
+}
+.analytics-wrapper-md {
+    height: 268px;
+}
+.analytics-wrapper-xl {
+    height: 386px;
+}
+.analytics-title {
+    width: 100%;
+    display: table-header-group;
+}
+.analytics-content {
+    display: table-cell;
+    vertical-align: middle;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top: -10px;
+}
+.analytics-content span {
+    font: {
+        family: $heading-font;
+        size:50px;
+        weight:300;
+    }
+    color: $color-primary;
+}
+.analytics-footer {
+    position: absolute;
+    padding: 0 10px;
+    width: 100%;
+    bottom: 0px;
+}
+.analytics-container {
+    width: 100%;
+    float: left;
+    position: relative;
+    padding: 0 20px 30px;
+    box-sizing: border-box;
+    background-color: $color-white;
+    border: 1px solid $color-border;
+    border-radius: 3px;
+    margin: 15px 0;
+}
+.analytics-graph-container {
+  border: 1px solid $color-border;
+  box-sizing: border-box;
+  padding: 15px;
+}
+.analytics-nodata {
+    font-weight: 700;
+    font-size: 14px;
+    text-align: center;
+}
+.calendar-form i {
+    cursor: pointer;
+}
+.sub-title h3 .caret {
+    margin: 13px 0 0 10px;
+}
+
+// Buttons // ------------------------------
+
+.analytics-help {
+    width: 20px;
+    height: 20px;
+    float: right;
+    background-color: rgba(216, 216, 216, 1);
+    color: $color-white;
+    font-size: $type-xs;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.analytics-help:before {
+    content: "?";
+    display: block;
+    margin-top: 2px;
+}
+.analytics-export {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+// Table // ------------------------------
+
+.ui-grid {
+    border-color: $color-border;
+    font-family: $primary-font;
+    height: 600px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    padding-bottom: 2px;
+}
+.ui-grid-row {
+    height: 130px !important;
+}
+.ui-grid-top-panel {
+    font-weight: normal;
+}
+.ui-grid-header-cell {
+    background-color: $color-white;
+    border-right: none;
+}
+.ui-grid-header {
+    border-color: $color-border;
+}
+.ui-grid-cell {
+    height: 130px !important;
+    padding: 15px 10px;
+    border: none;
+}
+.ui-grid-cell .btn-default {
+    margin-right: 5px;
+}
+.ui-grid-cell a img,
+.ui-grid-cell div img {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+}
+.ui-grid-pager-row-count-picker {
+    display: none;
+}
+.ui-grid-cell-contents {
+    padding: 10px 15px;
+}
+.ui-grid-column-menu-button {
+    top: 3px;
+}
+.ui-grid-column-menu-button .ui-grid-icon-angle-down {
+    display: inline-block;
+    margin-top: 7px;
+}
+.ui-grid-row:nth-child(even) .ui-grid-cell {
+    background-color: rgba(236, 243, 250, 1);
+}
+.ui-grid-pager-control button {
+    border: 1px solid $color-border;
+    border-radius: 3px;
+    background-color: $color-white;
+}
+.ui-grid-menu .ui-grid-menu-inner ul li:hover {
+    background-color: $color-primary;
+    color: $color-white;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.photosPerProductGrid {
+    height: 450px;
+}
+.photosPerProductGrid .ui-grid-row {
+    height: 45px !important;
+}
+.photosPerProductGrid .ui-grid-cell {
+    height: 45px !important;
+    padding: 2px;
+}
+.actionColumn {
+    padding: 5px !important;
+}
+.photosPerProductGrid .ui-grid-canvas {
+    height: auto !important;
+}
+.analytics-no_thumbnail {
+  width: 100px;
+  height: 100px;
+  background-color: $color-white;
+  border: 1px solid $color-border;
+  display: table;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.analytics-no_thumbnail:before {
+  content: "No media available";
+  font-size: $type-xs;
+  color: $color-primary;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+// Graphics // ------------------------------
+
+.nvd3.nv-line .nvd3.nv-scatter .nv-groups .nv-point {
+  fill-opacity: 1;
+  stroke-opacity: 1;
+}
+svg text {
+    font-family: "PT Sans", "Helvetica Neue", Arial, sans-serif;
+}
+.nv-axis.nv-x .tick line {
+    display: none;
+}
+.olapic-spinner{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.text-capitalized,
+text.nv-legend-text {
+    text-transform: capitalize;
+}
+div.nvtooltip {
+    font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+}
+.discreteBar {
+    cursor: pointer;
+}
+.nvd3.nv-noData {
+    font-size: 14px;
+}
+
+// Photos per product loading
+
+.ppp-loading {
+    width: 100%;
+    height: 480px;
+    left: 0;
+    position: absolute;
+    background-color: rgba(255,255,255,.8);
+    z-index: $zIndex-2;
+}
+.ppp-loading .olapic-spinner-bounce.olapic-spinner {
+    top: 50%;
+    margin-top: -10px!important;
+}

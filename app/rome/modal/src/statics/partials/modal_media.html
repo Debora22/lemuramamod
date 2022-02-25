@@ -1,0 +1,33 @@
+<div class="container-fluid" id="modal-media">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="modal-header">
+                <h1 class="pull-left">{{title}}</h1>
+                <ul class="pull-right">
+                    <li ng-show="have('prev')">
+                        <a href ng-click="move('prev');" id="modal-button-prev" data-tooltip="Previous media" tooltip-placement="bottom">
+                            <i class="icon-arrow-left"></i>
+                        </a>
+                    </li>
+                    <li ng-show="have('next')">
+                        <a href ng-click="move('next');" id="modal-button-next" data-tooltip="Next media" tooltip-placement="bottom">
+                            <i class="icon-arrow-right"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href ng-click="close()" data-tooltip="Close"  id="modal-button-close"  tooltip-placement="bottom">
+                            <i class="icon-close"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-wrapper">
+                <op-modal-media-preview></op-modal-media-preview>
+                <op-modal-media></op-modal-media>
+                <div class="modal-block-content" ng-if="haveExtras()">
+                    <op-modal-extras></op-modal-extras>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

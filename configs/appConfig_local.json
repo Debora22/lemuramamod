@@ -1,0 +1,10 @@
+{
+  "appConstant": {
+    "sso": {
+      "url": "https://sso.local.photorank.me"
+    },
+    "intercom": {
+      "enabled": true
+    }
+  }
+}

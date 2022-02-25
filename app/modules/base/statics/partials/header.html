@@ -1,0 +1,52 @@
+<nav class="navbar">
+    <div ng-class='{disabled: isLoading}'></div>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mobile-menu" ng-click="navCollapsed = !navCollapsed">
+            <i class="icon-list"></i>
+            </button>
+            <div class="logo">
+                <a class="olapic-logo" href="#/"></a>
+            </div>
+        </div>
+        <div class="collapse navbar-collapse" id="mobile-menu" collapse="navCollapsed">
+            <ul class="nav navbar-nav nav-menu">
+                <li ng-repeat="item in menu" ng-class="isActive(item.href)"><a href="{{item.href}}">{{item.name | translate}}</a>
+                    <ul ng-if="item.child.length">
+                        <li ng-repeat="child in item.child"><a href="{{child.href}}">{{child.name | translate}}</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <op-moderation-action-tracker></op-moderation-action-tracker>
+                <li class="hidden-xs header-customer-name">
+                    {{currentSession.name}}
+                </li>
+                <li>
+                    <div class="dropdown actions-dropdown pull-right" uib-dropdown>
+                        <div id="idHeaderAvatar" type="button" uib-dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="header-customer-avatar"
+                                name="{{currentSession.name.charAt(0).toUpperCase()}}"
+                                src="https://s3.amazonaws.com/photorank-media/customers/avatars/{{currentSession.id}}.jpg">
+                        </div>
+                        <ul class="dropdown-menu logout-dropdown" role="menu" aria-labelledby="idHeaderAvatar" uib-dropdown-menu>
+                            <li>
+                                <a class="dropdown-menu-switch-account" ng-click="switchAccount(true)">SUBMIT & SWITCH ACCOUNTS</a>
+                            </li>
+                            <li id="idSwitchAccountWithoutSubmit">
+                                <a dropdown-menu-logout ng-click="switchAccount(false)" tabindex="-1">Switch Accounts</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-menu-logout" role="menuitem"
+                                    tabindex="-1" ng-click="logout()"> {{'BTN_LOGOUT' | translate}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <div class="timeTracker-wrapper">
+                <op-moderation-time-tracker></op-moderation-time-tracker>
+            </div>
+        </div>
+    </div>
+</nav>

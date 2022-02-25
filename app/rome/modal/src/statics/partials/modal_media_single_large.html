@@ -1,0 +1,55 @@
+<div class="modal-media" id="modal-media-single" ng-class="{false: 'center'}[haveExtras()]" ng-hide="hideDuringPreview">
+    <div class="modal-media-container">
+        <div class="modal-media-header">
+            <div class="modal-user">
+                <i class="modal-source icon-{{data.source.name}}"></i>
+                <a href="{{data.source.data.url}}" target="_blank" ng-if="data.source.data.url" class="text-truncated">@{{data.user.username}}</a>
+                <span ng-if="!data.source.data.url">{{data.user.name}}</span>
+            </div>
+            <div class="modal-collected pull-right">
+                <span>Collected: {{data.date_submitted | date:'MM/dd/yyyy'}}</span>
+            </div>
+        </div>
+        <div ng-if="!data.video_url && !enableZoom" class="modal-img">
+            <op-annotable-img src="data.images.normal"
+                annotation-data="getAnnotationData()"
+                on-annotation-data-update="onAnnotationDataUpdate(annotation)"
+                enable-editor-ui="enableNewAnnotation"
+                on-annotation-input-search-change="annotationSearchTooltip"
+                width="450" height="450"
+                >
+            </op-annotable-img>
+        </div>
+        <a href="{{data.source.data.url}}" target="_blank" ng-if="data.source.data.url">
+            <div ng-if="!data.video_url && enableZoom" class="modal-img"
+                style="background-image: url('{{data.images.normal}}')"
+                ng-image-zoom="{{zoom}}"
+                data-zoom-type="{{data.type}}"
+                data-original-image="{{data.images.normal}}"
+                >
+            </div>
+        </a>
+        <div ng-show="data.video_url" class="modal-video">
+            <video ng-if="data.source.name !== 'youtube'" class="modal-media-video" controls
+            ng-attr-poster="{{data.images.normal}}">
+                <source ng-src="{{data.video_url | trusted}}" type="video/mp4">
+                <source ng-src="{{data.video_url | trusted}}" type="video/ogg">
+                <source ng-src="{{data.video_url | trusted}}" type="video/webm">
+                Your browser does not support the video tag.
+            </video>
+            <iframe ng-if="data.source.name == 'youtube'" ng-src="{{data.video_url | youTubeIframe}}"></iframe>
+        </div>
+        <button ng-if="!data.video_url" ng-click="enableZoom = !enableZoom"
+            ng-class="{false: 'modal-zoom-button modal-zoom-in-button', true: 'modal-zoom-button modal-zoom-out-button'}[enableZoom]">
+            <i class="zoom-search-icon icon-search"></i>
+            <span ng-show="enableZoom">Zoom out</span>
+            <span ng-hide="enableZoom">Zoom in</span>
+        </button>
+
+        <div class="modal-media-content">
+            <div op-translate="translate" texttotranslate="data.caption" texttranslated="data.captionTranslated" texttranslating="data.captionTranslating" showtranslated="data.captionShowTranslated" showicon="data.captionShowIcon">
+                <p><a href="{{data.source.data.url}}" target="_blank" ng-if="data.source.data.url" class="text-truncated">@{{data.user.username}}</a> {{data.caption}}</p>
+            </div>
+        </div>
+    </div>
+</div>

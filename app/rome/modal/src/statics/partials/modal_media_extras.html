@@ -1,0 +1,10 @@
+<div role="tabpanel" id="modal-media-extras">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" ng-show="showTabs">
+        <li ng-repeat="extra in extras | filter: showIf" class="{{extra.role}}" ng-class="classForActiveTab($index)">
+            <a href ng-click="tab(extra.role)">{{extra.title}}</a>
+        </li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content"></div>
+</div>

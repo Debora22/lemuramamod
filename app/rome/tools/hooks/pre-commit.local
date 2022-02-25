@@ -1,0 +1,7 @@
+#!/bin/bash -e
+
+# Run JSHint
+npm run hint || exit 2
+
+# Run Unit Tests
+$(npm bin)/grunt karma:precommit || exit 2

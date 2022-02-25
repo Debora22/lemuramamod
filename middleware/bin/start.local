@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+'use strict';
+
+const https = require('https');
+const fs = require('fs');
+
+// TODO this is a bad fix, digg around for alternatives
+// disable cert checking between services
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
+const container = require('../src/server/index.local.js')(`${__dirname}/../`);
+const app = container.get('app').express;
+https.createServer({
+    key: fs.readFileSync('./certs/server.key'),
+    cert: fs.readFileSync('./certs/server.crt')
+}, app).listen(process.env.PORT);

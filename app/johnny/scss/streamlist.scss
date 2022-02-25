@@ -1,0 +1,131 @@
+// Styles // ------------------------------
+@import 'colors';
+@import 'type';
+
+.streamlist-loading.olapic-spinner-bounce.olapic-spinner {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    margin: 50px auto;
+}
+
+.streamlist-notags {
+    width: 150px;
+    margin: 0 auto;
+    font-size: 12px;
+    color: $color-secondarytxt;
+    text-align: center;
+
+    i {
+        display: block;
+        height: 60px;
+        width: 60px;
+        margin: 0 auto 10px;
+        padding: 18px 0 0 3px;
+        border: 1px solid $color-border;
+        border-radius: 30px;
+        font-size: 24px;
+    }
+}
+
+.streamlist {
+    width: 100%;
+    max-height: 650px;
+    margin: 0;
+    padding: 0;
+
+    li {
+        list-style: none;
+        width: 100%;
+        border-bottom: 1px solid $color-border;
+        margin-bottom: 15px;
+        padding: 0 0 15px;
+
+        &:last-child {
+            padding: 0;
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+
+        .streambox {
+            width: 100%;
+
+            .streambox-thumbnail {
+                width: 100px;
+                height: 100px;
+                background-position: center center;
+                background-size: contain;
+                background-repeat: no-repeat;
+                border: 1px solid $color-border;
+                float: left;
+                text-align: center;
+                position: relative;
+
+                .no-image {
+                    height: 100%;
+                    width: 100%;
+                    display: block;
+
+                    &::before {
+                        width: 42px;
+                        height: 42px;
+                        font-size: 42px;
+                        display: block;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        margin: auto;
+                        z-index: 1;
+                        opacity: 0.15;
+                    }
+                }
+            }
+
+            .streambox-info {
+                width: 100%;
+                padding: 8px 0 8px 112px;
+
+                h5 {
+                    color: $color-text;
+                    font-size: 16px;
+                    margin-top: 0;
+                }
+
+                p {
+                    color: $color-secondarytxt;
+                    font-size: $type-xs;
+                }
+
+                h5, p {
+                    margin-bottom: 5px;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+
+                .streambox-info-link {
+                    color: $color-primary;
+                }
+
+                .streambox-actions {
+                    width: 100%;
+                    white-space: nowrap;
+
+                    button {
+                        height: 20px;
+                        padding: 0 12px;
+                        color: $color-secondarytxt;
+                        font-size: 11px;
+                        margin-left: 15px;
+
+                        &:first-child {
+                            margin-left: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

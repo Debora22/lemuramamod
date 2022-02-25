@@ -1,0 +1,20 @@
+<uib-accordion class="nsfwFilter">
+    <uib-accordion-group data-filter-name="nsfw" is-open="$ctrl.accordionOpen">
+        <uib-accordion-heading>
+            <div class="sliderTooltip">
+                NSFW
+                <div class="pull-right filtersNewSignal"
+                    tooltip-placement="top"
+                    tooltip-append-to-body="true"
+                    uib-tooltip-template="'uiWidgets/nsfwFilter/nsfwNewTooltip.html'">
+                NEW
+                </div>
+            </div>
+            <i class="pull-right glyphicon" ng-class="{'icon-arrow-down': $ctrl.accordionOpen, 'icon-arrow-right': !$ctrl.accordionOpen}"></i>
+        </uib-accordion-heading>
+        <uic-slider min-text="Show All"
+                    max-text="Show NSFW"
+                    value="$ctrl.filtersService.query.filters.nsfw.values.range.min"
+                    on-change="$ctrl.updateFilter(value)"></uic-slider>
+    </uib-accordion-group>
+</uib-accordion>

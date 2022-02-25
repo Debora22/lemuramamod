@@ -1,0 +1,51 @@
+{
+  "publicPath": "public",
+  "behindBalancer": true,
+  "port": 8081,
+  "supportCors": false,
+  "debugRequest": false,
+  "services": {
+    "authServer" : {
+      "url" : "https://eiam-authnz-server.photorank.me",
+      "authenticationScope": "modsquad"
+    },
+    "photorankAPI" : {
+      "url" : "http://rest.photorank.me"
+    },
+    "adminAPI" :{
+      "url": "https://admin-api.photorank.me"
+    },
+    "adminAPI2" :{
+      "url": "https://admin-api-v2.photorank.me"
+    },
+    "photorank": {
+      "url": "https://www.photorank.me"
+    },
+    "anafrus": {
+      "url": "https://data.photorank.me",
+      "enabled": true,
+      "bulkLimit": 10
+    },
+    "google": {
+      "translate": {
+        "url": "https://www.googleapis.com",
+        "apiKey": "AIzaSyCrJy2_6OR9Snc-m_UScP4-qH1JX00E20Q"
+      }
+    },
+    "submission":{
+      "url": "https://moderation-reporting.photorank.me"
+    },
+    "redis": {
+      "cacheStorage": {
+        "host": "count-lemurmods.redis.instances.photorank.me",
+        "port": 6379,
+        "db": 0
+      },
+      "sessionStorage": {
+        "host": "count-lemurmods.redis.instances.photorank.me",
+        "port": 6379,
+        "db": 1
+      }
+    }
+  }
+}

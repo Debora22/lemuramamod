@@ -1,0 +1,351 @@
+<!doctype html>
+<html class="no-js" ng-app="lemuramaApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Lemurama 〉Modsquad</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimal-ui">
+    <!-- build:css({.tmp,app}) styles/vendor.css -->
+    <link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="components/offline/themes/offline-theme-default.css">
+    <link rel="stylesheet" type="text/css" href="components/offline/themes/offline-language-english.css">
+    <link rel="stylesheet" type="text/css" href="components/offline/themes/offline-language-english-indicator.css">
+    <link rel="stylesheet" type="text/css" href="components/jquery-ui/themes/base/slider.css">
+    <link rel="stylesheet" type="text/css" href="components/jquery-ui/themes/smoothness/jquery-ui.css">
+    <!-- endbuild -->
+
+    <!-- build:css({.tmp,app}) styles/main.css -->
+    <!-- Theme Styles -->
+    <link rel="stylesheet" type="text/css" href="johnny/css/fonts.css">
+
+    <link rel="stylesheet" type="text/css" href="johnny/css/olapic.bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="johnny/css/olapic.theme.css">
+    <link rel="stylesheet" type="text/css" href="johnny/css/olapic-icons.css">
+    <link rel="stylesheet" type="text/css" href="johnny/css/box.css">
+    <link rel="stylesheet" type="text/css" href="johnny/css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="johnny/css/library.css">
+    <link rel="stylesheet" type="text/css" href="johnny/css/modal.css">
+    <link rel="stylesheet" type="text/css" href="johnny/css/analytics.css">
+    <link rel="stylesheet" type="text/css" href="johnny/css/error-page.css">
+    <link rel="stylesheet" type="text/css" href="johnny/css/progressbutton.css">
+    <link rel="stylesheet" type="text/css" href="johnny/css/translate.css">
+    <link rel="stylesheet" type="text/css" href="johnny/css/timeTracker.css">
+    <link rel="stylesheet" type="text/css" href="johnny/css/submitActivityPopup.css">
+    <link rel="stylesheet" type="text/css" href="johnny/css/annotable.css">
+
+    <link rel="stylesheet" type="text/css" href="modules/base/statics/css/base.css">
+    <link rel="stylesheet" type="text/css" href="uiWidgets/css/uiWidgets.css">
+    <link rel="stylesheet" type="text/css" href="uiWidgets/nsfwFilter/nsfwFilter.css">
+    <link rel="stylesheet" type="text/css" href="uiComponents/slider/slider.css">
+    <!-- End Theme Styles -->
+    <!-- endbuild -->
+
+    <!-- TRACKJS HERE -->
+
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>r
+    <![endif]-->
+
+    <header ng-include=" 'modules/base/statics/partials/header.html' " ng-controller="NavController" ng-hide="hideMenuFromNav"> </header>
+    <div class="wrapper container-fluid">
+        <div class="row">
+            <div class="col-md-12" ng-view></div>
+        </div>
+    </div>
+    <op-loading></op-loading>
+    <op-overlay></op-overlay>
+    <op-scroll-switch className="scroll-fixed" limit="96"></op-scroll-switch>
+
+    <script>
+       if (window.location.origin.indexOf('localhost') < 0) {
+            // Fullstory
+            window['_fs_run_in_iframe'] = true;
+            window['_fs_debug'] = false;
+            window['_fs_host'] = 'www.fullstory.com';
+            window['_fs_org'] = 'photorank.me';
+            (function(m,n,e,t,l,o,g,y){
+                g=m[e]=function(a,b){g.q?g.q.push([a,b]):g._api(a,b);};g.q=[];
+                o=n.createElement(t);o.async=1;o.src='https://'+_fs_host+'/s/fs.js';
+                y=n.getElementsByTagName(t)[0];y.parentNode.insertBefore(o,y);
+                g.identify=function(i,v){g(l,{uid:i});if(v)g(l,v)};g.setUserVars=function(v){FS(l,v)};
+                g.identifyAccount=function(i,v){o='account';v=v||{};v.acctId=i;FS(o,v)};
+                g.clearUserCookie=function(d,i){d=n.domain;while(1){n.cookie='fs_uid=;domain='+d+
+                ';path=/;expires='+new Date(0);i=d.indexOf('.');if(i<0)break;d=d.slice(i+1)}}
+            })(window,document,'FS','script','user');
+        }
+    </script>
+
+    <script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/mpj8a0bm';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();</script>
+
+    <!-- INFORMIZELY HERE -->
+
+    <!-- cdnify content -->
+    <!-- end cdnify content -->
+
+    <!-- build:js scripts/vendor.js -->
+    <script src="components/jquery/dist/jquery.js"></script>
+    <script src="components/jquery-ui/jquery-ui.js"></script>
+    <script src="components/angular/angular.js"></script>
+    <script src="components/angular-route/angular-route.js"></script>
+    <script src="components/angular-resource/angular-resource.js"></script>
+    <script src="components/angular-cookies/angular-cookies.js"></script>
+    <script src="components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="components/angular-animate/angular-animate.js"></script>
+    <script src="components/json3/lib/json3.js"></script>
+    <script src="components/angular-touch/angular-touch.js"></script>
+    <script src="components/angular-bootstrap/ui-bootstrap.js"></script>
+    <script src="components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="components/angular-ui-sortable/sortable.js"></script>
+    <script src="components/angular-translate/angular-translate.min.js"></script>
+    <script src="components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+    <script src="components/ng-infinite-scroller-origin/build/ng-infinite-scroll.min.js"></script>
+    <script src="components/jquery-zoom/jquery.zoom.min.js"></script>
+    <script src="components/sugar/release/sugar-full.min.js"></script>
+    <script src="components/ngstorage/ngStorage.min.js"></script>
+    <script src="components/angular-popup-boxes/angular-popup-boxes.js"></script>
+    <script src="components/keynavigator/keynavigator-min.js"></script>
+    <script src="components/ng-slider/dist/ng-slider.min.js"></script>
+    <script src="components/angular-q-all-settled/dist/angular-q-all-settled.min.js"></script>
+    <script src="components/angular-notify/dist/angular-notify.js"></script>
+    <script src="components/offline/offline.min.js"></script>
+    <script src="components/moment/moment.js"></script>
+    <script src="components/angular-moment/angular-moment.js"></script>
+    <script src="components/moment-duration-format/lib/moment-duration-format.js"></script>
+    <script src="components/EaselJS/lib/easeljs-0.8.2.min.js"></script>
+    <script src="components/angular-uuid4/angular-uuid4.min.js"></script>
+    <script src="components/angular-ui-slider/src/slider.js"></script>
+    <script src="components/ssoclient/dist/client.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+
+    <script src="templates/lemurama.js"></script>
+
+    <script src="rome/rome.js"></script>
+
+    <!-- Library components -->
+    <script src="rome/library/src/library.js"></script>
+    <script src="rome/library/src/services/libraryService.js"></script>
+    <script src="rome/library/src/directives/libraryDirective.js"></script>
+    <script src="rome/library/src/directives/ngRepeatFinishDirective.js"></script>
+    <!-- /Library components -->
+
+    <!-- Box components -->
+    <script src="rome/box/src/box.js"></script>
+    <script src="rome/box/src/services/boxService.js"></script>
+    <script src="rome/box/src/services/boxToolsService.js"></script>
+    <script src="rome/box/src/directives/boxDirective.js"></script>
+    <!-- /Box components -->
+
+    <!-- Filters components -->
+    <script src="rome/filters/src/filters.js"></script>
+    <script src="rome/filters/src/services/filtersService.js"></script>
+    <script src="rome/filters/src/directives/filtersDirective.js"></script>
+    <script src="rome/filters/src/services/staticFiltersService.js"></script>
+    <script src="rome/filters/src/directives/staticDropdownFilterDirective.js"></script>
+    <!-- /Filters components -->
+
+    <!-- Modal components -->
+    <script src="rome/modal/src/modal.js"></script>
+    <script src="rome/modal/src/services/modalService.js"></script>
+    <script src="rome/modal/src/services/modalToolService.js"></script>
+    <script src="rome/modal/src/services/modalMediaAnnotationService.js"></script>
+    <script src="rome/modal/src/directives/modalDirective.js"></script>
+    <script src="rome/modal/src/directives/modalExtrasDirective.js"></script>
+    <script src="rome/modal/src/directives/modalMediaDirective.js"></script>
+    <script src="rome/modal/src/directives/modalMediaPreviewDirective.js"></script>
+    <script src="rome/modal/src/controllers/ModalController.js"></script>
+    <!-- /Modal components -->
+
+    <!-- Tagging components -->
+    <script src="rome/tagging/src/tagging.js"></script>
+    <script src="rome/tagging/src/components/taggingSuggestion.js"></script>
+    <script src="rome/tagging/src/services/taggingSuggestionService.js"></script>
+    <script src="rome/tagging/src/services/taggingService.js"></script>
+    <script src="rome/tagging/src/services/taggingToolService.js"></script>
+    <script src="rome/tagging/src/directives/taggingDirective.js"></script>
+    <!-- /Loading components -->
+
+    <!-- Loading components -->
+    <script src="rome/loading/src/loading.js"></script>
+    <script src="rome/loading/src/services/loadingService.js"></script>
+    <script src="rome/loading/src/directives/loadingDirective.js"></script>
+    <!-- /Loading components -->
+
+    <!-- Auth module -->
+    <script src="rome/auth/src/auth.js"></script>
+    <script src="rome/auth/src/services/authService.js"></script>
+    <script src="rome/auth/src/services/scopeAuthService.js"></script>
+    <!-- /Auth module -->
+
+    <!-- Api module -->
+    <script src="rome/api/src/api.js"></script>
+    <script src="rome/api/src/services/apiService.js"></script>
+    <script src="rome/api/src/services/authServerAPIService.js"></script>
+    <script src="rome/api/src/services/adminAPIService.js"></script>
+    <script src="rome/api/src/services/trackingAPIService.js"></script>
+    <!-- /Api module -->
+
+    <!-- Actions module -->
+    <script src="rome/actions/src/actions.js"></script>
+    <script src="rome/actions/src/services/actionService.js"></script>
+    <script src="rome/actions/src/directives/actionsDirective.js"></script>
+    <!-- /Actions module -->
+
+    <!-- Autocomplete module -->
+    <script src="rome/autocomplete/src/autocomplete.js"></script>
+    <script src="rome/autocomplete/src/services/autocompleteService.js"></script>
+    <script src="rome/autocomplete/src/services/autocompleteToolsService.js"></script>
+    <script src="rome/autocomplete/src/directives/autocompleteDirective.js"></script>
+    <!-- /Autocomplete module -->
+
+    <!-- Track module -->
+    <script src="rome/track/src/track.js"></script>
+    <script src="rome/track/src/provider/trackProvider.js"></script>
+    <script src="rome/track/src/provider/trackv2Provider.js"></script>
+    <!-- /Track module -->
+
+    <!-- Notification module -->
+    <script src="rome/notifications/src/notifications.js"></script>
+    <script src="rome/notifications/src/providers/notificationProvider.js"></script>
+    <!-- /Notification module -->
+
+    <!-- Progressbutton module -->
+    <script src="rome/progressbutton/src/progressbutton.js"></script>
+    <script src="rome/progressbutton/src/services/progressbuttonService.js"></script>
+    <script src="rome/progressbutton/src/directives/progressbuttonDirective.js"></script>
+    <!-- /Progressbutton module -->
+
+    <!-- Translate module -->
+    <script src="rome/translate/src/translate.js"></script>
+    <script src="rome/translate/src/config/translateConfig.js"></script>
+    <script src="rome/translate/src/services/translateService.js"></script>
+    <script src="rome/translate/src/services/translateAPIService.js"></script>
+    <script src="rome/translate/src/directives/translateDirective.js"></script>
+    <!-- /Translate module -->
+
+    <!-- External Tracking module -->
+    <script src="rome/externalTracking/src/externalTracking.js"></script>
+    <script src="rome/externalTracking/src/services/externalTrackingFactory.js"></script>
+    <script src="rome/externalTracking/src/constants/externalTrackingConstants.js"></script>
+    <!-- /External Tracking module -->
+
+    <!-- Annotable module -->
+    <script src="rome/ngEaselJS/src/ngEaseljs.js"></script>
+    <script src="rome/ngEaselJS/src/services/easelJS.js"></script>
+    <script src="rome/annotable/src/annotable.js"></script>
+    <script src="rome/annotable/src/components/annotable.js"></script>
+    <!-- /External Tracking module -->
+
+    <!-- Internal Tracking module -->
+    <script src="rome/internalTracking/src/internalTracking.js"></script>
+    <script src="rome/internalTracking/src/services/internalTrackingService.js"></script>
+    <!-- /Internal Tracking module -->
+
+    <!-- Master Mind module -->
+    <script src="modules/masterMind/masterMind.js"></script>
+    <script src="modules/masterMind/services/backendService.js"></script>
+    <script src="modules/masterMind/services/masterMindService.js"></script>
+    <!-- /Master Mind module -->
+
+    <!-- UI Components -->
+    <script src="uiComponents/uiComponents.js"></script>
+    <script src="uiComponents/slider/slider.js"></script>
+    <script src="uiComponents/timeTracker/timeTracker.js"></script>
+    <!-- /UI Components -->
+
+    <!-- UI Widgets -->
+    <script src="uiWidgets/uiWidgets.js"></script>
+    <script src="uiWidgets/nsfwFilter/nsfwFilter.js"></script>
+    <script src="uiWidgets/moderationTimeTracker/moderationTimeTracker.js"></script>
+    <script src="uiWidgets/moderationTimeTracker/moderationTimeTrackerService.js"></script>
+    <script src="uiWidgets/moderationActionTracker/moderationActionTracker.js"></script>
+    <!-- /UI Components -->
+
+    <!-- __Sections__ -->
+
+    <!-- /Common section -->
+    <script src="modules/common/common.js"></script>
+    <script src="modules/common/services/autocompleteHelperFactory.js"></script>
+    <script src="modules/common/services/offlineProvider.js"></script>
+    <script src="modules/common/services/asyncSettingsService.js"></script>
+    <script src="modules/common/services/blacklistUserService.js"></script>
+    <script src="modules/common/services/fullstoryService.js"></script>
+    <script src="modules/common/services/mediaChangeStatusService.js"></script>
+    <script src="modules/common/services/sectionScopeService.js"></script>
+    <script src="modules/common/services/trackingService.js"></script>
+    <script src="modules/common/directives/overlayDirective.js"></script>
+    <script src="modules/common/constants/internalTrackingEventConstants.js"></script>
+    <script src="modules/common/factories/filterTrackingHelper.js"></script>
+    <!-- /Common section -->
+
+    <!-- Event subscribers -->
+    <script src="modules/eventSubscribers/eventSubscribers.js"></script>
+    <script src="modules/eventSubscribers/modules/taggingSuggestionsTracker.js"></script>
+    <script src="modules/eventSubscribers/modules/mediaActionTracker.js"></script>
+    <script src="modules/eventSubscribers/modules/pageViewTracker.js"></script>
+    <script src="modules/eventSubscribers/modules/syncActionsTracker.js"></script>
+    <script src="modules/eventSubscribers/modules/authenticationTracker.js"></script>
+    <script src="modules/eventSubscribers/modules/userActionTracker.js"></script>
+    <script src="modules/eventSubscribers/modules/timeTracker.js"></script>
+    <script src="modules/eventSubscribers/modules/filterTracker.js"></script>
+    <!-- /Event subscribers -->
+
+    <!-- /Base section -->
+    <script src="modules/base/base.js"></script>
+    <script src="modules/base/controllers/navController.js"></script>
+    <script src="modules/base/controllers/switchAccountController.js"></script>
+    <script src="modules/base/directives/autofocus.js"></script>
+    <script src="modules/base/directives/scrollSwitchDirective.js"></script>
+    <!-- /Base section -->
+
+    <!-- Account section -->
+    <script src="modules/account/account.js"></script>
+    <script src="modules/account/services/sectionService.js"></script>
+    <script src="modules/account/controllers/loginController.js"></script>
+    <script src="modules/account/controllers/logoutController.js"></script>
+    <script src="modules/account/factories/accountAccessTrackerHelperFactory.js"></script>
+    <script src="modules/account/factories/authInterceptorFactory.js"></script>
+    <!-- /Account section -->
+
+    <!-- Tagging section -->
+    <script src="modules/tagging/tagging.js"></script>
+    <script src="modules/tagging/controllers/taggingController.js"></script>
+    <script src="modules/tagging/factories/taggingHelperFactory.js"></script>
+    <!-- /Tagging section -->
+
+    <!-- Express Moderation section -->
+    <script src="modules/expressmoderation/expressModeration.js"></script>
+    <script src="modules/expressmoderation/controllers/expressModerationController.js"></script>
+    <script src="modules/expressmoderation/factories/ExpressModerationHelperFactory.js"></script>
+    <!-- /Express Moderation section -->
+
+    <!-- /Moderation Queue section -->
+    <script src="modules/moderation/moderation.js"></script>
+    <script src="modules/moderation/controllers/moderationController.js"></script>
+    <script src="modules/moderation/factories/moderationBackend.js"></script>
+    <!-- /Moderation Queue section -->
+
+    <!-- /QA section -->
+    <script src="modules/qa/qa.js"></script>
+    <script src="modules/qa/controllers/qaController.js"></script>
+    <script src="modules/qa/factories/qaFactory.js"></script>
+    <!-- /QA section -->
+
+    <!-- App init and config -->
+    <script src="core/lenguages/angular-locale_en-us.js"></script>
+    <script src="appConfig.js"></script>
+    <script src="googleAnalytics.js"></script>
+    <script src="app.js"></script>
+    <!-- /App init and config -->
+    <!-- endbuild -->
+
+    <!-- This code is for report bugs in jira -->
+    <!--
+    <script type="text/javascript" src="https://photorank.atlassian.net/s/aa229f2e2c57fe928d423d7259294889-T/en_US1y2vo5/64012/23/1.4.23/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=244687e0"></script>
+     -->
+    <!-- This code is for report bugs in jira -->
+</body>
+</html>

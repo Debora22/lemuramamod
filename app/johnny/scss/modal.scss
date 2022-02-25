@@ -1,0 +1,1083 @@
+// Dependencies // ------------------------------
+@import 'colors';
+@import 'type';
+@import 'zIndex';
+
+// Native styles // ------------------------------
+
+.olapic-modal-size-fullscreen {
+    height: 100% !important;
+    background-color: white;
+}
+.olapic-modal-size-fullscreen .modal-body {
+    padding: 0;
+}
+.olapic-modal-size-fullscreen .modal-dialog {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+.olapic-modal-size-large .modal-dialog {
+    width: 1000px;
+}
+.olapic-modal-size-medium .modal-dialog {
+    width: 500px;
+}
+.olapic-modal .modal-content {
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: none;
+}
+.olapic-modal .modal-media.center,
+.olapic-modal .media-bulk.center {
+    margin: 15px auto 0;
+    width: 450px;
+    float: none;
+    position: relative;
+}
+/**
+The angular-popup-boxes have a fix to preven a random behaviour on Safari.
+The following styles are required to show the modal.
+
+More details on https://github.com/Olapic/angular-popup-boxes/pull/6
+**/
+div.modal.fade.modal-confirmation-dialog.in {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+
+// olapic-modal-size-large styles // ------------------------------
+.olapic-modal-size-large {
+    .container-fluid {
+        padding: 0 40px;
+    }
+    .modal-header {
+        padding: 0;
+
+        h1 {
+            font-size: $type-m;
+        }
+
+        ul {
+            margin: 12px -15px 0 0
+        }
+    }
+
+    .modal-wrapper {
+        min-height: 470px;
+    }
+}
+
+.olapic-modal-size-large .modal-media {
+    width: 350px;
+    font-size: $type-xs;
+
+    .modal-img, .modal-video {
+        height: 350px;
+        min-height: 350px;
+        margin-bottom: 10px;
+    }
+
+    .modal-media-content p {
+        height: 50px;
+        width: 350px;
+    }
+}
+
+.olapic-modal-size-large .modal-media-header {
+    width: 350px;
+
+    .modal-user {
+        padding: 10px 0;
+
+        .modal-source {
+            font-size: 13px;
+            padding-top: 2px;
+        }
+    }
+
+    .modal-collected {
+        color: $color-secondarytxt;
+        padding: 10px 0;
+    }
+}
+
+.olapic-modal-size-large .modal-block-content {
+    padding: 37px 0 0 380px;
+
+    .onetab-pane {
+        height: 410px;
+        border-left: 1px solid $color-border;
+        padding-left: 30px;
+        overflow: auto;
+
+        .streamlist-notags {
+            margin: 143px auto;
+        }
+    }
+}
+// ------------------------------
+
+// Modal box style // ------------------------------
+/* this fix a bootsrap modal property*/
+.modal.in .modal-dialog {
+    transform: initial !important;
+}
+.modal-header {
+    border-top: none;
+    border-bottom: 1px solid $color-border;
+    float: left;
+    width: 100%;
+    padding: 5px;
+}
+.modal-header ul {
+    margin: 12px 0 0;
+}
+.modal-header ul li {
+    float: left;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    padding: 8px 0;
+    position: relative;
+    list-style: none;
+    font-size: $type-l;
+}
+.modal-header ul li a {
+    color: rgba(159, 159, 159, 1);
+}
+.modal-wrapper {
+    width: 100%;
+    float: left;
+    position: relative;
+    min-height: 640px;
+}
+.modal-media {
+    float: left;
+    position: absolute;
+    width: 450px;
+    height: 100%;
+
+    &.media-bulk {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+}
+
+.zoom-search-icon {
+    margin-right: 5px;
+}
+
+.modal-zoom-button {
+    border-style: solid;
+    color: $color-light-grey-4;
+    font-size: 12px;
+    height: 30px;
+    margin-bottom: 6px;
+    margin-right: 0px;
+    width: 450px;
+}
+
+.modal-zoom-in-button {
+    background-color: $color-white;
+    border-color: $color-light-grey-5;
+    box-shadow: 0 0 10px $color-light-grey-5;
+}
+
+.modal-zoom-out-button {
+    background-color: $color-dark-grey-3;
+    border-color: $color-light-grey-5;
+    box-shadow: 0 0 10px $color-light-grey-5;
+}
+
+.modal-img-without-zoom {
+    background-size: contain;
+    margin-bottom: 15px;
+}
+
+.modal-media .modal-img,
+.modal-media .modal-video {
+    clear: both;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    min-height: 450px;
+    width: 100%;
+    position: relative;
+    box-shadow: inset 0 0 0 1px $color-border;
+}
+.modal-img a {
+    display: block;
+    width: 100%; height: 100%;
+}
+.modal-img i,
+.modal-video i {
+  display: none;
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  font-size: 15px;
+  color: $color-white;
+  background: $color-text;
+  z-index: 1;
+}
+.modal-media-list li:hover i{ display: block; }
+.modal-media .modal-video{
+    margin-bottom: 10px;
+    height: 450px;
+}
+.modal-media .modal-video video,
+.modal-media .modal-video iframe{
+    width: 100%;
+    height: 100%;
+    border: 0px;
+}
+.modal-media-container {
+    float: left;
+
+    &.fixed_modal {
+        position: fixed;
+        top: 0px;
+        display: block;
+        width: 450px;
+        transform: translateZ(0);
+    }
+}
+.media-bulk .modal-img,
+.media-bulk .modal-video {
+    width: 138px;
+    height: 138px;
+    min-height: 138px;
+    background-size: contain;
+    background-position: center center;
+    margin-bottom: 0;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 0 0 1px $color-border;
+}
+.media-bulk .modal-video video,
+.media-bulk .modal-video iframe{
+    width: 100%;
+    height: 100%;
+    border: 0px;
+    transform-origin: top left;
+}
+.media-bulk .modal-video:hover,
+.media-bulk .modal-video iframe:hover {
+    left: 0px;
+    width: 438px;
+    height: 438px;
+    position: absolute;
+    z-index: 999;
+    transform: scale(1.001);
+}
+.modal-img a{
+    display: block;
+    width: 100%; height: 100%;
+}
+.media-bulk ul.modal-media-list {
+    padding: 0;
+    margin: 10px 0 0 0;
+    float: left;
+    display: block;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+}
+.media-bulk ul.modal-media-list li {
+    list-style: none;
+    float: left;
+    margin:0 10px 10px 0;
+    cursor: pointer;
+    width: 135px;
+    height: 135px;
+}
+.modal-media-header {
+    width: 450px;
+    float: left;
+}
+.modal-count {
+    padding: 15px 0;
+    float: left;
+    width: 158px;
+}
+.modal-media-header {
+    width: 450px;
+    float: left;
+}
+.modal-user {
+    padding: 15px 0;
+    float: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.modal-user ul {
+    margin: 0;
+    padding: 0;
+}
+.modal-user ul li {
+    list-style: none;
+    float: left;
+    margin-right: 10px;
+    font-size: $type-xs;
+}
+.modal-tools {
+    margin: 5px 14px 0 0;
+
+}
+.modal-tools ul li {
+    list-style: none;
+    float: left;
+    color: $color-primary;
+    padding: 0 5px;
+    cursor: pointer;
+}
+.modal-tools ul li i {
+    font-size: $type-m;
+}
+.modal-tools .dropdown {
+    color: $color-primary;
+}
+.modal-source {
+    font-size: $type-s;
+    float: left;
+    margin-right: 10px;
+}
+.dropdown ul.dropdown-menu li i {
+    font-size: inherit;
+}
+.box-content, .box-content ul  {
+    float: left;
+}
+.modal-media-content ul {
+    margin: 0 0 6px;
+    padding: 0;
+    width: 450px;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.modal-media-content ul li {
+    list-style: none;
+    display: inline;
+    font-size: $type-xs;
+    margin-right: 5px;
+}
+.modal-media-content p {
+    width: 450px;
+    height: 85px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    line-height: 18px;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+    text-align: left;
+}
+.modal-block-content {
+    float: left;
+    width: 100%;
+    padding: 20px 0 20px 470px;
+}
+.modal-block-content h6 {
+    font-size: $type-paragraph;
+    font-weight: 700;
+    margin: 0 0 15px;
+    display: block;
+    float: left;
+}
+.modal-current-tags {
+    height: 121px;
+    width: 100%;
+    overflow: hidden;
+    padding: 0 0 10px 0;
+    float: left;
+    border-bottom: 1px solid $color-border;
+    margin-bottom: 20px;
+}
+.modal-current-tags .carousel-inner .item {
+    width: 100%;
+    padding: 0 30px;
+    display: inline-block;
+}
+.modal-current-tags p {
+    text-align: center;
+    line-height: 90px;
+    color: $color-border;
+}
+.modal-current-tags ul {
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+.modal-current-tags ul li {
+    list-style: none;
+    float: left;
+    margin-right: 20px;
+}
+.modal-current-tag-box {
+    width: 246px;
+    height: 102px;
+}
+
+.modal-tags-search-box h4 {
+    padding: 0;
+    margin: 0 2px 0 170px;
+    word-break: break-word;
+    max-height: 92px;
+    overflow: hidden;
+}
+
+.modal-current-tag-box h5 {
+    padding: 0;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 123px;
+}
+.modal-current-tag-box h5 em {
+  font-style: normal;
+}
+.modal-current-tag-box span,
+.modal-tags-search span {
+    font-weight: 700;
+}
+.modal-current-tag-box p,
+.modal-current-tag-box a,
+.modal-tags-search p,
+.modal-tags-search a  {
+    font-size: $type-xs;
+    line-height: 1em;
+    text-align: left;
+    display: block;
+    margin: 10px 10px 10px;
+    word-wrap: break-word;
+}
+.modal-current-tag-box p,
+.modal-current-tag-box a{
+    margin-left: 105px;
+}
+.modal-tags-search-box p,
+.modal-tags-search-box a  {
+    margin-left: 177px;
+}
+.modal-current-tag-box p {
+    color: $color-text;
+}
+.modal-current-tag-box-thumbnail,
+.modal-tag-search-box-thumbnail {
+    width: 100px;
+    height: 100px;
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: 1px solid $color-border;
+    float: left;
+    margin-right: 5px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+}
+.modal-current-tag-box-thumbnail .no-image,
+.modal-tag-search-box-thumbnail .no-image {
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+.modal-current-tag-box-thumbnail .no-image::before,
+.modal-tag-search-box-thumbnail .no-image::before {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 1;
+    height: 75px;
+    width: 75px;
+    font-size: 75px;
+    opacity: .15;
+}
+
+.modal-current-tag-box-thumbnail .no-image::before {
+    width: 42px;
+    height: 42px;
+    font-size: 42px;
+}
+.modal-current-tag-box-thumbnail .modal-current-tag-box-remove,
+.modal-tag-search-box-thumbnail .modal-current-tag-box-remove {
+    display: table;
+    text-align: center;
+    float: left;
+    width: 98px;
+    height: 98px;
+    top: 0;
+    bottom: 0;
+    margin: 0;
+    background: rgba(0,0,0,.5);
+    opacity: 0;
+    position: absolute;
+    z-index: $zIndex-2;
+}
+.modal-current-tag-box-remove:hover {
+    opacity: 1;
+}
+.modal-current-tag-box-remove i {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    font-size: $type-m;
+    color: $color-white;
+}
+
+.modal-tag-search-box-thumbnail .modal-current-tag-box-remove{
+    display: none;
+    width: 170px;
+    height: 170px;
+    margin:0px;
+}
+
+.modal-tag-search-box-thumbnail.active .modal-current-tag-box-remove{
+    display: table;
+}
+
+.modal-tag-search-box-thumbnail {
+    width: 171px;
+    height: 171px;
+    cursor: pointer;
+    position: relative;
+}
+.modal-tag-search-box-thumbnail:hover {
+    box-shadow: inset 0 0 0 3px $color-primary;
+    border-color: transparent;
+}
+.modal-tags-search {
+    float: left;
+    width: 100%;
+}
+.modal-empty {
+    color: $color-border;
+    margin: 60px auto;
+    width: 230px;
+    text-align: center;
+}
+.modal-empty i {
+    font-size: $type-l;
+}
+.modal-empty p {
+    font-size: $type-paragraph;
+    line-height: inherit;
+    text-align: center;
+}
+.modal-tags-search-box {
+    width: 343px;
+    float: left;
+    margin-top: 10px;
+}
+.modal-tags-search ul {
+    margin: 10px 0 0;
+    padding: 0;
+}
+.modal-tags-search ul li {
+    list-style: none;
+}
+.modal-tags-search .form-group {
+    width: 100%;
+}
+.modal-tags-search .form-inline .checkbox {
+    margin: 7px 0 0 15px;
+}
+.modal-tags-search .form-inline .input-group {
+    width: 83%;
+    float: left;
+}
+.modal-tags-search .form-inline .input-group .input-group-btn {
+    width: 1px;
+}
+
+.modal-tags-search {
+    .clear-search {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 40px;
+        margin: auto;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        width: 40px;
+        justify-content: center;
+        font-size: 15px;
+    }
+}
+/* Carousel */
+
+.modal-current-tags .carousel-control.left,
+.modal-current-tags .carousel-control.right {
+    height: 100px;
+    width: 21px;
+    display: table;
+    background-image:none;
+    background-color: $color-primary;
+    text-align: center;
+    opacity: 1;
+}
+.modal-current-tags .carousel-control i {
+    display: table-cell;
+    vertical-align: middle;
+    text-shadow: none;
+    -webkit-text-shadow: none;
+}
+
+.tags-container {
+  width: 100%;
+  overflow: hidden;
+  overflow-x: scroll;
+  height: 118px;
+  line-height: 100px;
+  float: left;
+}
+.tags-container::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.tags-container::-webkit-scrollbar:vertical {
+    width: 11px;
+}
+
+.tags-container::-webkit-scrollbar:horizontal {
+    height: 11px;
+}
+
+.tags-container::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white; /* should match background, can't be transparent */
+    background-color: rgba(0, 0, 0, .5);
+}
+.tags-container ul {
+    padding: 0;
+    display: block;
+    float: left;
+    height: 118px;
+    position: relative;
+    overflow-y: hidden;
+    min-width: 100%;
+}
+.tags-container ul li {
+    padding-right: 5px;
+    margin: 0;
+    float: left;
+    list-style: none;
+    display: inline-block;
+    width: 251px;
+    height: 118px;
+}
+.tags-container ul li .tooltip-inner {
+    max-width: inherit;
+}
+
+// Meta tags // ------------------------------
+
+.modal-metadata ul {
+    float: left;
+    padding: 0;
+    margin: 10px 0 0;
+}
+.modal-metadata ul li {
+    padding: 15px 20px;
+    float: left;
+    margin: 10px 10px 0 0;
+    list-style: none;
+    background-color: $color-primary;
+    color: $color-white;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.modal-metadata .input-group {
+    margin-top: 20px;
+}
+
+// Share // ------------------------------
+
+.modal-share-network {
+    float: left;
+    margin-bottom: 20px;
+}
+.modal-share-edit form {
+    float: left;
+    width: 100%;
+}
+.modal-share-edit .btn {
+    float: left;
+}
+.modal-share-error {
+    clear: both;
+}
+.modal-share-cancel-button {
+    margin-left: 10px;
+}
+
+// Share sider // ------------------------------
+
+
+.modal-share-select {
+    box-shadow: inset 0 0 0 3px $color-primary;
+    border-color: transparent;
+}
+.share-module .carousel-inner {
+    overflow: hidden;
+    height: 102px;
+    position: relative;
+}
+.share-module .carousel-inner .item {
+    height: 102px;
+    width: 100%;
+    position: relative;
+}
+.share-module .modal-current-tag-box {
+    width: 245px;
+}
+.carousel-inner {
+    overflow: hidden;
+    height: 102px;
+    position: relative;
+}
+.carousel-inner .item {
+    height: 102px;
+    width: 9999%;
+    position: relative;
+}
+.modal-tag-search-box-thumbnail.active {
+  box-shadow: inset 0 0 0 4px #0095f5;
+  border-color: transparent;
+}
+.modal .olapic-spinner-bounce.olapic-spinner {
+    z-index: 100;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 0;
+    left: initial;
+    margin: 8px 50px 0 0;
+}
+.modal .olapic-spinner-bounce .olapic-bounce1, .modal .olapic-spinner-bounce .olapic-bounce2 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: $color-primary;
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-animation: olapic-doubleBounce 2s infinite ease-in-out;
+          animation: olapic-doubleBounce 2s infinite ease-in-out;
+}
+.modal .olapic-spinner-bounce .olapic-bounce2 {
+  -webkit-animation-delay: -1s;
+          animation-delay: -1s;
+}
+@-webkit-keyframes olapic-doubleBounce {
+  0%, 100% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+    }
+
+  50% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    }
+}
+
+@keyframes sk-doubleBounce {
+  0%, 100% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+    }
+  50% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    }
+}
+
+/* Facebook Boost */
+
+.share-facebook-boost-slider {
+    margin: 10px 0 0 0;
+}
+.share-facebook-boost-checkbox {
+    margin: 10px 0 0 0;
+}
+.share-facebook-boost-checkbox input{
+    margin: 0 0 0 6px;
+}
+
+/* Tagging section into modal */
+
+.tagging-preview-image {
+    text-align: center;
+    padding-top: 30px;
+}
+
+.tagging-preview-image img {
+    max-width: 100%;
+}
+
+.load-more-tagging {
+    width: 100%;
+    float: left;
+    clear: both;
+    margin: 20px 0 0 0
+}
+
+.load-more-tagging button {
+    margin: 0 auto;
+    display: block;
+}
+
+.inactive-stream > p:last-of-type   {
+    color: #666;
+    font-weight: 600;
+}
+
+.inactive-stream,
+.inactive-stream p,
+.inactive-stream h4,
+.inactive-stream span {
+    color: rgba(33, 33, 33, 0.54);
+}
+
+/* Onetab-pane */
+
+.onetab-pane {
+    width: 100%;
+    float: left;
+    margin: 0 0 20px;
+    overflow: auto;
+
+    h3 {
+        color: $color-text;
+        font-size: $type-s;
+        font-weight: 500;
+        margin: 0 0 20px;
+    }
+}
+
+.suggested-products-wrapper {
+    position: relative;
+    min-height: 180px;
+
+    .olapic-spinner-bounce.olapic-spinner {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
+    h2 {
+        font-size: 17px;
+        border-bottom: 1px solid $color-border;
+        padding-bottom: 10px;
+    }
+    .modal-tag-search {
+        ul {
+            li {
+                display: inline-block;
+            }
+        }
+    }
+
+    .suggested-products-category {
+        font-size: 13px;
+        line-height: 18px;
+        border-bottom: 1px solid $color-border;
+        clear: left;
+        margin-top: 0;
+        padding-bottom: 10px;
+        padding-top: 18px;
+    }
+}
+
+// Media Queries // ------------------------------
+
+/* Desktops and laptops ----------- */
+@media only screen
+and (max-width : 1450px) {
+
+}
+
+/* IPAD ----------- */
+
+@media only screen
+and (max-width : 1023px) {
+    .modal-media,
+    .media-bulk {
+        position: relative;
+        width: 640px;
+        margin: 0 auto;
+        float: initial;
+    }
+    .modal-media-container {
+        position: relative!important;
+        width: auto!important;
+        height: auto!important;
+        float: none;
+    }
+    .modal-media-header {
+        width: 640px;
+    }
+    .modal-media .modal-img,
+    .modal-media .modal-video {
+        height: 640px;
+    }
+    .media-bulk .modal-img,
+    .media-bulk .modal-video {
+        height: 138px!important;
+    }
+    .modal-media-content p {
+        width: 100%;
+        height: auto;
+        overflow-y:auto;
+        text-overflow: initial;
+        display: block;
+    }
+    .modal-block-content {
+        float: initial;
+        padding: 0 0 20px;
+        width: 640px;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+    .modal-tags-search .form-inline .input-group {
+        width: 100%;
+    }
+    .modal-tags-search-box {
+        width: 315px;
+    }
+    .modal-tag-search-box-thumbnail {
+        width: 150px;
+        height: 150px;
+    }
+    .modal-current-tag-box {
+        width: 289px;
+    }
+    .modal-current-tag-box span,
+    .modal-tags-search span {
+        line-height: 24px;
+    }
+    .modal-tags-search .form-inline .checkbox {
+        margin: 5px 0 0;
+        float: left;
+    }
+    .modal-current-tag-box p,
+    .modal-current-tag-box a,
+    .modal-tags-search p,
+    .modal-tags-search a {
+        margin: 5px 0;
+    }
+    .modal-media-content ul {
+        width: 100%;
+    }
+
+    .olapic-modal-size-large {
+        .modal-media {
+            float: left;
+            position: absolute;
+
+            .modal-img, .modal-video {
+                height: 350px;
+            }
+        }
+
+        .modal-block-content {
+            float: left;
+            width: 100%;
+        }
+    }
+}
+
+/* IPHONE ----------- */
+
+@media only screen
+and (max-width : 767px) {
+    .modal-header h1 {
+        font-size: 24px;
+    }
+    .modal-tags-search {
+        padding: 0;
+    }
+    .modal-dialog {
+        min-width: 330px;
+    }
+    .olapic-modal .modal-media.center,
+    .modal-media {
+        width: 300px;
+    }
+    .modal-media-header {
+        width: 300px;
+    }
+    .modal-media .modal-img,
+    .modal-media .modal-video {
+        height: 300px;
+        min-height: 300px;
+    }
+    .media-bulk .modal-img,
+    .media-bulk .modal-video {
+        height: 138px!important;
+        min-height: 138px!important;
+    }
+    .modal-user {
+        width: 158px;
+    }
+    .modal-block-content {
+        width: 300px;
+    }
+    .modal-tags-search .form-inline .checkbox {
+      margin: 5px 0 0;
+      float: left;
+    }
+    .modal-current-tag-box {
+        width: 244px;
+    }
+    .olapic-modal-size-medium .modal-dialog {
+        width: 100%;
+        margin: 0;
+    }
+    .olapic-modal-size-large .modal-dialog {
+        width: 100%;
+        min-width: 430px;
+        margin: 0;
+
+        .modal-wrapper {
+            max-height: initial;
+            .modal-media {
+                float: initial;
+                position: relative;
+
+            }
+        }
+    }
+
+    .olapic-modal-size-large .modal-block-content {
+        float: initial;
+        width: 350px;
+        padding: 20px 0 20px;
+
+        .onetab-pane {
+            max-height: initial;
+            border-left: none;
+            padding-left: 0;
+            overflow: initial;
+        }
+    }
+}

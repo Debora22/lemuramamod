@@ -1,0 +1,26 @@
+<div class="modal-media media-bulk" id="modal-media-bulk" ng-class="{false: 'center'}[haveExtras()]" ng-hide="hideDuringPreview">
+    <div class="modal-media-container">
+        <div class="modal-media-header">
+            <div class="modal-count">{{data.length}} media selected</div>
+            <div class="modal-tools pull-right"></div>
+        </div>
+        <ul class="modal-media-list">
+            <li ng-repeat="media in data">
+                <div ng-if="!media.video_url" class="modal-img" style="background-image: url('{{media.images.thumbnail}}')">
+                    <i class="icon-close" ng-click="removeItem($index)"></i>
+                    <a href="{{media.source.url}}" target="_blank"></a>
+                </div>
+                <div ng-if="media.video_url" class="modal-video">
+                    <i class="icon-close" ng-click="removeItem($index)" ng-if="media.source.name !== 'youtube'"></i>
+                    <video ng-if="media.source.name !== 'youtube'" class="modal-media-video" controls poster="{{media.images.mobile}}">
+                        <source src="{{media.video_url | trusted}}" type="video/mp4">
+                        <source src="{{media.video_url | trusted}}" type="video/ogg">
+                        <source src="{{media.video_url | trusted}}" type="video/webm">
+                        Your browser does not support the video tag.
+                    </video>
+                    <iframe ng-if="media.source.name == 'youtube'" ng-src="{{media.video_url | youTubeIframe}}"></iframe>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

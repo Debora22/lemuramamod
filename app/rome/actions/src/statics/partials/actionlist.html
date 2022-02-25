@@ -1,0 +1,16 @@
+    <ul>
+        <li ng-repeat="action in actions | filter: showIf | limitTo: listLimit">
+            <div class="box-tool" id="action-{{action.title}}" ng-click="applyAction(action)" tooltip-placement="top" tooltip="{{action.title}}"><i class="icon-{{action.iconClass}}"></i></div>
+        </li>
+        <li ng-show="showDropDown">
+            <div class="dropdown box-dropdown actions-dropdown pull-right" uib-dropdown>
+                <div class="box-tool" id="dLabel" type="button" uib-dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="icon-more" tooltip-placement="top" tooltip="More&nbsp;options"></i>
+                </div>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <li ng-repeat="action in actions|filter:showIf|dropdownList:listLimit" ng-click="applyAction(action)" id="action-dropdown-{{action.iconClass}}"> <a href><i class="icon-{{action.iconClass}}"></i>{{action.title}}</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>

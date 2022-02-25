@@ -1,0 +1,36 @@
+<form class="side-item input-group" ng-submit="search()" style='order: 0'>
+    <input type="text" autocomplete="off" class="form-control" id="filters-search-input" name="search" placeholder="{{searchPlaceholder}}" ng-model="settings.query.staticFilters.phrase" op-autocomplete="searchAutocomplete">
+    <span class="input-group-btn">
+        <button class="btn btn-default" id="filters-search-submit" type="submit"><i class="icon-search"></i></button>
+    </span>
+</form>
+
+<div class="sidebar-item sidebar-total" id="sidebar-total" ng-if="showTotal.position" ng-style="{order: showTotal.position}">
+    <p>Results: <span>{{total}}<span> <a href class="pull-right" ng-click="resetFilters()" id="filters-reset-btn" ng-show="thereAreAppliedFilters()">Clear filters</a></p>
+</div>
+
+<uib-accordion ng-repeat="(key,filter) in filtersOrdered" class="sidebar-item accordion" id="filters-accordion-{{::normalizeIndexId(filter.label || filter.key)}}" close-others="oneAtATime" ng-style="{order: itemsOrder[filter.key]}">
+    <uib-accordion-group data-filter-name="{{key}}" is-open="openFilters[key]">
+    <uib-accordion-heading>
+        {{filter.label || filter.key}}<i class="pull-right glyphicon" ng-class="{'icon-arrow-down': openFilters[key], 'icon-arrow-right': !openFilters[key]}"></i>
+    </uib-accordion-heading>
+        <ul id="filters-for-{{key}}">
+            <li
+              ng-repeat="(ikey,subfilter) in filter.values"
+              data-filter-item-key="{{i.key}}"
+              ng-click="applyFilter(filter.key, subfilter.name)"
+              id="filters-option-{{::normalizeIndexId((filter.label || filter.key) + '-' + (subfilter.label||subfilter.name))}}"
+              ng-class="{'-with-description': subfilter.description}"
+            >
+                <span ng-class="{'remove': 'item-select', 'trigger-remove': 'item-select'}[i.action]">
+                    <op-filters-tooltip
+                      text="{{::(subfilter.label||subfilter.name)}} {{::(subfilter.total ? '(' + subfilter.total + ')' : '')}}"
+                      text-limit="{{tooltip.limit}}" position="{{tooltip.position}}">
+                    </op-filters-tooltip>
+                    <i class="filter-label-description">{{::subfilter.description}}</i>
+                </span>
+                <i class="icon-square pull-right" ng-class="{true: 'icon-check', false: 'icon-square', undefined: 'icon-square'}[subfilter.selected]">&nbsp;</i>
+            </li>
+        </ul>
+    </uib-accordion-group>
+</uib-accordion>

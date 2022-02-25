@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+    <title>Demo - Loading</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.theme.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic-icons.css"/>
+
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/progressbutton.css"/>
+</head>
+<body ng-app="app" ng-controller="demo">
+<h1>The progress button is <span>disabled</span></h1>
+<op-progressbutton></op-progressbutton>
+
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="../../bower_components/angular/angular.js"></script>
+
+<script src="../src/progressbutton.js"></script>
+<script src="../src/services/progressbuttonService.js"></script>
+<script src="../src/directives/progressbuttonDirective.js"></script>
+<script type="text/javascript">
+    angular.module('app', ['op.progressbutton'])
+        .controller('demo', ['$scope', 'ProgressbuttonService', function($scope, ProgressbuttonService) {
+            $scope.progressButton = new ProgressbuttonService({
+                templatePath: '../',
+                callbacks: {
+                    onInputChange: function(scope) {
+                        angular.element('h1 span').html(scope.bind.progressButtonStatus ? 'enabled' : 'disabled');
+                    }
+                }
+            });
+        }]);
+</script>
+</body>
+</html>

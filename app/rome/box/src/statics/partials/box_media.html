@@ -1,0 +1,63 @@
+<div>
+    <div data-media-id="{{entity.id}}" data-media-username="{{entity.user.username}}" id="box-{{entity.id}}">
+        <div class="box-header">
+            <div class="box-user">
+                <i class="icon-{{entity.source.name}}"></i>
+                <a href="{{entity.source.data.url}}" target="_blank" ng-if="entity.source.data.url">
+                    @{{entity.user.username | limitTo:12}}<span ng-if="entity.user.username.length > 12">...</span>
+                </a>
+                <span ng-if="!entity.source.data.url">
+                    {{entity.user.name | limitTo:12}}<span ng-if="entity.user.name.length > 12">...</span>
+                </span>
+            </div>
+            <div class="content_actions"></div>
+        </div>
+        <div class="box-media-wrapper">
+            <input type="checkbox" class="box-media-check" value="1" id="box-check-{{entity.id}}" name="check-{{entity.id}}" ng-model="entity.checked" ng-change="checkboxChange(entity)" />
+
+            <div class="box-media" style="background-image:url({{entity.images.mobile}})">
+                <i class="icon-play" ng-if="entity.video_url"></i>
+            </div>
+
+            <div class="box-hover">
+                <ul class="badges">
+                    <li ng-if="entity.rights == 'GIVEN'" class="badge-rights" tooltip-placement="left" tooltip="Rights&nbsp;Approved">
+                        <i class="icon-user"></i>
+                    </li>
+                </ul>
+                <div class="box-check" ng-show="showCheckbox">
+                    <label for="box-check-{{entity.id}}"></label>
+                </div>
+                <div class="box-content-close">
+                  <a href ng-click="toggleCaption()" class="icon-close" data-toggle="tooltip" data-placement="bottom" title="Collapse caption"></a>
+                </div>
+                <div class="box-hover-bg" ng-click="photoClick(entity, $index)"></div>
+            </div>
+        </div>
+        <div class="box-content">
+            <label>
+                <input type="checkbox"><!-- used by the css to show the caption -->
+                <div class="box-content-container">
+                    <ul>
+                        <li><i class="icon-calendar"></i> {{entity.date_submitted | date:'MM/dd/yyyy'}}</li>
+                        <li ng-if="entity.sonar_place.name" class="location"><i class="icon-location"> {{entity.sonar_place.name}}</i></li>
+                    </ul>
+                    <div op-translate="translate" texttotranslate="entity.caption" texttranslated="entity.captionTranslated" texttranslating="entity.captionTranslating" showtranslated="entity.captionShowTranslated" showicon="entity.captionShowIcon">
+                        <p>{{entity.caption}}</p>
+                    </div>
+                </div>
+            </label>
+        </div>
+        <div class="box-tags" ng-if="carousel !== false">
+            <div class="box-carousel">
+                <span ng-show="loadingStreams">Loading...</span>
+                <span ng-show="!carousel.length && !loadingStreams">No products or streams have been assigned yet</span>
+                <ul ng-show="carousel.length > 0">
+                    <li ng-repeat="item in carousel" data-stream-id="{{item.id}}" style="background-image:url('{{item.image}}')" tooltip-placement="top" tooltip="{{item.title}}" ng-click="carouselPhotoClick(entity, item, $index)">
+                        <span class="no-image icon-polaroids" ng-if="!item.image"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

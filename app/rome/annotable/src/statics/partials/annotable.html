@@ -1,0 +1,15 @@
+<div class="op-annotable-wrapper" id="{{$ctrl.wrapperId}}">
+    <div id="canvasContainer">
+    </div>
+    <div class="op-annotable-search-tooltip"
+    id="op-annotable-search-tooltip-{{$ctrl.canvasId}}"
+    style="display: none;">
+        <svg class="op-annotable-search-tooltip-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15">
+            <polyline class="op-annotable-search-tooltip-arrow-lines" points="0 10 10 0 20 10"/>
+        </svg>
+        <input type="text" type="text" autocomplete="off" id="op-annotable-search-stream" class="form-control"
+        placeholder="Search streams" ng-model="$ctrl.searchTooltipText" ng-model-options="{ debounce: 450 }"
+        ng-keypress="$ctrl.tooltipSearch($event)" ng-change="$ctrl.onInputSearchChange()"
+        maxlength="255"/>
+    </div>
+</div>

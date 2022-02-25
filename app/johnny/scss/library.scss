@@ -1,0 +1,106 @@
+// Dependencies // ------------------------------
+
+@import 'colors';
+@import 'zIndex';
+
+// Containers // ------------------------------
+
+.library-actions-container {
+    width: 100%;
+    position: relative;
+    top: 0;
+    background-color: transparent;
+    float: left;
+    margin-top: 13px;
+    padding: 20px 0 15px;
+    z-index: $zIndex-4
+}
+.library-media-container {
+    margin-left: 321px;
+    position: relative;
+    transition: all .4s ease-in-out;
+}
+.scroll-fixed .library-media-container > div {
+    margin-top: 96px;
+}
+.library-clearboth {
+    clear: both;
+}
+.filter-switch {
+    float: left;
+}
+
+// Hide sidebar // ------------------------------
+
+.hide-sidebar .library-media-container{
+    margin-left: 0px;
+}
+
+// Tools // ------------------------------
+
+.library-actions-container .tools {
+    margin-right: 15px;
+}
+.library-actions-container .tools ul {
+    float: right;
+}
+.library-actions-container  .tools ul li {
+    display: block;
+    float: left;
+    margin-right: 10px;
+    padding: 0;
+}
+.library-actions-container  .tool-filter {
+    width: 250px;
+}
+
+// Fixed blocks // ------------------------------
+
+.scroll-fixed .library-actions-container {
+    position: fixed;
+    top: 60px;
+    margin-top: 0;
+    background-color:rgba(249, 249, 251, .97);
+}
+.scroll-fixed .tools-filter {
+    margin-right: 45px;
+}
+
+// Media Queries // ------------------------------
+
+/* Desktops and laptops ----------- */
+@media only screen
+and (max-width : 1450px) {
+
+}
+
+/* IPAD ----------- */
+
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : landscape) {
+
+}
+
+/* IPHONE ----------- */
+
+@media only screen
+and (max-width : 767px) {
+    .library-media-container {
+        margin-left: 0;
+    }
+    .library-actions-container .tools {
+        padding: 0px 0 10px;
+    }
+    .library-actions-container .tools ul {
+        margin-top: 10px;
+        padding: 0;
+    }
+    .library-actions-container .tools ul li {
+        margin-bottom: 10px;
+    }
+    .library-actions-container .tools .dropdown-menu li {
+        margin-bottom: 0;
+    }
+}

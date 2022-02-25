@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+    <title>Track v2 demo</title>
+</head>
+<body ng-app="app" ng-controller="demo">
+
+    <h1>Track v2 demo</h1>
+
+    <div>
+        <label for="accessToken">Access token:</label>
+        <input ng-model='accessToken' name="accessToken" size="48"></input>
+        <button ng-click='flush()'>Flush!</button>
+    </div>
+    <div>
+        <h4>Result</h4>
+        <pre>{{result | json}}</pre>
+    </div>
+
+    <script src="../../bower_components/angular/angular.js"></script>
+
+    <script src="../../track/src/track.js"></script>
+    <script src="../../track/src/provider/trackv2Provider.js"></script>
+
+    <script type="text/javascript">
+        angular
+        .module('app', ['op.track'])
+        .constant('appConstant', {
+            anafrus: {
+                url: 'https://data.photorank.me/'
+            }
+        })
+        .config(['trackv2Provider', 'appConstant', function(trackProvider, appConstant) {
+            trackProvider.setSettings({
+                url: appConstant.anafrus.url,
+                appName: 'lemuramav2',
+                enabled: true,
+                bulkLimit: 5
+            });
+        }])
+        .controller('demo', ['$scope', 'trackv2', function($scope, track){
+
+            $scope.accessToken = '78c378d6fdcda6a297e3553ecfb0399d4c4866b6'; // might be expired
+            $scope.result = [];
+
+            var showResult = function(response){
+                $scope.result.push(response.map(function(item){return item.data;}));
+            };
+
+            $scope.flush = function() {
+
+                // delete on premod
+                track.addEvent('test-premod', 'delete-on-premod', {
+                    'type': 'media',
+                    'id': '111'
+                });
+
+                // another one of the same type
+                track.addEvent('test-premod', 'delete-on-premod', {
+                    'type': 'media',
+                    'id': '222'
+                });
+
+                // another one of the same type bur different context
+                track.addEvent('test-another', 'delete-on-premod', {
+                    'type': 'media',
+                    'id': '333'
+                });
+
+                // one with related entity
+                track.addEvent('test-tagging', 'tagged', {
+                    'type': 'media',
+                    'id': '444'
+                }, {
+                    'type': 'gallery',
+                    'id': '8'
+                });
+
+                // send events
+                track.flush().then(showResult);
+
+                // sned a single event
+                track.addEvent('test-premod', 'delete-on-premod', {
+                    'type': 'media',
+                    'id': '555'
+                });
+
+                // flush, it should only send the last event
+                track.flush().then(showResult);
+
+                // testing bulk limit (sending more than 5)
+
+                for (var i = 1; i <= 8; i++) {
+                    // delete on premod
+                    track.addEvent('test-premod', 'delete-on-premod', {
+                        'type': 'media',
+                        'id': 4321*i
+                    });
+                }
+                track.flush().then(showResult);
+            }
+        }]);
+    </script>
+
+</body>
+</html>

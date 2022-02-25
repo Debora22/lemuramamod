@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-lg-12">
+
+        <h1>{{'TITLE_PRE_MODERATION' | translate}}</h1>
+
+        <div class="library-actions-container">
+            <div class="pull-left">
+                <a href class="sidebar-button" ng-click="toggleFilters()">
+                    <i class="icon-list"></i> <span>{{showFilters ? 'Hide filter' : 'Show filter'}}</span>
+                </a>
+            </div>
+            <div class="tools tools-filter pull-right">
+                <ul ng-show="library.actions.items().length">
+                    <li class="liTranslate">
+                        <div class="translateTooltip">Caption<div tooltip-placement="bottom" tooltip-append-to-body="true" uib-tooltip-template="'modules/base/statics/partials/translationTooltipHelp.html'"></div></div>
+                        <op-static-dropdown-filter settings='filtersLanguageService'></op-static-dropdown-filter>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-default" uib-tooltip-template="'modules/expressmoderation/statics/partials/expressModerationToolTip.html'" tooltip-placement="bottom" tooltip-trigger="click">?</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" id="btn-approve-selected-reject-others" type="button" ng-click="bulkAction()">
+                            {{'BTN_APPROVE_REJECT' | translate}}
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn btn-default" id="btn-report-spam" type="button" ng-click="reportSpamAction()" ng-disabled="!isLibraryInBulk()">
+                            {{'BTN_REPORT_SPAM' | translate}}
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn btn-default" id="btn-blacklist-bulk" type="button" ng-click="blacklistBulkAction()" ng-disabled="!checkBlacklistButtonStatus()">
+                            {{'BTN_BLACKLIST_USER_BULK' | translate}}
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div ng-class="{true:'col-lg-12', false:'col-lg-12 hide-sidebar'}[showFilters]">
+        <op-filters settings="filters">
+            <op-static-dropdown-filter settings='filtersSortingService'></op-static-dropdown-filter>
+            <uiw-nsfw-filter ng-if="isNSFWEnabled" class="sidebar-item accordion" style="order: 5" filters-service="filters"></uiw-nsfw-filter>
+        </op-filters>
+        <op-library ></op-library>
+        <op-modal></op-modal>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="modal-header" id="modal-media-text">
+    <h1 class="pull-left">{{data.title}}</h3>
+    <ul class="pull-right">
+        <li>
+            <a href ng-click="close()" data-tooltip="Close" tooltip-placement="bottom">
+                <i class="icon-close"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="modal-body pull-left">
+    {{data.description}}
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" id="modal-media-text-close-btn" ng-click="close()">Close</button>
+</div>

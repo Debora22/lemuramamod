@@ -1,0 +1,15 @@
+<div class='box-content-container-content'>
+    <div class='box-content-container-content-visible' ng-class="{entityTranslateEffect: showTransitionEffect, entityTranslated: showTranslated}">
+        <p>{{textToTranslate}}</p>
+        <p ng-bind-html="textTranslated"></p>
+    </div>
+    <div>
+        <div class="translate-loading-wrapper" ng-class="{true:'active'}[loading]">
+            <div class="translate-loading">
+                <div class="language-1"></div>
+                <div class="language-2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<i class="translateIcon icon-earth" ng-if="textToTranslate && (showIconWhenTranslated ? textTranslated : showIcon)" ng-click="clickTranslateIcon($event);" tooltip="{{showTranslated ? 'View original caption' : 'View translated caption'}}" ng-class="{active: showTranslated}"/>

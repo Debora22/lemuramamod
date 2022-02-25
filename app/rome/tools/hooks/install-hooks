@@ -1,0 +1,11 @@
+#!/bin/sh
+if [ -d ".git" ]; then
+    ln -sv ../../tools/hooks/pre-commit.local ./.git/hooks/pre-commit
+    ln -sv ../../tools/hooks/post-merge.local ./.git/hooks/post-merge
+    git config commit.template tools/hooks/commit.template
+    echo "Hooks installed"
+    exit 0
+fi
+
+echo "You need to be at the root of Olapic directory (where the .git directory is) to install the hooks"
+exit 1

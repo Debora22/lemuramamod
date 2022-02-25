@@ -1,0 +1,12 @@
+<div class='opTimeTracking'>
+    <div class="opTimeTracking_action" ng-click="$ctrl.toggle()">
+        <div class="opTimeTracking_button">
+            <i ng-class="{'icon-pause': $ctrl.running, 'icon-play':!$ctrl.running}" /></i>
+        </div>
+    </div>
+
+    <div class="opTimeTracking_copy">
+        <span>{{$ctrl.title}}</span></br>
+        <span class="opTimeTracking_copy_time">{{$ctrl.displayValue}}</span>
+    </div>
+</div>

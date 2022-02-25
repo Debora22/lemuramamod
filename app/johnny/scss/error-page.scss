@@ -1,0 +1,58 @@
+@import 'colors';
+@import 'fonts';
+@import 'olapic-icons';
+@import 'type';
+
+body {
+    background: #f9f9fb;
+}
+#olapic-error-page-wrapper {
+    #page-error-message {
+        display: block;
+        height: 170px;
+        width: 100%;
+        max-width: 550px;
+        position: relative;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 100px;
+        margin: auto;
+        font-family: $heading-font;
+        text-align: center;
+
+        h1, h2 {
+            padding: 0;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 40px;
+            color: transparentize($color-danger, .2);
+            text-shadow: 1px 4px 6px #f9f9fb, 0 0 0 #000, 1px 4px 6px #f9f9fb;
+            display: inline-block;
+        }
+
+        h2 {
+            color: $color-subtitle;
+            font-weight: 600;
+            font-size: 24px;
+        }
+
+        #error-content-wrapper {
+            border-bottom: 1px solid $color-border;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .message-content {
+            font-family: $primary-font;
+            p {
+                margin: 0;
+                padding: 15px 0 0;
+                color: $color-subtitle;
+            }
+        }
+    }
+}

@@ -1,0 +1,17 @@
+<div class="opSlider">
+    <div class="opSlider_limitsLabel">
+        <span>{{$ctrl.minText}}</span>
+        <span class="opSlider_maxText">{{$ctrl.maxText}}</span>
+    </div>
+    <div class="opSlider_sliderBar"
+        ui-slider
+        min="0"
+        max="100"
+        step="1"
+        tip
+        use-decimals
+        ng-change="$ctrl.onSliderChange()"
+        ng-model-options="{ debounce: 800 }"
+        ng-model="$ctrl.sliderModel.value">
+    </div>
+</div>

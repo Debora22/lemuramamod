@@ -1,0 +1,81 @@
+.opSlider {
+    /*TODO: Once we unify johnny with LemuramaModsquad we should tranform this file to scss*/
+    /*TODO: Once we unify with johnny we should update these colors with color.scss*/
+}
+
+.opSlider_limitsLabel {
+    color: #4c4d4c;
+    font-weight: initial;
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: 10px;
+}
+
+.opSlider_maxText {
+    position: absolute;
+    right: 9px;
+}
+
+.opSlider_sliderBar {
+    background: #d8d8d8;
+    border-radius: 0%;
+    height: 7px;
+    margin: 0 24px 7px 8px;
+}
+
+.opSlider_sliderBar .ui-slider-handle {
+    background: #0493f8;
+    border-color: #0493f8;
+    border-radius: 50%;
+    top: -6px;
+}
+
+.opSlider_sliderBar .ui-slider-tip
+{
+    font-size: 12px;
+    line-height: 1.4;
+    line-height: 21px;
+
+    position: absolute;
+    z-index: 1030;
+    top: -27px;
+    left: -9px;
+
+    display: none;
+    visibility: visible;
+
+    width: 36px;
+    height: 21px;
+
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+
+    opacity: .9;
+    color: #fff;
+    border-radius: 4px;
+    background-color: #000;
+}
+.opSlider_sliderBar .ui-slider-tip::after
+{
+    content: '%';
+}
+.opSlider_sliderBar .ui-slider-tip::before
+{
+	top: 100%;
+	left: 48%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(0, 0, 0, 0);
+	border-top-color: #000;
+	border-width: 5px;
+	margin-left: -5px;
+}
+.opSlider_sliderBar .ui-slider-handle:hover .ui-slider-tip
+{
+    display: block;
+}

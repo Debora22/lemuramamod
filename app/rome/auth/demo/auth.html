@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+    <title>Demo - AUTH</title>
+    <style type="text/css">
+    body {
+        margin: 0px;
+        padding: 0px;
+        font-size: 14px;
+        font-family: Helvetica;
+    }
+    .login,
+    .logged {
+        width:250px;
+        margin: 0 auto;
+        margin-top: 100px;
+    }
+    input {
+        width: 100%;
+        padding: 5px;
+        margin: 2px;
+    }
+    button {
+        padding: 5px;
+        margin: 2px;
+    }
+    </style>
+</head>
+<body ng-app="app" ng-controller="demo">
+
+<script src="../../bower_components/angular/angular.js"></script>
+<script src="../../bower_components/ngstorage/ngStorage.js"></script>
+
+<script src="../../auth/src/auth.js"></script>
+<script src="../../auth/src/services/authService.js"></script>
+<script src="../../auth/src/services/profileService.js"></script>
+<script src="../../auth/src/services/scopeAuthService.js"></script>
+<script src="../../auth/src/services/sessionService.js"></script>
+
+<script src="../../api/src/api.js"></script>
+<script src="../../api/src/services/apiService.js"></script>
+<script src="../../api/src/services/photorankAPIService.js"></script>
+<script src="../../api/src/services/curationAPIService.js"></script>
+<script src="../../api/src/services/authServerAPIService.js"></script>
+
+<div class="login" ng-show="!logged">
+    <input type="text" placeholder="Email" ng-model="bind.email" />
+    <input type="password" placeholder="Password" ng-model="bind.password" />
+    <button ng-show="!loading" ng-click="login()">Login</button> <span ng-show="loading">Loading...</span>
+    <div ng-show="message">{{message}}</div>
+</div>
+
+<div class="logged" ng-show="logged">
+    {{logged.name}}<br/>
+    <a href="" ng-click="logout()">Logout!</a>
+</div>
+
+<script type="text/javascript">
+angular
+    .module('app', ['op.auth', 'op.api'])
+    .constant('appConstant', {
+        authServer: {
+            url: 'https://oauth.local.photorank.me'
+        }
+    })
+    .controller('demo', ['$scope', 'authService', function($scope, authService){
+
+        $scope.bind = {
+            email: '',
+            password: ''
+        };
+
+        $scope.loading = false;
+
+        $scope.message = false;
+
+        $scope.logged = authService.isAuthenticated() ? authService.getAccount() : false;
+
+        $scope.login = function(){
+            $scope.loading = true;
+            $scope.message = false;
+            authService.login($scope.bind.email, $scope.bind.password)
+                .then(function(response){
+                    $scope.message = 'You\'re logged!!!';
+                    $scope.loading = false;
+                    $scope.logged = authService.getAccount();
+                })
+                .catch(function(err){
+                    $scope.message = err;
+                    $scope.loading = false;
+                });
+        };
+
+        $scope.logout = function(){
+            authService.logout();
+            $scope.logged = false;
+        };
+
+    }]);
+</script>
+
+</body>
+</html>

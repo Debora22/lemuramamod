@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+    <title>Demo - Modal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic.bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/olapic-icons.css"/>
+    <link rel="stylesheet" type="text/css" href="../../bower_components/johnny/css/modal.css">
+    <style type="text/css">
+    .tagging-preview-image {
+        margin-top: 20px;
+    }
+    </style>
+</head>
+<body ng-app="app" ng-controller="demo">
+
+<div><a href="" ng-click="bulk()">Open modal as bulk</a></div>
+<div ng-repeat="item in list" style="float:left; margin: 10px;">
+    <a href="" ng-click="open(item);"><img src="{{item.images.square}}" /></a>
+</div>
+<op-modal></op-modal>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="../../bower_components/angular/angular.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="../../bower_components/angular-ui-sortable/sortable.js"></script>
+<script src="../../bower_components/jquery-zoom/jquery.zoom.js"></script>
+
+<script src="../../modal/src/modal.js"></script>
+<script src="../../modal/src/services/modalService.js"></script>
+<script src="../../modal/src/services/modalToolService.js"></script>
+<script src="../../modal/src/directives/modalDirective.js"></script>
+<script src="../../modal/src/directives/modalExtrasDirective.js"></script>
+<script src="../../modal/src/directives/modalMediaDirective.js"></script>
+<script src="../../modal/src/controllers/ModalController.js"></script>
+
+<script src="../../actions/src/actions.js"></script>
+<script src="../../actions/src/services/actionService.js"></script>
+<script src="../../actions/src/directives/actionsDirective.js"></script>
+
+<script src="../../tagging/src/tagging.js"></script>
+<script src="../../tagging/src/services/taggingService.js"></script>
+<script src="../../tagging/src/services/taggingToolService.js"></script>
+<script src="../../tagging/src/directives/taggingDirective.js"></script>
+
+<script type="text/javascript">
+angular.module('appConfig', [])
+    .constant('appConstant', {
+        enviroment: 'local'
+    });
+
+angular
+    .module('app', ['op.modal', 'op.actions', 'op.tagging'])
+    .controller('demo', ['$scope', '$http', 'modalService', 'actionService', 'taggingService', '$timeout',
+     function ($scope, $http, ModalService, ActionService, TaggingService, $timeout) {
+        function init(){
+
+            //======================================================================================================
+            // Tagging
+            //======================================================================================================
+
+            var streamRepository = {
+                search : function() {
+                    return $http.get('mocks/mock-streams.json');
+                }
+            };
+
+            var repository = {
+                search : function() {
+                    return $http.get('mocks/mock.json');
+                }
+            };
+
+            $scope.tagging = new TaggingService({
+                templatePath: '../../tagging/',
+                callbacks: {
+                    itemRemoved: function(entity){
+                        console.log('Entity removed!', entity);
+                    },
+                    itemAdded: function(entity){
+                        console.log('Entity added!', entity);
+                    },
+                    loadContent: function(query, finish){
+                        streamRepository.search(query).then(function(response){
+                            finish(response.data.data.streams);
+                        });
+                    },
+                    resultItemOnHover: function(item){
+                        var image = item.base_image; //low quality
+                        angular.element('.modal-media, .modal-media-bulk').children().hide();
+                        angular.element('.modal-media, .modal-media-bulk').append('<img src="'+item.base_image+'" class="tagging-preview-image" />');
+                    },
+                    resultItemOnOut: function(item){
+                        angular.element('.tagging-preview-image').remove();
+                        angular.element('.modal-media, .modal-media-bulk').children().show();
+                    }
+                }
+            });
+
+            //======================================================================================================
+            // Actions
+            //======================================================================================================
+
+            $scope.actionSave = new ActionService({
+                title: 'Approve media',
+                iconClass: 'check',
+                callback: function(){
+                    console.log('approve');
+                }
+            });
+
+            $scope.actionDelete = new ActionService({
+                title: 'Reject media',
+                iconClass: 'close',
+                callback: function(){
+                    console.log('reject');
+                }
+            });
+
+            //======================================================================================================
+            // Modal
+            //======================================================================================================
+
+            $scope.modal = new ModalService({
+                templatePath: '../',
+                fullscreen: false,
+                directives: [{
+                    selector: '.modal-tools',
+                    directive: '<op-actions action-services="[actionSave, actionDelete]" template-path="../../actions/"></op-actions>',
+                    scope: $scope
+                }],
+                callbacks: {
+                    afterOpen: function(){
+                        console.log('afterOpen');
+                    },
+                    afterClose: function(){
+                        console.log('afterClose');
+                    }
+                }
+            });
+
+            //======================================================================================================
+            // Methods of the implementation not of Rome
+            //======================================================================================================
+
+
+            repository.search().then(function(response){
+                $scope.list = response.data.data.media;
+                $scope.modal.actions.navigation(response.data.data.media);
+            });
+
+            $scope.open = function(entity){
+                $scope.modal.actions.open([entity]);
+                $scope.modal.actions.setTitle('Edit Media');
+            };
+
+            $scope.bulk = function(){
+                $scope.modal.actions.open($scope.list);
+                $scope.modal.actions.setTitle('Edit Selected Media');
+            };
+        }
+
+        $timeout(function() {
+            init()
+        }, 2000);
+    }]);
+</script>
+
+</body>
+</html>

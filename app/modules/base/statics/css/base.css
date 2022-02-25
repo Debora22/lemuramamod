@@ -1,0 +1,331 @@
+.navbar .disabled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #FFFFFF;
+    opacity: 0.8;
+    z-index: 9999;
+}
+
+.no-bulk-action .box-check{
+    display: none !important;
+}
+.container-fluid{
+    position: relative;
+    z-index: 1
+}
+
+.grid-library li {
+    position: relative;
+}
+
+.withFilter .library-media-container{
+    margin-left: 321px;
+}
+.withoutFilter .library-media-container{
+    margin-left: 0px;
+}
+
+.tagging-preview-image {
+    margin-top: 20px;
+    width: 450px;
+    height: 640px;
+    border: rgb(198, 198, 198) 1px solid;
+    background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+.tagging-preview-image.fixed {
+    position: fixed;
+    top: 0px
+}
+
+/*********************************
+        Notifications
+**********************************/
+
+.cg-notify-message {
+    width: 400px;
+    position:fixed;
+    top:0px;
+    z-index: 9999;
+    max-width:400px;
+    text-align: left;
+    color: #fff;
+    padding: 15px;
+    border-radius: 4px;
+    visibility:hidden;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    margin-top: 5px !important;
+    -webkit-transition: 0.2s ease-out;
+    -moz-transition: 0.2s ease-out;
+    -o-transition: 0.2s ease-out;
+    transition: 0.2s ease-out;
+}
+
+.cg-notify-message > div {
+    overflow: hidden;
+}
+
+.cg-notify-message-center {
+    left:50%;
+}
+
+.cg-notify-message-left {
+    left:15px;
+}
+
+.cg-notify-message-right {
+    right:15px;
+}
+
+.cg-notify-message a {
+    font-weight:bold;
+    color:inherit;
+}
+
+.cg-notify-message a:hover {
+    color:inherit;
+}
+
+.cg-notify-close {
+    -webkit-appearance: none;
+    padding: 0;
+    cursor: pointer;
+    background: 0 0;
+    border: 0;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: .2;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    line-height: 15px;
+    margin-top: -7px;
+}
+
+.cg-notify-close:hover, .cg-notify-close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    filter: alpha(opacity=50);
+    opacity: .5;
+}
+
+.cg-notify-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* Overalay */
+.overlay {
+    top: 0px;
+    opacity: 0;
+    width: 100%;
+    height: 0%;
+    background: rgba(255,255,255,0.75);
+    position: fixed;
+    transition: transform 0.4s cubic-bezier(0.4, 0.46, 0.32, 1.275),opacity 0.3s ease;
+}
+
+.overlay.active {
+    opacity: 1;
+    height: 100%;
+    z-index: 1000;
+}
+
+/* Translate */
+.liTranslate .sidebar-item {
+    width: inherit;
+    border: none;
+    padding: 0;
+    cursor: default;
+}
+
+.liTranslate div {
+    float: left;
+}
+
+.liTranslate .sidebar-item button {
+    width: 170px;
+}
+
+.liTranslate .dropdown-menu {
+    max-height: 300px;
+    overflow: scroll;
+}
+
+.translateTooltip {
+    color: #212121;
+    font-weight: 700;
+    margin: 7px 10px 0 0;
+}
+
+.translateTooltip > div {
+    width: 20px;
+    height: 20px;
+    float: right;
+    background-color: #d8d8d8;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 50%;
+    margin: 0 0 0 4px;
+    cursor: pointer;
+}
+
+.translateTooltip > div::before {
+    content: "?";
+    display: block;
+    margin: 2px 0 0 7px;
+}
+
+.header-customer-avatar {
+    border: 1px solid #0095f5;
+    border-radius: 50%;
+    color: transparent;
+    height: 46px;
+    vertical-align: top;
+    width: 46px;
+}
+
+.header-customer-avatar::before {
+    background-color: white;
+    border: white;
+    content: " ";
+    height: 48px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.header-customer-avatar::after {
+    background: #d8d8d8;
+    border: 1px solid #0095f5;
+    border-radius: 50%;
+    color: white;
+    content: attr(name);
+    font-size: 22px;
+    font-weight: bold;
+    height: 46px;
+    left: 0;
+    line-height: 48px;
+    position: absolute;
+    text-align: center;
+    top: 5px;
+    vertical-align: top;
+    width: 46px;
+}
+
+.logout-dropdown {
+    width: 240px;
+}
+
+.logout-dropdown li:first-child {
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.dropdown-menu .dropdown-menu-switch-account {
+    width: 215px;
+    margin-left: 10px;
+    height: 35px;
+    background-color: #0095F5;
+    border-radius: 3px;
+    font-family: "PT Sans";
+    font-size: 15px;
+    color: #FFFFFF;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.dropdown-menu .dropdown-menu-switch-account:hover {
+    color: #FFFFFF;
+    background-color: #0283d6;
+    border-radius: 3px;
+    transition: 0.6s;
+}
+
+.dropdown-menu li .dropdown-menu-logout {
+    font-size: 15px;
+    padding: 12px 0 0 12px;
+}
+
+.dropdown-menu::before {
+    border-bottom: 6px solid #c0c0c2;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    content: " ";
+    position: absolute;
+    right: 16px;
+    top: -7px;
+}
+
+.dropdown-menu::after {
+    border-bottom: 6px solid #fff;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    content: " ";
+    position: absolute;
+    right: 16px;
+    top: -6px;
+}
+
+.timeTracker-wrapper{
+    float: right;
+}
+.navbar-right .header-actions-title {
+    color: #898989;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.4px;
+    margin: 11px 0px 0px 0px;
+    padding: 0;
+    height: 20px;
+}
+.navbar-right .stats-wrapper {
+    line-height: normal;
+}
+
+.navbar-right .header-actions-number {
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0px;
+    margin: 0px;
+}
+
+.navbar-right li:nth-child(-n+2) {
+    border-right: 1px solid #ccc;
+    cursor: inherit;
+}
+
+.navbar-right li:first-child {
+    border-left: 1px solid #ccc;
+    cursor: inherit;
+}
+
+.header-customer-name {
+    color: #898989;
+}
+
+.tools_tooltip{
+    text-align: left;
+}

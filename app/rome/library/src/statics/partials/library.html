@@ -1,0 +1,7 @@
+<div class="library-media-container" id="library-media">
+  <div infinite-scroll="loadMore()" infinite-scroll-distance="0"  infinite-scroll-disabled="isLoading && !firstLoad">
+    <op-box box="entityView" ng-repeat="entity in entities track by entity.id" ng-repeat-on-finish-render></op-box>
+    <div ng-if="!entities.length" class="library_empty">No results found</div>
+    <div class="library-clearboth"></div>
+  </div>
+</div>

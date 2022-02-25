@@ -1,0 +1,18 @@
+{
+  "MENU_ITEM_EXPRESS_MODERATOR": "Pre-moderation",
+  "MENU_ITEM_TAGGING": "Tagging",
+  "MENU_ITEM_QA": "QA",
+  "MENU_ITEM_MEDIA_LIBRARY": "Media Library",
+  "MENU_ITEM_MEDIA": "Media",
+  "MENU_ITEM_MODERATION": "Moderation",
+  "MENU_ITEM_STREAMS": "Streams",
+  "MENU_ITEM_CATEGORIES": "Categories",
+  "MENU_ITEM_VIEW_ALL_ACCOUNTS": "View all accounts",
+  "MENU_ITEM_LOGOUT": "Logout",
+  "TITLE_PRE_MODERATION": "Pre-moderation",
+  "TITLE_TAGGING": "Tagging",
+  "BTN_LOGOUT": "Logout",
+  "BTN_APPROVE_REJECT": "Approve Selected & Reject All Others",
+  "BTN_BLACKLIST_USER_BULK": "Blacklist Users",
+  "BTN_REPORT_SPAM": "Flag as Spam"
+}

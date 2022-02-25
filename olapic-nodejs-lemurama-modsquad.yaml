@@ -1,0 +1,330 @@
+kind: "Template"
+apiVersion: "v1"
+metadata:
+  name: "olapic-service-lemurama-modsquad"
+  annotations:
+    description: "The internal tool for the inhouse Moderation team - aka Modsquad."
+    version: "1.1"
+    iconClass: "icon-nodejs"
+    tags: "olapic,instant-app,nodejs,lemurama-modsquad"
+objects:
+  # Service 1: lemurama-modsquad Generic app.
+  - # lemurama-modsquad Generic service to be exposed at lemurama-modsquad-${APP_ID}.apps.192.168.87.200.xip.io:80. This section includes the port and loadbalancer configuration.
+    kind: "Service"
+    apiVersion: "v1"
+    metadata:
+      name: "lemurama-modsquad-${APP_ID}"
+    spec:
+      ports:
+        - # Ports in which the lemurama-modsquad service will be exposed
+          name: "lemurama-modsquad-${APP_ID}-endpoint"
+          protocol: "TCP"
+          port: 8080 # Exposed port
+          targetPort: 8081 # Container port
+      selector:
+        context: "lemurama-modsquad-${APP_ID}-context"
+      portalIP: ""
+      type: "ClusterIP"
+      sessionAffinity: "None"
+    status:
+      loadBalancer: {}
+  - # lemurama-modsquad Generic service route. The URL is defined in this section. i.e.: lemurama-modsquad-${APP_ID}.apps.192.168.87.200.xip.io
+    kind: "Route"
+    apiVersion: "v1"
+    metadata:
+      name: "lemurama-modsquad-${APP_ID}-route"
+      annotations:
+        haproxy.router.openshift.io/disable_cookies: "true"
+        routes.alpha.olapic.com/enigma.handler: "true"
+    spec:
+      host: "${ROUTE_HOSTNAME}" # URL to access the exposed service
+      to:
+        kind: "Service"
+        name: "lemurama-modsquad-${APP_ID}"
+      port:
+        targetPort: "lemurama-modsquad-${APP_ID}-endpoint" # Port to be exposed by the route (previously defined)
+      tls:
+        termination: edge
+    status: {}
+  - # Openshift image streams configurations. The docker registries and tags for lemurama-modsquad generic app should be configured in the following section.
+    kind: "ImageStream"
+    apiVersion: "v1"
+    metadata:
+      name: "service-lemurama-modsquad-${APP_ID}"
+    spec:
+      dockerImageRepository: 740906069008.dkr.ecr.us-east-1.amazonaws.com/service/lemurama-modsquad # Origin docker image repository
+      tags:
+        -
+          name: ${IMAGE_TAG}
+          from:
+            kind: DockerImage
+            name: '740906069008.dkr.ecr.us-east-1.amazonaws.com/service/lemurama-modsquad:${IMAGE_TAG}' # Origin docker image repository and tag
+          importPolicy:
+            scheduled: true
+  - # Openshift image streams configurations. The docker registries and tags for NodeJS generic app should be configured in the following section.
+    kind: "ImageStream"
+    apiVersion: "v1"
+    metadata:
+      name: "nginx-${APP_ID}"
+    spec:
+      dockerImageRepository: 740906069008.dkr.ecr.us-east-1.amazonaws.com/nginx # Origin docker image repository
+      tags:
+        -
+          name: ${NGINX_TAG}
+          from:
+            kind: DockerImage
+            name: '740906069008.dkr.ecr.us-east-1.amazonaws.com/nginx:${NGINX_TAG}'
+          importPolicy:
+            scheduled: true
+  -
+    kind: HorizontalPodAutoscaler
+    apiVersion: extensions/v1beta1
+    metadata:
+      name: lemurama-modsquad-${APP_ID}  # The name of the HorizontalPodAutoscaler object to create
+    spec:
+      scaleRef:  # This defines the scaling target.
+        kind: DeploymentConfig
+        apiVersion: v1
+        name: lemurama-modsquad-${APP_ID} # This name must match the name of the DeploymentConfig
+                                  # previously defined.
+        subresource: scale
+      minReplicas: 2
+      maxReplicas: 10
+      cpuUtilization:  # This HPA is configured to track CPU usage for making scaling decisions.
+        targetPercentage: 75  # It will try to keep the average CPU utilization percentage at this
+                              # value.
+  - # DeploymentConfig includes: Pods update rolling strategy, update triggers (source image and/or config changes), initial ammount of replicas to be deployed, and the containers description
+    kind: "DeploymentConfig"
+    apiVersion: "v1"
+    metadata:
+      name: "lemurama-modsquad-${APP_ID}"
+    spec:
+      strategy:
+        type: "Rolling"
+        rollingParams:
+          updatePeriodSeconds: 1
+          intervalSeconds: 1
+          timeoutSeconds: 120
+          maxSurge: "20%" # During an update, Openshift will be able to create a X% extra pods to perform the procedure. i.e. If there are 10 replicas, and maxSurge is 20%, Openshfit will create 2 extra pods during the update.
+          maxUnavailable: "10%" # During an update, Openshift will be able to use Y% of existing pods to perform the procedure. i.e. If there are 10 replicas, and maxUnavailable is 10%, Openshift will use 1 of the existing pods during the update.
+      triggers:
+        -
+          type: "ImageChange"
+          imageChangeParams:
+            automatic: true
+            containerNames:
+              - "lemurama-modsquad-${APP_ID}"
+            from:
+              kind: "ImageStreamTag"
+              name: "service-lemurama-modsquad-${APP_ID}:${IMAGE_TAG}"
+        -
+          type: "ImageChange"
+          imageChangeParams:
+            automatic: true
+            containerNames:
+              - "nginx-lemurama-modsquad-${APP_ID}"
+            from:
+              kind: "ImageStreamTag"
+              name: "nginx-${APP_ID}:${NGINX_TAG}"
+        -
+          type: "ConfigChange"
+      selector:
+        name: "lemurama-modsquad-${APP_ID}"
+        context: "lemurama-modsquad-${APP_ID}-context"
+      template:
+        metadata:
+          labels:
+            name: "lemurama-modsquad-${APP_ID}"
+            context: "lemurama-modsquad-${APP_ID}-context"
+        spec:
+          containers: #Following containers will be running on a single POD.
+            - # Container 1: lemurama-modsquad Generic app
+              name: "lemurama-modsquad-${APP_ID}" # Container name
+              image: "service-lemurama-modsquad-${APP_ID}:${IMAGE_TAG}" # Image and tag
+              ports:
+                -
+                  containerPort: 8080 # port
+              env:
+                - name: 'AUTHNZ_API_URL'
+                  value: "${AUTHNZ_API_URL}"
+                - name: 'PHOTORANK_API_URL'
+                  value: "${PHOTORANK_API_URL}"
+                - name: 'ADMIN_API_URL'
+                  value: "${ADMIN_API_URL}"
+                - name: 'ADMIN_API_V2_URL'
+                  value: "${ADMIN_API_V2_URL}"
+                - name: 'PHOTORANK_URL'
+                  value: "${PHOTORANK_URL}"
+                - name: 'ANAFRUS_API_URL'
+                  value: "${ANAFRUS_API_URL}"
+                - name: 'GOOGLE_TRANSLATE_API_KEY'
+                  value: "${GOOGLE_TRANSLATE_API_KEY}"
+                - name: 'REPORTING_API_URL'
+                  value: "${REPORTING_API_URL}"
+                - name: 'REDIS_HOST'
+                  value: "${REDIS_HOST}"
+                - name: 'REDIS_PORT'
+                  value: "${REDIS_PORT}"
+                - name: 'REDIS_DB_FOR_STORAGE'
+                  value: "${REDIS_DB_FOR_STORAGE}"
+                - name: 'REDIS_DB_FOR_SESSION'
+                  value: "${REDIS_DB_FOR_SESSION}"
+                - name: 'PORT'
+                  value: '8080' # nginx will look for the upstream server in port 8080
+              # defines the health checking
+              livenessProbe:
+                # an http probe
+                httpGet:
+                  path: /service/health
+                  port: 8080
+                # length of time to wait for a pod to initialize
+                # after pod startup, before applying health checking
+                initialDelaySeconds: 15
+                timeoutSeconds: 1
+              resources:
+                limits:
+                  cpu: 1000m
+                  memory: 1000Mi
+                requests:
+                  cpu: 400m
+                  memory: 500Mi
+              terminationMessagePath: "/dev/termination-log"
+              imagePullPolicy: "IfNotPresent"
+              securityContext:
+                capabilities: {}
+                privileged: false
+            - # Container 2: Nginx app
+              name: "nginx-lemurama-modsquad-${APP_ID}" # Container name
+              image: "nginx-${APP_ID}:${NGINX_TAG}" # Image and tag
+              ports:
+                -
+                  containerPort: 8081 # TCP exposed port
+              env:
+                - name: 'GRAPHITE_HOST'
+                  value: "${GRAPHITE_HOST}"
+                - name: 'NGINX_WORKER_CONNECTIONS'
+                  value: "${NGINX_WORKER_CONNECTIONS}"
+                - name: 'APP_LANGUAGE'
+                  value: "nodejs"
+                - name: 'CONTAINER_NAME'
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.name
+                - name: 'NAMESPACE'
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+              livenessProbe:
+                # an http probe
+                httpGet:
+                  path: /nginx/alive
+                  port: 8081
+                # length of time to wait for a pod to initialize
+                # after pod startup, before applying health checking
+                initialDelaySeconds: 5
+                timeoutSeconds: 1
+              readinessProbe:
+                # an http probe
+                httpGet:
+                  path: /service/health
+                  port: 8081
+                initialDelaySeconds: 5
+                timeoutSeconds: 1
+                periodSeconds: 10
+                successThreshold: 1
+                failureThreshold: 3
+              resources:
+                limits:
+                  cpu: 50m
+                  memory: 160Mi
+                requests:
+                  cpu: 30m
+                  memory: 80Mi
+              terminationMessagePath: "/dev/termination-log"
+              imagePullPolicy: "IfNotPresent"
+              securityContext:
+                capabilities: {}
+                privileged: false
+          restartPolicy: "Always"
+          dnsPolicy: "ClusterFirst"
+
+parameters: # Following parameter will be required to instantiate a new lemurama-modsquad generic app
+  -
+    name: "APP_ID"
+    description: "Application execution ID"
+    generate: "expression"
+    from: "[a-z0-9]{3}"
+    required: true
+  -
+    name: "GRAPHITE_HOST"
+    description: "Graphite host to report Nginx metrics. If left empty no metrics will be reported."
+    value: ""
+  -
+    name: "NGINX_WORKER_CONNECTIONS"
+    description: "Sets the maximum number of simultaneous connections that can be opened by a worker process."
+    value: "1024"
+  -
+    name: "IMAGE_TAG"
+    description: "Docker image tag"
+    value: "latest"
+    required: true
+  -
+    name: "NGINX_TAG"
+    description: "NGINX Docker tag that the ImageStream is configured to follow"
+    value: "3"
+    required: true
+  -
+    name: "AUTHNZ_API_URL"
+    description: "The URL of the AuthNZ server API"
+    required: true
+  -
+    name: "PHOTORANK_API_URL"
+    description: "The URL of the Photorank REST API"
+    required: true
+  -
+    name: "ADMIN_API_URL"
+    description: "The URL of the Admin API (v1)"
+    required: true
+  -
+    name: "ADMIN_API_V2_URL"
+    description: "The URL of the Admin API (v2)"
+    required: true
+  -
+    name: "PHOTORANK_URL"
+    description: "The URL of the Photorank admin"
+    required: true
+  -
+    name: "ANAFRUS_API_URL"
+    description: "The URL of the Anafrus API"
+    required: true
+  -
+    name: "GOOGLE_TRANSLATE_API_KEY"
+    description: "The API key for the Google Translate API"
+    required: true
+  -
+    name: "REPORTING_API_URL"
+    description: "The URL of the Reporting API"
+    required: true
+  -
+    name: "REDIS_HOST"
+    description: "The Redis server hostname"
+    required: true
+  -
+    name: "REDIS_PORT"
+    description: "The Redis server port"
+    required: true
+  -
+    name: "REDIS_DB_FOR_STORAGE"
+    description: "The number of the Redis database for data storage"
+    required: true
+  -
+    name: "REDIS_DB_FOR_SESSION"
+    description: "The number of the Redis database for session storage"
+    required: true
+  -
+    name: "ROUTE_HOSTNAME"
+    description: "Hostname where the service will exist"
+    required: true
+labels:
+  vendor: "Olapic"
+  service: "lemurama-modsquad"

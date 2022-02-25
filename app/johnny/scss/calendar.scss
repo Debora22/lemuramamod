@@ -1,0 +1,86 @@
+// Dependencies // ------------------------------
+
+@import 'colors';
+
+// Styles // ------------------------------
+
+.calendar-form .form-group {
+    position: relative;
+}
+.calendar-form .form-control {
+    width: 130px;
+    box-sizing: box-shadow;
+    padding: 6px 10px 6px 32px;
+}
+.calendar-form i {
+    position: absolute;
+    color: $color-border;
+    top: 10px;
+    left: 10px;
+}
+.calendar-form input[readonly] {
+    cursor: pointer;
+    background-color: $color-white;
+}
+.dropdown-menu li div:focus,
+.dropdown-menu li div:active,
+.dropdown-menu li div table:focus,
+.dropdown-menu li div table:active {
+    outline: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+}
+
+.dropdown-menu li div table thead tr th .btn-default,
+.dropdown-menu li div table tbody tr td .btn-default {
+    border: none;
+}
+.dropdown-menu li div table tbody tr td .btn-disabled {
+    opacity: 1;
+}
+.dropdown-menu li div table tbody tr td .btn-info.active {
+    background-color: $color-primary;
+    border-color: $color-primary;
+}
+.dropdown-menu li div table tbody tr td .btn-default.active {
+    background-color: $color-border;
+    border-color: $color-border;
+}
+.dropdown-menu li div table tbody tr td .btn-info.active span {
+    color: $color-white;
+}
+.dropdown-menu li div table tbody tr td .btn-default.active span {
+    color: $color-text;
+}
+.dropdown-menu li div table tbody tr td .text-info {
+    color: $color-primary;
+}
+.dropdown-menu li div table tbody tr td .btn-default[disabled] {
+    color: $color-primary;
+}
+
+// Media Queries // ------------------------------
+
+/* Desktops and laptops ----------- */
+@media only screen
+and (max-width : 1450px) {
+
+}
+
+/* IPAD ----------- */
+
+@media only screen
+and (max-width : 1023px) {
+
+}
+
+/* IPHONE ----------- */
+
+@media only screen
+and (max-width : 767px) {
+    .calendar-form .form-group,
+    .calendar-form .form-control {
+        width: 100%;
+    }
+}

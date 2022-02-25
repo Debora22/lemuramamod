@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1>QA</h1>
+
+        <div class="library-actions-container">
+            <div class="pull-left">
+                <a href class="sidebar-button" ng-click="toggleFilters()">
+                    <i class="icon-list"></i> <span>{{showFilters ? 'Hide filter' : 'Show filter'}}</span>
+                </a>
+            </div>
+            <div class="tools tools-filter pull-right">
+                <ul>
+                    <li class="liTranslate">
+                        <div class="translateTooltip">Caption <div tooltip-placement="bottom" tooltip-append-to-body="true" uib-tooltip-template="'modules/base/statics/partials/translationTooltipHelp.html'"></div></div>
+                        <op-static-dropdown-filter settings='filtersLanguageService'></op-static-dropdown-filter>
+                    </li>
+                    <li>
+                        <button class="btn btn-default" id="btnSelectAll" type="button" ng-click="bulkSelection()" tooltip-placement="bottom" tooltip="{{bulkTooltip}}">
+                            <span ng-class="{false: 'icon-square', true: 'icon-check'}[bulkSelected()]"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btnBulkActions" class="btn btn-default btn-select" type="button" ng-click="bulkTagging()" ng-disabled="!isModalInBulk()">
+                            Bulk Actions
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div ng-class="{true:'col-lg-12', false:'col-lg-12 hide-sidebar'}[showFilters]">
+        <op-filters settings="filters">
+            <op-static-dropdown-filter settings='filtersSortingService'></op-static-dropdown-filter>
+            <uiw-nsfw-filter ng-if="isNSFWEnabled" class="sidebar-item accordion" style="order: 5" filters-service="filters"></uiw-nsfw-filter>
+        </op-filters>
+        <op-library></op-library>
+        <op-modal></op-modal>
+    </div>
+</div>

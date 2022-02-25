@@ -1,0 +1,50 @@
+@import 'colors';
+
+$customerselector-component-name: 'opTimeTracking';
+
+.#{$customerselector-component-name} {
+    float: left;
+
+    &_action {
+        border-left: 1px solid $color-header-timer;
+        color: $color-header-timer;
+        cursor: pointer;
+        float: left;
+        font-size: 16px;
+        height: 60px;
+        line-height: 60px;
+        margin-left: 6px;
+        text-align: center;
+        width: 60px;
+    }
+
+    &_button {
+        border-radius: 50%;
+        border: 1px solid $color-header-timer;
+        height: 40px;
+        line-height: 40px;
+        margin: 8px;
+        overflow: hidden;
+        width: 40px;
+    }
+
+    &_copy {
+        color: $color-header-timer;
+        float: left;
+        font-size: 11px;
+        font-weight: bold;
+        padding: 10px 0 0 10px;
+        overflow: hidden;
+        letter-spacing: 0.4px;
+        padding: 11px;
+        text-transform: uppercase;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 183px;
+
+
+        &_time {
+            text-transform: none;
+        }
+    }
+}
